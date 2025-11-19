@@ -2,461 +2,446 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Day 1 – Hardbody</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Day 2 – Chest & Tris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --bg: #111111;
-      --card-bg: #222222;
-      --accent: #ff4d4d;
-      --accent-soft: #3b82f6;
+      --card-bg: #1e1e1e;
+      --accent: #ff4b4b;
+      --accent-soft: #ff8b8b;
       --text-main: #ffffff;
       --text-muted: #bbbbbb;
-      --done: #22c55e;
+      --border-subtle: #333333;
+      --btn-bg: #262626;
+      --btn-radius: 999px;
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       background-color: var(--bg);
       color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        system-ui, sans-serif;
-      padding: 20px 16px 40px;
-      max-width: 480px;
-      margin: 0 auto;
+      padding: 16px;
     }
 
-    header {
-      margin-bottom: 24px;
+    .app-header {
+      margin-bottom: 16px;
     }
 
-    .label-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.16);
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-bottom: 8px;
+    .day-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 4px;
     }
 
     h1 {
-      font-size: 32px;
-      line-height: 1.1;
-      margin-bottom: 8px;
+      margin: 0;
+      font-size: 1.8rem;
     }
 
     .subtitle {
-      font-size: 14px;
+      margin-top: 6px;
+      font-size: 0.95rem;
       color: var(--text-muted);
-    }
-
-    .subtle {
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px 14px;
-      margin-bottom: 16px;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .step-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      gap: 8px;
-    }
-
-    .step-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .step-badge {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.16);
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-
-    .step-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
     }
 
     .exercise-list {
-      font-size: 13px;
-      margin-bottom: 10px;
-      padding-left: 16px;
-      color: var(--text-main);
-    }
-
-    .exercise-list li + li {
-      margin-top: 4px;
-    }
-
-    .complete-row {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .exercise-card {
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      padding: 14px 14px 10px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .exercise-header {
+      display: flex;
       justify-content: space-between;
-      gap: 10px;
-      margin-top: 6px;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
     }
 
-    .status-pill {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.16);
-      color: var(--text-muted);
-    }
-
-    .status-pill.done {
-      background: rgba(34, 197, 94, 0.18);
-      color: var(--done);
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
+    .exercise-title {
+      font-size: 1rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      background: var(--accent-soft);
-      color: white;
     }
 
-    button.done {
-      background: var(--done);
-    }
-
-    button.secondary {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-
-    .progress-card {
-      margin-top: 10px;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      font-size: 13px;
-    }
-
-    .dots {
+    .reorder-buttons {
       display: flex;
       gap: 6px;
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
+    .icon-button {
+      border: none;
+      background-color: var(--btn-bg);
+      color: var(--text-main);
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.4);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.95rem;
+      padding: 0;
     }
 
-    .dot.done {
-      background: var(--done);
+    .icon-button:active {
+      transform: scale(0.96);
+      background-color: #333333;
     }
 
-    .footer-text {
-      font-size: 12px;
+    .exercise-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .field-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .field-label {
+      font-size: 0.85rem;
       color: var(--text-muted);
-      margin-top: 10px;
+    }
+
+    .value-chip {
+      min-width: 66px;
+      text-align: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background-color: #262626;
+      font-size: 0.9rem;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stepper button {
+      border-radius: var(--btn-radius);
+      border: none;
+      background-color: var(--btn-bg);
+      color: var(--text-main);
+      width: 26px;
+      height: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      padding: 0;
+    }
+
+    .stepper button:active {
+      transform: scale(0.95);
+      background-color: #333333;
+    }
+
+    .stepper span {
+      min-width: 30px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .weight-input {
+      width: 90px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background-color: #161616;
+      color: var(--text-main);
+      font-size: 0.9rem;
       text-align: center;
     }
 
-    .footer-text span {
-      color: var(--accent-soft);
-      font-weight: 600;
+    .weight-input:focus {
+      outline: 1px solid var(--accent-soft);
     }
 
-    .reset-wrapper {
+    .footer-note {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
       text-align: center;
-      margin-top: 12px;
-    }
-
-    .reset-wrapper button {
-      padding-inline: 20px;
-    }
-
-    @media (min-width: 600px) {
-      body {
-        padding-top: 32px;
-      }
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="label-pill">
-      <span>Day 1 • Hardbody</span>
-    </div>
-    <h1>Strength + Push I + Pull I</h1>
-    <p class="subtitle">
-      Tap “Done” on each block as you finish it. Your progress is saved on this
-      device so you can leave and come back.
-    </p>
+  <header class="app-header">
+    <div class="day-label">Day 2</div>
+    <h1>Chest & Triceps</h1>
+    <p class="subtitle">Tap + / − to tweak sets & reps, log your weight, and move exercises up or down.</p>
   </header>
 
-  <!-- WARM-UP -->
-  <section class="card step-card" data-step="warmup">
-    <div class="step-header">
-      <div>
-        <div class="step-title">Warm-up & Mobility</div>
-        <p class="step-desc">
-          5–10 minutes to get your joints warm and your head in the game.
-        </p>
+  <main class="exercise-list" id="exercise-list">
+    <!-- Incline Dumbbell Bench Press -->
+    <section class="exercise-card" id="ex-incline-db">
+      <div class="exercise-header">
+        <div class="exercise-title">Incline Dumbbell Bench Press</div>
+        <div class="reorder-buttons">
+          <button class="icon-button" onclick="moveCard('ex-incline-db', 'up')">↑</button>
+          <button class="icon-button" onclick="moveCard('ex-incline-db', 'down')">↓</button>
+        </div>
       </div>
-      <span class="step-badge">Block 1 / 5</span>
-    </div>
 
-    <ul class="exercise-list">
-      <li>Light treadmill walk or bike – 5 min</li>
-      <li>Band shoulder dislocates – 2×15</li>
-      <li>World’s greatest stretch – 2× each side</li>
-    </ul>
+      <div class="exercise-body">
+        <div class="field-row">
+          <span class="field-label">Sets</span>
+          <div class="stepper">
+            <button onclick="changeCount('incline-db', 'sets', -1)">−</button>
+            <span id="incline-db-sets">3</span>
+            <button onclick="changeCount('incline-db', 'sets', 1)">+</button>
+          </div>
+        </div>
 
-    <div class="complete-row">
-      <span class="status-pill">Not done</span>
-      <button class="complete-btn">Mark Done</button>
-    </div>
-  </section>
+        <div class="field-row">
+          <span class="field-label">Reps</span>
+          <div class="stepper">
+            <button onclick="changeCount('incline-db', 'reps', -1)">−</button>
+            <span id="incline-db-reps">10</span>
+            <button onclick="changeCount('incline-db', 'reps', 1)">+</button>
+          </div>
+        </div>
 
-  <!-- MAIN LIFT -->
-  <section class="card step-card" data-step="main">
-    <div class="step-header">
-      <div>
-        <div class="step-title">Main Lift – Bench</div>
-        <p class="step-desc">
-          Heavy compound work. Focus on tight setup, controlled reps, and
-          consistent bar path.
-        </p>
+        <div class="field-row">
+          <span class="field-label">Weight (lbs)</span>
+          <input
+            id="incline-db-weight"
+            class="weight-input"
+            type="number"
+            inputmode="decimal"
+            placeholder="0"
+          />
+        </div>
       </div>
-      <span class="step-badge">Block 2 / 5</span>
-    </div>
+    </section>
 
-    <ul class="exercise-list">
-      <li>Barbell Bench Press – 4×5 @ RPE 7–8</li>
-      <li>Rest 2–3 min between sets</li>
-    </ul>
-
-    <div class="complete-row">
-      <span class="status-pill">Not done</span>
-      <button class="complete-btn">Mark Done</button>
-    </div>
-  </section>
-
-  <!-- PUSH ACCESSORIES -->
-  <section class="card step-card" data-step="push">
-    <div class="step-header">
-      <div>
-        <div class="step-title">Push Accessories</div>
-        <p class="step-desc">
-          Hypertrophy work to build your chest, shoulders, and triceps.
-        </p>
+    <!-- Incline Machine Chest Fly -->
+    <section class="exercise-card" id="ex-incline-fly">
+      <div class="exercise-header">
+        <div class="exercise-title">Incline Machine Chest Fly</div>
+        <div class="reorder-buttons">
+          <button class="icon-button" onclick="moveCard('ex-incline-fly', 'up')">↑</button>
+          <button class="icon-button" onclick="moveCard('ex-incline-fly', 'down')">↓</button>
+        </div>
       </div>
-      <span class="step-badge">Block 3 / 5</span>
-    </div>
 
-    <ul class="exercise-list">
-      <li>Incline DB Press – 3×8–10</li>
-      <li>Cable Lateral Raise – 3×12–15</li>
-      <li>Rope Triceps Pushdown – 3×10–12</li>
-    </ul>
+      <div class="exercise-body">
+        <div class="field-row">
+          <span class="field-label">Sets</span>
+          <div class="stepper">
+            <button onclick="changeCount('incline-fly', 'sets', -1)">−</button>
+            <span id="incline-fly-sets">3</span>
+            <button onclick="changeCount('incline-fly', 'sets', 1)">+</button>
+          </div>
+        </div>
 
-    <div class="complete-row">
-      <span class="status-pill">Not done</span>
-      <button class="complete-btn">Mark Done</button>
-    </div>
-  </section>
+        <div class="field-row">
+          <span class="field-label">Reps</span>
+          <div class="stepper">
+            <button onclick="changeCount('incline-fly', 'reps', -1)">−</button>
+            <span id="incline-fly-reps">12</span>
+            <button onclick="changeCount('incline-fly', 'reps', 1)">+</button>
+          </div>
+        </div>
 
-  <!-- PULL ACCESSORIES -->
-  <section class="card step-card" data-step="pull">
-    <div class="step-header">
-      <div>
-        <div class="step-title">Pull Accessories</div>
-        <p class="step-desc">
-          Balance out all the pressing. Think lats, upper-back, and biceps.
-        </p>
+        <div class="field-row">
+          <span class="field-label">Weight (lbs)</span>
+          <input
+            id="incline-fly-weight"
+            class="weight-input"
+            type="number"
+            inputmode="decimal"
+            placeholder="0"
+          />
+        </div>
       </div>
-      <span class="step-badge">Block 4 / 5</span>
-    </div>
+    </section>
 
-    <ul class="exercise-list">
-      <li>Chest-supported Row – 3×8–10</li>
-      <li>Lat Pulldown or Pull-ups – 3×6–10</li>
-      <li>EZ-bar Curl – 3×10–12</li>
-    </ul>
-
-    <div class="complete-row">
-      <span class="status-pill">Not done</span>
-      <button class="complete-btn">Mark Done</button>
-    </div>
-  </section>
-
-  <!-- FINISHER -->
-  <section class="card step-card" data-step="finisher">
-    <div class="step-header">
-      <div>
-        <div class="step-title">Finisher / Conditioning</div>
-        <p class="step-desc">
-          Short burn to finish the day. Keep form tight and breathing under
-          control.
-        </p>
+    <!-- Bodyweight Dips -->
+    <section class="exercise-card" id="ex-dips">
+      <div class="exercise-header">
+        <div class="exercise-title">Bodyweight Dips</div>
+        <div class="reorder-buttons">
+          <button class="icon-button" onclick="moveCard('ex-dips', 'up')">↑</button>
+          <button class="icon-button" onclick="moveCard('ex-dips', 'down')">↓</button>
+        </div>
       </div>
-      <span class="step-badge">Block 5 / 5</span>
-    </div>
 
-    <ul class="exercise-list">
-      <li>Battle ropes or bike sprints – 6–8 rounds, 20s on / 40s off</li>
-      <li>Then light walk + breathing to cool down – 3–5 min</li>
-    </ul>
+      <div class="exercise-body">
+        <div class="field-row">
+          <span class="field-label">Sets</span>
+          <div class="stepper">
+            <button onclick="changeCount('dips', 'sets', -1)">−</button>
+            <span id="dips-sets">3</span>
+            <button onclick="changeCount('dips', 'sets', 1)">+</button>
+          </div>
+        </div>
 
-    <div class="complete-row">
-      <span class="status-pill">Not done</span>
-      <button class="complete-btn">Mark Done</button>
-    </div>
-  </section>
+        <div class="field-row">
+          <span class="field-label">Reps</span>
+          <div class="stepper">
+            <button onclick="changeCount('dips', 'reps', -1)">−</button>
+            <span id="dips-reps">8</span>
+            <button onclick="changeCount('dips', 'reps', 1)">+</button>
+          </div>
+        </div>
 
-  <!-- PROGRESS + RESET -->
-  <section class="card progress-card">
-    <div class="progress-header">
-      <span id="progress-label">Day 1 Progress</span>
-      <div class="dots" id="progress-dots">
-        <!-- JS will fill these in -->
+        <div class="field-row">
+          <span class="field-label">Extra weight (lbs)</span>
+          <input
+            id="dips-weight"
+            class="weight-input"
+            type="number"
+            inputmode="decimal"
+            placeholder="0"
+          />
+        </div>
       </div>
-    </div>
-    <p class="step-desc" id="progress-text">
-      0 / 5 blocks complete. Let’s get after it.
-    </p>
+    </section>
 
-    <div class="reset-wrapper">
-      <button class="secondary" id="reset-btn">Reset Day 1</button>
-    </div>
-  </section>
+    <!-- Tricep Cable Pushdown -->
+    <section class="exercise-card" id="ex-cable-pushdown">
+      <div class="exercise-header">
+        <div class="exercise-title">Tricep Cable Pushdown</div>
+        <div class="reorder-buttons">
+          <button class="icon-button" onclick="moveCard('ex-cable-pushdown', 'up')">↑</button>
+          <button class="icon-button" onclick="moveCard('ex-cable-pushdown', 'down')">↓</button>
+        </div>
+      </div>
 
-  <p class="footer-text">
-    This only saves on <span>this device</span>. If you clear your browser data,
-    your checkmarks will reset.
+      <div class="exercise-body">
+        <div class="field-row">
+          <span class="field-label">Sets</span>
+          <div class="stepper">
+            <button onclick="changeCount('cable-push', 'sets', -1)">−</button>
+            <span id="cable-push-sets">3</span>
+            <button onclick="changeCount('cable-push', 'sets', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">Reps</span>
+          <div class="stepper">
+            <button onclick="changeCount('cable-push', 'reps', -1)">−</button>
+            <span id="cable-push-reps">12</span>
+            <button onclick="changeCount('cable-push', 'reps', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">Weight (lbs)</span>
+          <input
+            id="cable-push-weight"
+            class="weight-input"
+            type="number"
+            inputmode="decimal"
+            placeholder="0"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Overhead Tricep Extension -->
+    <section class="exercise-card" id="ex-overhead-tri">
+      <div class="exercise-header">
+        <div class="exercise-title">Overhead Tricep Extension</div>
+        <div class="reorder-buttons">
+          <button class="icon-button" onclick="moveCard('ex-overhead-tri', 'up')">↑</button>
+          <button class="icon-button" onclick="moveCard('ex-overhead-tri', 'down')">↓</button>
+        </div>
+      </div>
+
+      <div class="exercise-body">
+        <div class="field-row">
+          <span class="field-label">Sets</span>
+          <div class="stepper">
+            <button onclick="changeCount('overhead-tri', 'sets', -1)">−</button>
+            <span id="overhead-tri-sets">3</span>
+            <button onclick="changeCount('overhead-tri', 'sets', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">Reps</span>
+          <div class="stepper">
+            <button onclick="changeCount('overhead-tri', 'reps', -1)">−</button>
+            <span id="overhead-tri-reps">10</span>
+            <button onclick="changeCount('overhead-tri', 'reps', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">Weight (lbs)</span>
+          <input
+            id="overhead-tri-weight"
+            class="weight-input"
+            type="number"
+            inputmode="decimal"
+            placeholder="0"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <p class="footer-note">
+    Tip: Reorder your session at the top of your workout, then tweak sets, reps, and weights as you go.
   </p>
 
   <script>
-    (function () {
-      const STORAGE_KEY = "hardbody-day1-progress";
-      const stepCards = Array.from(document.querySelectorAll(".step-card"));
-      const progressText = document.getElementById("progress-text");
-      const progressDots = document.getElementById("progress-dots");
-      const resetBtn = document.getElementById("reset-btn");
+    function changeCount(exerciseKey, field, delta) {
+      const id = exerciseKey + '-' + field;
+      const el = document.getElementById(id);
+      if (!el) return;
 
-      // Build dots based on how many blocks we have
-      stepCards.forEach(() => {
-        const d = document.createElement("div");
-        d.className = "dot";
-        progressDots.appendChild(d);
-      });
+      let current = parseInt(el.textContent || '0', 10);
+      if (isNaN(current)) current = 0;
 
-      function loadState() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          return raw ? JSON.parse(raw) : {};
-        } catch (e) {
-          return {};
-        }
+      current += delta;
+      if (current < 0) current = 0;
+
+      el.textContent = current;
+    }
+
+    function moveCard(cardId, direction) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const container = document.getElementById('exercise-list');
+      if (!container) return;
+
+      if (direction === 'up') {
+        const prev = card.previousElementSibling;
+        if (prev) container.insertBefore(card, prev);
+      } else if (direction === 'down') {
+        const next = card.nextElementSibling;
+        if (next) container.insertBefore(next, card);
       }
-
-      function saveState(state) {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        } catch (e) {
-          // ignore
-        }
-      }
-
-      function updateUI() {
-        const state = loadState();
-        let completed = 0;
-
-        stepCards.forEach((card, index) => {
-          const id = card.dataset.step;
-          const done = !!state[id];
-          const btn = card.querySelector(".complete-btn");
-          const pill = card.querySelector(".status-pill");
-          const dot = progressDots.children[index];
-
-          if (done) {
-            completed += 1;
-            btn.textContent = "Done";
-            btn.classList.add("done");
-            pill.textContent = "Done";
-            pill.classList.add("done");
-            dot.classList.add("done");
-          } else {
-            btn.textContent = "Mark Done";
-            btn.classList.remove("done");
-            pill.textContent = "Not done";
-            pill.classList.remove("done");
-            dot.classList.remove("done");
-          }
-        });
-
-        const total = stepCards.length;
-        if (completed === 0) {
-          progressText.textContent = `${completed} / ${total} blocks complete. Let’s get after it.`;
-        } else if (completed < total) {
-          progressText.textContent = `${completed} / ${total} blocks complete. Keep going.`;
-        } else {
-          progressText.textContent = `All ${total} blocks complete. Day 1 in the books.`;
-        }
-      }
-
-      // Attach listeners
-      stepCards.forEach((card) => {
-        const id = card.dataset.step;
-        const btn = card.querySelector(".complete-btn");
-
-        btn.addEventListener("click", () => {
-          const state = loadState();
-          state[id] = !state[id]; // toggle
-          saveState(state);
-          updateUI();
-        });
-      });
-
-      resetBtn.addEventListener("click", () => {
-        if (confirm("Reset all Day 1 blocks on this device?")) {
-          saveState({});
-          updateUI();
-        }
-      });
-
-      // Initial paint
-      updateUI();
-    })();
+    }
   </script>
 </body>
 </html>
+
