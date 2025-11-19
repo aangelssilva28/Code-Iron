@@ -291,23 +291,32 @@
 
   <!-- WORKOUT TEMPLATES SCREEN -->
   <main id="workoutsScreen" class="screen">
-    <section class="card">
-      <h2 class="card-title">Workouts</h2>
-      <p class="card-subtitle">
-        Create and save workout templates you can load later on the main page.
-      </p>
+  <section class="card">
+    <h2 class="card-title">Workouts</h2>
+    <p class="card-subtitle">
+      Create and save workout templates you can load later on the main page.
+    </p>
 
-      <div class="template-workouts-container" id="templateWorkoutsContainer"></div>
+    <!-- This container will hold the template-building card,
+         identical to the logger style (name + sets + remove + add set). -->
+    <div class="workouts-container" id="templateBuilderContainer"></div>
 
-      <button id="addTemplateWorkoutBtn" class="primary-btn footer-btn">
-        Add workout to template
-      </button>
+    <!-- Button to add the current builder workout as a saved template -->
+    <button id="addTemplateWorkoutBtn" class="primary-btn footer-btn">
+      Add workout to template
+    </button>
 
-      <div class="link-back" id="backToLogger">
-        <span>←</span> Back to workout logger
-      </div>
-    </section>
-  </main>
+    <!-- Saved templates list (like on your screenshot with "Chest day") -->
+    <div class="saved-templates" id="savedTemplatesSection">
+      <h3 class="saved-title">Saved workouts</h3>
+      <div id="savedWorkoutsList"></div>
+    </div>
+
+    <div class="link-back" id="backToLogger">
+      <span>←</span> Back to workout logger
+    </div>
+  </section>
+</main>
 </div>
 
 <script>
