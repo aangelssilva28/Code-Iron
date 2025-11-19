@@ -1,110 +1,305 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Code and Iron</title>
-<style>
-body {
-  background-color: #0d0d0d;
-  color: white;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  margin: 0;
-  padding: 15px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code and Iron</title>
 
-/* Page title */
-h1 {
-  font-size: 34px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 15px;
+    }
 
-/* Subtitle */
-.subtitle {
-  font-size: 15px;
-  color: #ccc;
-  margin-bottom: 20px;
-}
+    /* Page title */
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
 
-/* Exercise card */
-.exercise {
-  background-color: #141414;
-  padding: 16px;
-  border-radius: 14px;
-  margin-bottom: 18px; /* smaller spacing */
-  box-shadow: 0 0 4px rgba(255,255,255,0.05);
-}
+    /* Subtitle */
+    .subtitle {
+      font-size: 15px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
 
-/* Exercise title */
-.exercise h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0 0 10px 0;
-}
+    /* Exercise card */
+    .exercise {
+      background-color: #141414;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.05);
+    }
 
-/* Set title */
-.set-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffb74d;
-  margin: 5px 0 8px;
-}
+    /* Exercise title */
+    .exercise h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
 
-/* Input containers */
-.input-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+    /* Set container box */
+    .set-box {
+      background-color: #1a1a1a;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #2a2a2a;
+    }
 
-.input-box {
-  width: 48%;
-}
+    /* Set title */
+    .set-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffb74d;
+      margin: 5px 0 8px;
+    }
 
-.input-box label {
-  font-size: 13px;
-  color: #bbb;
-}
+    /* Inputs */
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
 
-.input-box input {
-  width: 100%;
-  padding: 8px 10px;       /* smaller input */
-  border-radius: 10px;
-  background-color: #000;
-  border: 1px solid #333;
-  color: white;
-  font-size: 16px;
-}
+    .input-box {
+      flex: 1;
+    }
 
-/* Buttons */
-.add-set-btn {
-  width: 100%;
-  padding: 12px;          /* smaller height */
-  background-color: #007aff;
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 17px;
-  font-weight: 600;
-  margin-top: 5px;
-}
+    .input-box label {
+      font-size: 13px;
+      color: #bbb;
+      display: block;
+      margin-bottom: 3px;
+    }
 
-.remove-set-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #d93030;
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  margin-top: 5px;
-}
+    .input-box input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background-color: #000;
+      border: 1px solid #333;
+      color: white;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
 
-/* Set container box */
-.set-box {
-  background-color: #1a1a1a;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  border: 1px solid #2a2a2a;
-}
+    /* Buttons */
+    .add-set-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007aff;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .remove-set-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #d93030;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .remove-set-btn:disabled {
+      opacity: 0.4;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Code and Iron</h1>
+  <p class="subtitle">
+    Track each set with its own reps and weight. Tap “Add set” to log more.
+  </p>
+
+  <!-- EXERCISE 1 -->
+  <div class="exercise" data-exercise="1">
+    <h2>Incline Dumbbell Bench Press</h2>
+    <div class="sets-container">
+      <!-- Set 1 -->
+      <div class="set-box">
+        <div class="set-label">Set 1</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn" disabled>Remove set</button>
+      </div>
+    </div>
+    <button class="add-set-btn">Add set</button>
+  </div>
+
+  <!-- EXERCISE 2 -->
+  <div class="exercise" data-exercise="2">
+    <h2>Incline Machine Chest Fly</h2>
+    <div class="sets-container">
+      <div class="set-box">
+        <div class="set-label">Set 1</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn" disabled>Remove set</button>
+      </div>
+    </div>
+    <button class="add-set-btn">Add set</button>
+  </div>
+
+  <!-- EXERCISE 3 -->
+  <div class="exercise" data-exercise="3">
+    <h2>Bodyweight Dips</h2>
+    <div class="sets-container">
+      <div class="set-box">
+        <div class="set-label">Set 1</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn" disabled>Remove set</button>
+      </div>
+    </div>
+    <button class="add-set-btn">Add set</button>
+  </div>
+
+  <!-- EXERCISE 4 -->
+  <div class="exercise" data-exercise="4">
+    <h2>Tricep Cable Pulldown</h2>
+    <div class="sets-container">
+      <div class="set-box">
+        <div class="set-label">Set 1</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn" disabled>Remove set</button>
+      </div>
+    </div>
+    <button class="add-set-btn">Add set</button>
+  </div>
+
+  <!-- EXERCISE 5 -->
+  <div class="exercise" data-exercise="5">
+    <h2>Overhead Tricep Extension</h2>
+    <div class="sets-container">
+      <div class="set-box">
+        <div class="set-label">Set 1</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn" disabled>Remove set</button>
+      </div>
+    </div>
+    <button class="add-set-btn">Add set</button>
+  </div>
+
+  <script>
+    // Helper to create a new set box
+    function createSetBox(setNumber) {
+      const box = document.createElement("div");
+      box.className = "set-box";
+      box.innerHTML = `
+        <div class="set-label">Set ${setNumber}</div>
+        <div class="input-row">
+          <div class="input-box">
+            <label>Weight</label>
+            <input type="number" inputmode="decimal" placeholder="lbs" />
+          </div>
+          <div class="input-box">
+            <label>Reps</label>
+            <input type="number" inputmode="numeric" value="0" min="0" />
+          </div>
+        </div>
+        <button class="remove-set-btn">Remove set</button>
+      `;
+      return box;
+    }
+
+    document.querySelectorAll(".exercise").forEach((exercise) => {
+      const setsContainer = exercise.querySelector(".sets-container");
+      const addBtn = exercise.querySelector(".add-set-btn");
+
+      // Keep track of set count per exercise
+      let setCount = setsContainer.querySelectorAll(".set-box").length;
+
+      // Enable/disable remove buttons based on count
+      function updateRemoveButtons() {
+        const removeButtons = setsContainer.querySelectorAll(".remove-set-btn");
+        removeButtons.forEach((btn) => (btn.disabled = setCount === 1));
+      }
+
+      updateRemoveButtons();
+
+      addBtn.addEventListener("click", () => {
+        setCount++;
+        const newBox = createSetBox(setCount);
+        setsContainer.appendChild(newBox);
+        updateRemoveButtons();
+      });
+
+      // Remove set using event delegation
+      setsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("remove-set-btn") && setCount > 1) {
+          const box = e.target.closest(".set-box");
+          box.remove();
+          setCount--;
+
+          // Re-number sets after removal
+          setsContainer.querySelectorAll(".set-box").forEach((box, idx) => {
+            const label = box.querySelector(".set-label");
+            label.textContent = `Set ${idx + 1}`;
+          });
+
+          updateRemoveButtons();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
