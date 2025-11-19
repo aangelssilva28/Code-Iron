@@ -469,6 +469,10 @@
     "addTemplateWorkoutBtn"
   );
   const backToLogger = document.getElementById("backToLogger");
+  // make "Back to workout logger" link go back to home
+document.getElementById('backToLogger').addEventListener('click', () => {
+  showScreen('home');
+});
 
   addTemplateWorkoutBtn.addEventListener("click", () => {
     templateContainer.appendChild(createWorkoutCard());
