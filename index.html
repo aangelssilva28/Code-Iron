@@ -2,446 +2,282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Day 2 – Chest & Tris</title>
+  <title>Code and Iron</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    :root {
-      --bg: #111111;
-      --card-bg: #1e1e1e;
-      --accent: #ff4b4b;
-      --accent-soft: #ff8b8b;
-      --text-main: #ffffff;
-      --text-muted: #bbbbbb;
-      --border-subtle: #333333;
-      --btn-bg: #262626;
-      --btn-radius: 999px;
-    }
-
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background-color: var(--bg);
-      color: var(--text-main);
-      padding: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: #0f0f10;
+      color: #f5f5f5;
+      padding: 20px;
     }
 
-    .app-header {
-      margin-bottom: 16px;
-    }
-
-    .day-label {
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-soft);
-      margin-bottom: 4px;
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     h1 {
-      margin: 0;
-      font-size: 1.8rem;
+      font-size: 2.2rem;
+      margin-bottom: 0.25rem;
     }
 
     .subtitle {
-      margin-top: 6px;
       font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .exercise-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
+      color: #b0b0b0;
+      margin-bottom: 1.5rem;
     }
 
     .exercise-card {
-      background-color: var(--card-bg);
+      background: #181818;
       border-radius: 14px;
-      padding: 14px 14px 10px;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+      padding: 16px 16px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid #262626;
     }
 
     .exercise-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
 
-    .exercise-title {
-      font-size: 1rem;
+    .exercise-name {
+      font-size: 1.1rem;
       font-weight: 600;
     }
 
-    .reorder-buttons {
-      display: flex;
-      gap: 6px;
-    }
-
-    .icon-button {
-      border: none;
-      background-color: var(--btn-bg);
-      color: var(--text-main);
-      border-radius: 999px;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.95rem;
-      padding: 0;
-    }
-
-    .icon-button:active {
-      transform: scale(0.96);
-      background-color: #333333;
-    }
-
-    .exercise-body {
+    .sets-container {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 6px;
+      margin-bottom: 10px;
     }
 
-    .field-row {
-      display: flex;
-      justify-content: space-between;
+    .set-row {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr auto;
+      gap: 8px;
       align-items: center;
-      gap: 10px;
+      background: #202020;
+      padding: 8px 10px;
+      border-radius: 10px;
     }
 
-    .field-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    .set-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffb84d;
+      min-width: 55px;
     }
 
-    .value-chip {
-      min-width: 66px;
-      text-align: center;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background-color: #262626;
+    .set-field {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+    }
+
+    .set-field label {
+      margin-bottom: 2px;
+      color: #bbbbbb;
+    }
+
+    .set-field input {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 4px 6px;
+      color: #f5f5f5;
       font-size: 0.9rem;
     }
 
-    .stepper {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .set-field input:focus {
+      outline: none;
+      border-color: #3b82f6;
     }
 
-    .stepper button {
-      border-radius: var(--btn-radius);
+    .remove-set {
       border: none;
-      background-color: var(--btn-bg);
-      color: var(--text-main);
+      background: #3b1818;
+      color: #f97373;
+      border-radius: 999px;
       width: 26px;
       height: 26px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 1rem;
-      padding: 0;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
     }
 
-    .stepper button:active {
+    .remove-set:active {
       transform: scale(0.95);
-      background-color: #333333;
     }
 
-    .stepper span {
-      min-width: 30px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .weight-input {
-      width: 90px;
-      padding: 5px 8px;
+    .add-set-btn {
+      margin-top: 4px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background-color: #161616;
-      color: var(--text-main);
-      font-size: 0.9rem;
-      text-align: center;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
     }
 
-    .weight-input:focus {
-      outline: 1px solid var(--accent-soft);
+    .add-set-btn span {
+      font-size: 1.1rem;
+    }
+
+    .add-set-btn:active {
+      transform: scale(0.97);
     }
 
     .footer-note {
       margin-top: 18px;
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: #7c7c7c;
       text-align: center;
-      opacity: 0.7;
+    }
+
+    @media (max-width: 640px) {
+      .set-row {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .set-row .set-field:nth-child(2),
+      .set-row .set-field:nth-child(3) {
+        grid-column: span 1;
+      }
+
+      .set-row .remove-set {
+        justify-self: flex-end;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="app-header">
-    <div class="day-label">Day 2</div>
-    <h1>Chest & Triceps</h1>
-    <p class="subtitle">Tap + / − to tweak sets & reps, log your weight, and move exercises up or down.</p>
-  </header>
+  <div class="app">
+    <h1>Code and Iron</h1>
+    <p class="subtitle">
+      Track each set with its own reps and weight. Tap “+ Add set” to log more.
+    </p>
 
-  <main class="exercise-list" id="exercise-list">
-    <!-- Incline Dumbbell Bench Press -->
-    <section class="exercise-card" id="ex-incline-db">
+    <!-- Exercise 1 -->
+    <div class="exercise-card" id="exercise-bench">
       <div class="exercise-header">
-        <div class="exercise-title">Incline Dumbbell Bench Press</div>
-        <div class="reorder-buttons">
-          <button class="icon-button" onclick="moveCard('ex-incline-db', 'up')">↑</button>
-          <button class="icon-button" onclick="moveCard('ex-incline-db', 'down')">↓</button>
-        </div>
+        <div class="exercise-name">Incline Dumbbell Bench Press</div>
       </div>
+      <div class="sets-container" id="sets-bench"></div>
+      <button class="add-set-btn" type="button" onclick="addSet('sets-bench')">
+        <span>＋</span> Add set
+      </button>
+    </div>
 
-      <div class="exercise-body">
-        <div class="field-row">
-          <span class="field-label">Sets</span>
-          <div class="stepper">
-            <button onclick="changeCount('incline-db', 'sets', -1)">−</button>
-            <span id="incline-db-sets">3</span>
-            <button onclick="changeCount('incline-db', 'sets', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Reps</span>
-          <div class="stepper">
-            <button onclick="changeCount('incline-db', 'reps', -1)">−</button>
-            <span id="incline-db-reps">10</span>
-            <button onclick="changeCount('incline-db', 'reps', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Weight (lbs)</span>
-          <input
-            id="incline-db-weight"
-            class="weight-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Incline Machine Chest Fly -->
-    <section class="exercise-card" id="ex-incline-fly">
+    <!-- Exercise 2 -->
+    <div class="exercise-card" id="exercise-fly">
       <div class="exercise-header">
-        <div class="exercise-title">Incline Machine Chest Fly</div>
-        <div class="reorder-buttons">
-          <button class="icon-button" onclick="moveCard('ex-incline-fly', 'up')">↑</button>
-          <button class="icon-button" onclick="moveCard('ex-incline-fly', 'down')">↓</button>
-        </div>
+        <div class="exercise-name">Incline Machine Chest Fly</div>
       </div>
+      <div class="sets-container" id="sets-fly"></div>
+      <button class="add-set-btn" type="button" onclick="addSet('sets-fly')">
+        <span>＋</span> Add set
+      </button>
+    </div>
 
-      <div class="exercise-body">
-        <div class="field-row">
-          <span class="field-label">Sets</span>
-          <div class="stepper">
-            <button onclick="changeCount('incline-fly', 'sets', -1)">−</button>
-            <span id="incline-fly-sets">3</span>
-            <button onclick="changeCount('incline-fly', 'sets', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Reps</span>
-          <div class="stepper">
-            <button onclick="changeCount('incline-fly', 'reps', -1)">−</button>
-            <span id="incline-fly-reps">12</span>
-            <button onclick="changeCount('incline-fly', 'reps', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Weight (lbs)</span>
-          <input
-            id="incline-fly-weight"
-            class="weight-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Bodyweight Dips -->
-    <section class="exercise-card" id="ex-dips">
+    <!-- Exercise 3 -->
+    <div class="exercise-card" id="exercise-dips">
       <div class="exercise-header">
-        <div class="exercise-title">Bodyweight Dips</div>
-        <div class="reorder-buttons">
-          <button class="icon-button" onclick="moveCard('ex-dips', 'up')">↑</button>
-          <button class="icon-button" onclick="moveCard('ex-dips', 'down')">↓</button>
-        </div>
+        <div class="exercise-name">Bodyweight Dips</div>
       </div>
+      <div class="sets-container" id="sets-dips"></div>
+      <button class="add-set-btn" type="button" onclick="addSet('sets-dips')">
+        <span>＋</span> Add set
+      </button>
+    </div>
 
-      <div class="exercise-body">
-        <div class="field-row">
-          <span class="field-label">Sets</span>
-          <div class="stepper">
-            <button onclick="changeCount('dips', 'sets', -1)">−</button>
-            <span id="dips-sets">3</span>
-            <button onclick="changeCount('dips', 'sets', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Reps</span>
-          <div class="stepper">
-            <button onclick="changeCount('dips', 'reps', -1)">−</button>
-            <span id="dips-reps">8</span>
-            <button onclick="changeCount('dips', 'reps', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Extra weight (lbs)</span>
-          <input
-            id="dips-weight"
-            class="weight-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Tricep Cable Pushdown -->
-    <section class="exercise-card" id="ex-cable-pushdown">
+    <!-- Exercise 4 -->
+    <div class="exercise-card" id="exercise-pulldown">
       <div class="exercise-header">
-        <div class="exercise-title">Tricep Cable Pushdown</div>
-        <div class="reorder-buttons">
-          <button class="icon-button" onclick="moveCard('ex-cable-pushdown', 'up')">↑</button>
-          <button class="icon-button" onclick="moveCard('ex-cable-pushdown', 'down')">↓</button>
-        </div>
+        <div class="exercise-name">Tricep Cable Pushdown</div>
       </div>
+      <div class="sets-container" id="sets-pulldown"></div>
+      <button class="add-set-btn" type="button" onclick="addSet('sets-pulldown')">
+        <span>＋</span> Add set
+      </button>
+    </div>
 
-      <div class="exercise-body">
-        <div class="field-row">
-          <span class="field-label">Sets</span>
-          <div class="stepper">
-            <button onclick="changeCount('cable-push', 'sets', -1)">−</button>
-            <span id="cable-push-sets">3</span>
-            <button onclick="changeCount('cable-push', 'sets', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Reps</span>
-          <div class="stepper">
-            <button onclick="changeCount('cable-push', 'reps', -1)">−</button>
-            <span id="cable-push-reps">12</span>
-            <button onclick="changeCount('cable-push', 'reps', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Weight (lbs)</span>
-          <input
-            id="cable-push-weight"
-            class="weight-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Overhead Tricep Extension -->
-    <section class="exercise-card" id="ex-overhead-tri">
+    <!-- Exercise 5 -->
+    <div class="exercise-card" id="exercise-overhead">
       <div class="exercise-header">
-        <div class="exercise-title">Overhead Tricep Extension</div>
-        <div class="reorder-buttons">
-          <button class="icon-button" onclick="moveCard('ex-overhead-tri', 'up')">↑</button>
-          <button class="icon-button" onclick="moveCard('ex-overhead-tri', 'down')">↓</button>
-        </div>
+        <div class="exercise-name">Overhead Tricep Extension</div>
       </div>
+      <div class="sets-container" id="sets-overhead"></div>
+      <button class="add-set-btn" type="button" onclick="addSet('sets-overhead')">
+        <span>＋</span> Add set
+      </button>
+    </div>
 
-      <div class="exercise-body">
-        <div class="field-row">
-          <span class="field-label">Sets</span>
-          <div class="stepper">
-            <button onclick="changeCount('overhead-tri', 'sets', -1)">−</button>
-            <span id="overhead-tri-sets">3</span>
-            <button onclick="changeCount('overhead-tri', 'sets', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Reps</span>
-          <div class="stepper">
-            <button onclick="changeCount('overhead-tri', 'reps', -1)">−</button>
-            <span id="overhead-tri-reps">10</span>
-            <button onclick="changeCount('overhead-tri', 'reps', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <span class="field-label">Weight (lbs)</span>
-          <input
-            id="overhead-tri-weight"
-            class="weight-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <p class="footer-note">
-    Tip: Reorder your session at the top of your workout, then tweak sets, reps, and weights as you go.
-  </p>
+    <p class="footer-note">
+      Re-order exercises by moving these cards in the HTML file.
+    </p>
+  </div>
 
   <script>
-    function changeCount(exerciseKey, field, delta) {
-      const id = exerciseKey + '-' + field;
-      const el = document.getElementById(id);
-      if (!el) return;
+    // Track how many sets each exercise has
+    const setCounters = {};
 
-      let current = parseInt(el.textContent || '0', 10);
-      if (isNaN(current)) current = 0;
-
-      current += delta;
-      if (current < 0) current = 0;
-
-      el.textContent = current;
-    }
-
-    function moveCard(cardId, direction) {
-      const card = document.getElementById(cardId);
-      if (!card) return;
-
-      const container = document.getElementById('exercise-list');
-      if (!container) return;
-
-      if (direction === 'up') {
-        const prev = card.previousElementSibling;
-        if (prev) container.insertBefore(card, prev);
-      } else if (direction === 'down') {
-        const next = card.nextElementSibling;
-        if (next) container.insertBefore(next, card);
+    function addSet(containerId) {
+      if (!setCounters[containerId]) {
+        setCounters[containerId] = 0;
       }
+      setCounters[containerId] += 1;
+      const setNumber = setCounters[containerId];
+
+      const container = document.getElementById(containerId);
+      const row = document.createElement("div");
+      row.className = "set-row";
+
+      row.innerHTML = `
+        <div class="set-label">Set ${setNumber}</div>
+        <div class="set-field">
+          <label>Reps</label>
+          <input type="number" min="0" inputmode="numeric" placeholder="0">
+        </div>
+        <div class="set-field">
+          <label>Weight</label>
+          <input type="number" min="0" inputmode="numeric" placeholder="lbs">
+        </div>
+        <button class="remove-set" type="button" title="Remove this set">&minus;</button>
+      `;
+
+      row.querySelector(".remove-set").addEventListener("click", () => {
+        container.removeChild(row);
+      });
+
+      container.appendChild(row);
     }
+
+    // Start each exercise with one empty set
+    window.addEventListener("DOMContentLoaded", () => {
+      ["sets-bench", "sets-fly", "sets-dips", "sets-pulldown", "sets-overhead"]
+        .forEach(id => addSet(id));
+    });
   </script>
 </body>
 </html>
+
 
