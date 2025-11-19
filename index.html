@@ -312,7 +312,7 @@
       <div id="savedWorkoutsList"></div>
     </div>
 
-    <div class="link-back" id="backToLogger">
+    <div class="link-back" id="backToLoggerLink">
       <span>←</span> Back to workout logger
     </div>
   </section>
@@ -324,6 +324,12 @@
   const menuDropdown = document.getElementById("menuDropdown");
   const homeScreen = document.getElementById("homeScreen");
   const workoutsScreen = document.getElementById("workoutsScreen");
+  
+  backToLoggerLink.addEventListener("click", () => {
+  workoutsScreen.classList.remove("active");
+  homeScreen.classList.add("active");
+  menuDropdown.classList.remove("show");
+});
 
   function setScreen(screen) {
     if (screen === "home") {
