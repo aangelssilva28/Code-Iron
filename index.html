@@ -1,284 +1,400 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Code and Iron</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Code and Iron</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-body {
-  background-color: #0d0d0d;
-  color: white;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    :root {
+      --bg: #050505;
+      --card: #151515;
+      --set-card: #1f1f1f;
+      --accent-blue: #007aff;
+      --accent-red: #d93030;
+      --text-main: #ffffff;
+      --text-muted: #aaaaaa;
+      --input-bg: #000000;
+      --input-border: #333333;
+      --yellow: #ffb74d;
+    }
 
-/* Header Row ----------------------------------------------------- */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 20px 5px 20px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-h1 {
-  font-size: 34px;
-  font-weight: 800;
-  margin: 0;
-}
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+    }
 
-/* Menu Button ---------------------------------------------------- */
-.menu-btn {
-  width: 34px;
-  height: 34px;
-  background-color: #1c1c1e;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 700;
-  color: white;
-  border: 1px solid #333;
-  cursor: pointer;
-}
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
 
-/* Dropdown Menu -------------------------------------------------- */
-.dropdown {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  width: 160px;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 10px;
-  display: none;
-  flex-direction: column;
-  padding: 8px 0;
-  z-index: 20;
-}
+    .title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
 
-.dropdown button {
-  background: none;
-  border: none;
-  color: white;
-  padding: 12px;
-  text-align: left;
-  font-size: 16px;
-  width: 100%;
-}
+    .menu-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: #171717;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
 
-.dropdown button:hover {
-  background-color: #333;
-}
+    .menu-icon {
+      width: 18px;
+      height: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-/* Workout card --------------------------------------------------- */
-.workout {
-  background-color: #141414;
-  margin: 16px;
-  padding: 18px;
-  border-radius: 14px;
-  box-shadow: 0 0 4px rgba(255,255,255,0.04);
-}
+    .menu-icon span {
+      height: 2px;
+      border-radius: 999px;
+      background-color: #fff;
+    }
 
-.workout-name {
-  width: 100%;
-  padding: 12px;
-  background-color: #000;
-  border: 1px solid #333;
-  border-radius: 10px;
-  color: white;
-  font-size: 17px;
-}
+    /* DROPDOWN */
+    .menu-dropdown {
+      position: absolute;
+      right: 16px;
+      top: 58px;
+      background-color: #111;
+      border-radius: 10px;
+      border: 1px solid #333;
+      overflow: hidden;
+      display: none;
+      min-width: 150px;
+      z-index: 20;
+    }
 
-.remove-workout-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #d93030;
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 16px;
-  margin-top: 10px;
-}
+    .menu-dropdown.open {
+      display: block;
+    }
 
-/* Set box -------------------------------------------------------- */
-.set-box {
-  background-color: #1a1a1a;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 14px;
-  border: 1px solid #2a2a2a;
-}
+    .menu-item {
+      padding: 10px 14px;
+      font-size: 14px;
+      border-bottom: 1px solid #222;
+      cursor: pointer;
+    }
 
-.set-label {
-  color: #ffb74d;
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
+    .menu-item:last-child {
+      border-bottom: none;
+    }
 
-.input-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+    .menu-item:hover {
+      background-color: #222;
+    }
 
-.input-box {
-  width: 48%;
-}
+    /* LAYOUT */
+    .app {
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-.input-box label {
-  font-size: 14px;
-  color: #bbb;
-}
+    .exercise-card {
+      background-color: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    }
 
-.input-box input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #000;
-  border: 1px solid #333;
-  color: white;
-  font-size: 16px;
-}
+    /* Workout name input */
+    .workout-name-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
 
-.remove-set-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #a02a2a;
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 15px;
-  margin-top: 6px;
-}
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      color: #fff;
+      margin-top: 8px;
+      cursor: pointer;
+    }
 
-.add-set-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #007aff;
-  border-radius: 30px;
-  border: none;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 14px;
-}
+    .btn-blue {
+      background-color: var(--accent-blue);
+    }
 
-.add-workout-btn {
-  width: calc(100% - 32px);
-  margin: 20px 16px;
-  padding: 16px;
-  background-color: #0a84ff;
-  border: none;
-  border-radius: 30px;
-  font-size: 18px;
-  color: white;
-  font-weight: 600;
-}
-</style>
+    .btn-red {
+      background-color: var(--accent-red);
+    }
+
+    .btn-red:disabled,
+    .btn-blue:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    /* Sets */
+    .set-box {
+      background-color: var(--set-card);
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #222;
+    }
+
+    .set-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .input-box {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .input-box label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      font-size: 15px;
+    }
+
+    /* Add workout bottom button */
+    .bottom-add-workout {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 24px;
+      }
+      .title {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <h1>Code and Iron</h1>
-  <div class="menu-btn" onclick="toggleMenu()">≡</div>
-</div>
-
-<!-- DROPDOWN MENU -->
-<div id="dropdownMenu" class="dropdown">
-  <button>Option 1</button>
-  <button>Option 2</button>
-  <button>Option 3</button>
-  <button>Option 4</button>
-</div>
-
-<div id="workouts"></div>
-
-<button class="add-workout-btn" onclick="addWorkout()">Add workout</button>
-
-<script>
-let workoutCount = 0;
-
-function toggleMenu() {
-  const menu = document.getElementById("dropdownMenu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-}
-
-/* Add workout ---------------------------------------------------- */
-function addWorkout() {
-  workoutCount++;
-
-  const workoutDiv = document.createElement("div");
-  workoutDiv.className = "workout";
-
-  workoutDiv.innerHTML = `
-    <input class="workout-name" placeholder="Enter workout name">
-
-    <button class="remove-workout-btn" onclick="this.parentElement.remove()">Remove workout</button>
-
-    <div class="set-box">
-      <div class="set-label">Set 1</div>
-
-      <div class="input-row">
-        <div class="input-box">
-          <label>Weight</label>
-          <input placeholder="lbs">
+  <div class="app">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="title">Code and Iron</div>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">
+        <div class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-
-        <div class="input-box">
-          <label>Reps</label>
-          <input type="number" value="0">
-        </div>
-      </div>
-
-      <button class="remove-set-btn" onclick="removeSet(this)">Remove set</button>
+      </button>
     </div>
 
-    <button class="add-set-btn" onclick="addSet(this)">Add set</button>
-  `;
-
-  document.getElementById("workouts").appendChild(workoutDiv);
-}
-
-/* Add set -------------------------------------------------------- */
-function addSet(button) {
-  const setBox = document.createElement("div");
-  setBox.className = "set-box";
-
-  const workout = button.parentElement;
-  const existingSets = workout.querySelectorAll(".set-box").length;
-  const newSetNumber = existingSets + 1;
-
-  setBox.innerHTML = `
-    <div class="set-label">Set ${newSetNumber}</div>
-
-    <div class="input-row">
-      <div class="input-box">
-        <label>Weight</label>
-        <input placeholder="lbs">
-      </div>
-
-      <div class="input-box">
-        <label>Reps</label>
-        <input type="number" value="0">
-      </div>
+    <!-- DROPDOWN MENU -->
+    <div class="menu-dropdown" id="menuDropdown">
+      <div class="menu-item">Option 1</div>
+      <div class="menu-item">Option 2</div>
+      <div class="menu-item">Option 3</div>
+      <div class="menu-item">Option 4</div>
     </div>
 
-    <button class="remove-set-btn" onclick="removeSet(this)">Remove set</button>
-  `;
+    <!-- WORKOUTS CONTAINER -->
+    <div id="workoutsContainer"></div>
 
-  workout.insertBefore(setBox, button);
-}
+    <!-- ADD WORKOUT BUTTON -->
+    <div class="bottom-add-workout">
+      <button class="btn btn-blue" id="addWorkoutBtn">Add workout</button>
+    </div>
+  </div>
 
-/* Remove set ----------------------------------------------------- */
-function removeSet(btn) {
-  btn.parentElement.remove();
-}
-</script>
+  <script>
+    const workoutsContainer = document.getElementById('workoutsContainer');
+    const addWorkoutBtn = document.getElementById('addWorkoutBtn');
 
+    // MENU TOGGLE
+    const menuBtn = document.getElementById('menuBtn');
+    const menuDropdown = document.getElementById('menuDropdown');
+
+    menuBtn.addEventListener('click', () => {
+      menuDropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuDropdown.classList.remove('open');
+      }
+    });
+
+    // CREATE WORKOUT CARD
+    function createWorkoutCard() {
+      const card = document.createElement('div');
+      card.className = 'exercise-card';
+
+      const nameInput = document.createElement('input');
+      nameInput.className = 'workout-name-input';
+      nameInput.placeholder = 'Enter workout name';
+
+      const removeWorkoutBtn = document.createElement('button');
+      removeWorkoutBtn.className = 'btn btn-red';
+      removeWorkoutBtn.textContent = 'Remove workout';
+
+      const setsContainer = document.createElement('div');
+
+      removeWorkoutBtn.addEventListener('click', () => {
+        workoutsContainer.removeChild(card);
+        toggleLastWorkoutRemoveState();
+      });
+
+      const setBox = createSetBox(1, setsContainer);
+
+      const addSetBtn = document.createElement('button');
+      addSetBtn.className = 'btn btn-blue';
+      addSetBtn.textContent = 'Add set';
+
+      addSetBtn.addEventListener('click', () => {
+        const count = setsContainer.children.length + 1;
+        createSetBox(count, setsContainer);
+      });
+
+      card.appendChild(nameInput);
+      card.appendChild(removeWorkoutBtn);
+      card.appendChild(setsContainer);
+      card.appendChild(addSetBtn);
+
+      workoutsContainer.appendChild(card);
+      toggleLastWorkoutRemoveState();
+    }
+
+    // CREATE SET BOX
+    function createSetBox(setNumber, container) {
+      const box = document.createElement('div');
+      box.className = 'set-box';
+
+      const label = document.createElement('div');
+      label.className = 'set-label';
+      label.textContent = 'Set ' + setNumber;
+
+      const inputRow = document.createElement('div');
+      inputRow.className = 'input-row';
+
+      const weightBox = document.createElement('div');
+      weightBox.className = 'input-box';
+
+      const weightLabel = document.createElement('label');
+      weightLabel.textContent = 'Weight';
+
+      const weightInput = document.createElement('input');
+      weightInput.type = 'text';
+      weightInput.placeholder = 'lbs';
+
+      weightBox.appendChild(weightLabel);
+      weightBox.appendChild(weightInput);
+
+      const repsBox = document.createElement('div');
+      repsBox.className = 'input-box';
+
+      const repsLabel = document.createElement('label');
+      repsLabel.textContent = 'Reps';
+
+      const repsInput = document.createElement('input');
+      repsInput.type = 'number';
+      repsInput.min = '0';
+      repsInput.value = '0';
+
+      repsBox.appendChild(repsLabel);
+      repsBox.appendChild(repsInput);
+
+      inputRow.appendChild(weightBox);
+      inputRow.appendChild(repsBox);
+
+      const removeSetBtn = document.createElement('button');
+      removeSetBtn.className = 'btn btn-red';
+      removeSetBtn.textContent = 'Remove set';
+
+      removeSetBtn.addEventListener('click', () => {
+        container.removeChild(box);
+        updateSetLabels(container);
+      });
+
+      box.appendChild(label);
+      box.appendChild(inputRow);
+      box.appendChild(removeSetBtn);
+
+      container.appendChild(box);
+      updateSetLabels(container);
+
+      return box;
+    }
+
+    function updateSetLabels(container) {
+      const boxes = container.querySelectorAll('.set-box .set-label');
+      boxes.forEach((label, index) => {
+        label.textContent = 'Set ' + (index + 1);
+      });
+    }
+
+    function toggleLastWorkoutRemoveState() {
+      const cards = workoutsContainer.querySelectorAll('.exercise-card');
+      cards.forEach((card, index) => {
+        const btn = card.querySelector('.btn-red');
+        if (!btn) return;
+        if (cards.length === 1) {
+          btn.disabled = true;
+        } else {
+          btn.disabled = false;
+        }
+      });
+    }
+
+    // Start with one blank workout
+    createWorkoutCard();
+
+    // Add workout handler
+    addWorkoutBtn.addEventListener('click', () => {
+      createWorkoutCard();
+    });
+  </script>
 </body>
 </html>
