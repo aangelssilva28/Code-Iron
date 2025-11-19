@@ -1,47 +1,462 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Day 1 – Hardbody</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-    background-color: #111;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-}
-.card {
-    background: #222;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-button {
-    width: 100%;
-    padding: 15px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Day 1 – Hardbody</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #111111;
+      --card-bg: #222222;
+      --accent: #ff4d4d;
+      --accent-soft: #3b82f6;
+      --text-main: #ffffff;
+      --text-muted: #bbbbbb;
+      --done: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, sans-serif;
+      padding: 20px 16px 40px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    .label-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.16);
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .subtle {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .step-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.16);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .exercise-list {
+      font-size: 13px;
+      margin-bottom: 10px;
+      padding-left: 16px;
+      color: var(--text-main);
+    }
+
+    .exercise-list li + li {
+      margin-top: 4px;
+    }
+
+    .complete-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .status-pill {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.16);
+      color: var(--text-muted);
+    }
+
+    .status-pill.done {
+      background: rgba(34, 197, 94, 0.18);
+      color: var(--done);
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      background: var(--accent-soft);
+      color: white;
+    }
+
+    button.done {
+      background: var(--done);
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .progress-card {
+      margin-top: 10px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.4);
+    }
+
+    .dot.done {
+      background: var(--done);
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .footer-text span {
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .reset-wrapper {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .reset-wrapper button {
+      padding-inline: 20px;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        padding-top: 32px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="label-pill">
+      <span>Day 1 • Hardbody</span>
+    </div>
+    <h1>Strength + Push I + Pull I</h1>
+    <p class="subtitle">
+      Tap “Done” on each block as you finish it. Your progress is saved on this
+      device so you can leave and come back.
+    </p>
+  </header>
 
-<h1>Day 1 – Hardbody</h1>
-<p>Focus: Strength + Push I + Pull I</p>
+  <!-- WARM-UP -->
+  <section class="card step-card" data-step="warmup">
+    <div class="step-header">
+      <div>
+        <div class="step-title">Warm-up & Mobility</div>
+        <p class="step-desc">
+          5–10 minutes to get your joints warm and your head in the game.
+        </p>
+      </div>
+      <span class="step-badge">Block 1 / 5</span>
+    </div>
 
-<div class="card">
-    <h2>Day 1 Complete</h2>
-    <p>You’ve finished every block for Day 1.</p>
-</div>
+    <ul class="exercise-list">
+      <li>Light treadmill walk or bike – 5 min</li>
+      <li>Band shoulder dislocates – 2×15</li>
+      <li>World’s greatest stretch – 2× each side</li>
+    </ul>
 
-<div class="card">
-    <h3>Day 1 Progress</h3>
-    <p>Day 1 complete. Nice work.</p>
-    <button>Reset Day 1</button>
-</div>
+    <div class="complete-row">
+      <span class="status-pill">Not done</span>
+      <button class="complete-btn">Mark Done</button>
+    </div>
+  </section>
 
+  <!-- MAIN LIFT -->
+  <section class="card step-card" data-step="main">
+    <div class="step-header">
+      <div>
+        <div class="step-title">Main Lift – Bench</div>
+        <p class="step-desc">
+          Heavy compound work. Focus on tight setup, controlled reps, and
+          consistent bar path.
+        </p>
+      </div>
+      <span class="step-badge">Block 2 / 5</span>
+    </div>
+
+    <ul class="exercise-list">
+      <li>Barbell Bench Press – 4×5 @ RPE 7–8</li>
+      <li>Rest 2–3 min between sets</li>
+    </ul>
+
+    <div class="complete-row">
+      <span class="status-pill">Not done</span>
+      <button class="complete-btn">Mark Done</button>
+    </div>
+  </section>
+
+  <!-- PUSH ACCESSORIES -->
+  <section class="card step-card" data-step="push">
+    <div class="step-header">
+      <div>
+        <div class="step-title">Push Accessories</div>
+        <p class="step-desc">
+          Hypertrophy work to build your chest, shoulders, and triceps.
+        </p>
+      </div>
+      <span class="step-badge">Block 3 / 5</span>
+    </div>
+
+    <ul class="exercise-list">
+      <li>Incline DB Press – 3×8–10</li>
+      <li>Cable Lateral Raise – 3×12–15</li>
+      <li>Rope Triceps Pushdown – 3×10–12</li>
+    </ul>
+
+    <div class="complete-row">
+      <span class="status-pill">Not done</span>
+      <button class="complete-btn">Mark Done</button>
+    </div>
+  </section>
+
+  <!-- PULL ACCESSORIES -->
+  <section class="card step-card" data-step="pull">
+    <div class="step-header">
+      <div>
+        <div class="step-title">Pull Accessories</div>
+        <p class="step-desc">
+          Balance out all the pressing. Think lats, upper-back, and biceps.
+        </p>
+      </div>
+      <span class="step-badge">Block 4 / 5</span>
+    </div>
+
+    <ul class="exercise-list">
+      <li>Chest-supported Row – 3×8–10</li>
+      <li>Lat Pulldown or Pull-ups – 3×6–10</li>
+      <li>EZ-bar Curl – 3×10–12</li>
+    </ul>
+
+    <div class="complete-row">
+      <span class="status-pill">Not done</span>
+      <button class="complete-btn">Mark Done</button>
+    </div>
+  </section>
+
+  <!-- FINISHER -->
+  <section class="card step-card" data-step="finisher">
+    <div class="step-header">
+      <div>
+        <div class="step-title">Finisher / Conditioning</div>
+        <p class="step-desc">
+          Short burn to finish the day. Keep form tight and breathing under
+          control.
+        </p>
+      </div>
+      <span class="step-badge">Block 5 / 5</span>
+    </div>
+
+    <ul class="exercise-list">
+      <li>Battle ropes or bike sprints – 6–8 rounds, 20s on / 40s off</li>
+      <li>Then light walk + breathing to cool down – 3–5 min</li>
+    </ul>
+
+    <div class="complete-row">
+      <span class="status-pill">Not done</span>
+      <button class="complete-btn">Mark Done</button>
+    </div>
+  </section>
+
+  <!-- PROGRESS + RESET -->
+  <section class="card progress-card">
+    <div class="progress-header">
+      <span id="progress-label">Day 1 Progress</span>
+      <div class="dots" id="progress-dots">
+        <!-- JS will fill these in -->
+      </div>
+    </div>
+    <p class="step-desc" id="progress-text">
+      0 / 5 blocks complete. Let’s get after it.
+    </p>
+
+    <div class="reset-wrapper">
+      <button class="secondary" id="reset-btn">Reset Day 1</button>
+    </div>
+  </section>
+
+  <p class="footer-text">
+    This only saves on <span>this device</span>. If you clear your browser data,
+    your checkmarks will reset.
+  </p>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "hardbody-day1-progress";
+      const stepCards = Array.from(document.querySelectorAll(".step-card"));
+      const progressText = document.getElementById("progress-text");
+      const progressDots = document.getElementById("progress-dots");
+      const resetBtn = document.getElementById("reset-btn");
+
+      // Build dots based on how many blocks we have
+      stepCards.forEach(() => {
+        const d = document.createElement("div");
+        d.className = "dot";
+        progressDots.appendChild(d);
+      });
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveState(state) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      function updateUI() {
+        const state = loadState();
+        let completed = 0;
+
+        stepCards.forEach((card, index) => {
+          const id = card.dataset.step;
+          const done = !!state[id];
+          const btn = card.querySelector(".complete-btn");
+          const pill = card.querySelector(".status-pill");
+          const dot = progressDots.children[index];
+
+          if (done) {
+            completed += 1;
+            btn.textContent = "Done";
+            btn.classList.add("done");
+            pill.textContent = "Done";
+            pill.classList.add("done");
+            dot.classList.add("done");
+          } else {
+            btn.textContent = "Mark Done";
+            btn.classList.remove("done");
+            pill.textContent = "Not done";
+            pill.classList.remove("done");
+            dot.classList.remove("done");
+          }
+        });
+
+        const total = stepCards.length;
+        if (completed === 0) {
+          progressText.textContent = `${completed} / ${total} blocks complete. Let’s get after it.`;
+        } else if (completed < total) {
+          progressText.textContent = `${completed} / ${total} blocks complete. Keep going.`;
+        } else {
+          progressText.textContent = `All ${total} blocks complete. Day 1 in the books.`;
+        }
+      }
+
+      // Attach listeners
+      stepCards.forEach((card) => {
+        const id = card.dataset.step;
+        const btn = card.querySelector(".complete-btn");
+
+        btn.addEventListener("click", () => {
+          const state = loadState();
+          state[id] = !state[id]; // toggle
+          saveState(state);
+          updateUI();
+        });
+      });
+
+      resetBtn.addEventListener("click", () => {
+        if (confirm("Reset all Day 1 blocks on this device?")) {
+          saveState({});
+          updateUI();
+        }
+      });
+
+      // Initial paint
+      updateUI();
+    })();
+  </script>
 </body>
 </html>
