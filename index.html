@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <title>Code and Iron</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
     :root {
-      --bg: #000000;
-      --card: #101010;
-      --inner-card: #181818;
+      --bg-main: #000000;
+      --bg-card: #141414;
+      --bg-inner: #1a1a1a;
       --accent-blue: #007aff;
       --accent-red: #d93030;
-      --accent-red-dark: #b12424;
+      --accent-text: #ffb74d;
       --text-main: #ffffff;
-      --text-subtle: #bbbbbb;
-      --text-gold: #ffb74d;
-      --border-soft: #222222;
-      --menu-bg: #161616;
-      --menu-item-border: #242424;
+      --text-muted: #cccccc;
+      --input-bg: #000000;
+      --input-border: #333333;
+      --menu-bg: #181818;
+      --menu-border: #333333;
     }
 
     * {
@@ -27,16 +28,15 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
+      background-color: var(--bg-main);
       color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    .app {
+    /* Page wrapper */
+    .page {
       min-height: 100vh;
-      padding: 20px 16px 32px;
-      max-width: 520px;
-      margin: 0 auto;
+      padding: 16px 16px 32px 16px;
     }
 
     /* Header */
@@ -44,67 +44,60 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
-    h1 {
-      font-size: 34px;
+    .title {
+      font-size: 32px;
       font-weight: 800;
-      margin: 0;
     }
 
-    /* Menu button */
     .menu-button {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background-color: #111;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       border: 1px solid #333;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      background-color: #111;
     }
 
-    .menu-lines {
+    .menu-icon-line {
       width: 18px;
-      height: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .menu-lines span {
-      display: block;
       height: 2px;
-      border-radius: 999px;
       background-color: #fff;
+      margin: 2px 0;
+      border-radius: 2px;
     }
 
-    /* Dropdown menu */
-    .menu-dropdown {
+    /* Menu dropdown */
+    .menu-container {
+      position: relative;
+    }
+
+    .menu-panel {
       position: absolute;
-      top: 62px;
-      right: 16px;
-      width: 260px;
+      right: 0;
+      top: 50px;
       background-color: var(--menu-bg);
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+      border-radius: 12px;
+      border: 1px solid var(--menu-border);
+      width: 260px;
       overflow: hidden;
-      border: 1px solid #333;
-      z-index: 20;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
       display: none;
+      z-index: 20;
     }
 
-    .menu-dropdown.open {
+    .menu-panel.open {
       display: block;
     }
 
     .menu-item {
-      padding: 14px 18px;
+      padding: 16px;
+      border-bottom: 1px solid #222;
       font-size: 16px;
-      border-bottom: 1px solid var(--menu-item-border);
-      cursor: pointer;
     }
 
     .menu-item:last-child {
@@ -115,558 +108,522 @@
       background-color: #222;
     }
 
-    /* Shared card styles */
+    /* Tabs: Home vs Saved Workouts */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 999px;
+      border: 1px solid #333;
+      background-color: #050505;
+      color: #aaa;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tab-button.active {
+      background-color: var(--accent-blue);
+      color: #fff;
+      border-color: var(--accent-blue);
+    }
+
+    /* Card container (same style for both pages) */
     .card {
-      background-color: var(--card);
-      border-radius: 18px;
-      padding: 18px 14px 20px;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
-      border: 1px solid var(--border-soft);
-      margin-bottom: 18px;
+      background-color: var(--bg-card);
+      border-radius: 24px;
+      padding: 18px 16px 20px 16px;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.04);
+      margin-bottom: 16px;
     }
 
-    .inner-card {
-      background-color: var(--inner-card);
-      border-radius: 16px;
-      padding: 14px 12px 16px;
-      border: 1px solid #222;
-      margin-top: 10px;
-    }
-
-    .label {
-      font-size: 15px;
+    .card-title {
+      font-size: 24px;
       font-weight: 700;
-      color: var(--text-gold);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* Workout name input (same style as before) */
+    .workout-name-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .remove-workout-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 14px 0;
+      border-radius: 999px;
+      border: none;
+      background-color: var(--accent-red);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* Inner set box */
+    .set-box {
+      background-color: var(--bg-inner);
+      border-radius: 18px;
+      padding: 14px 12px 16px 12px;
+      margin-top: 16px;
+    }
+
+    .set-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-text);
+      margin-bottom: 10px;
     }
 
     .row {
       display: flex;
+      justify-content: space-between;
       gap: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .col {
+    .input-box {
       flex: 1;
     }
 
-    .field-label {
-      font-size: 13px;
-      color: var(--text-subtle);
+    .input-label {
+      font-size: 14px;
+      color: var(--text-muted);
       margin-bottom: 4px;
     }
 
-    input[type="text"],
-    input[type="number"] {
+    .input-field {
       width: 100%;
-      padding: 9px 10px;
+      padding: 8px 10px;
       border-radius: 10px;
-      border: 1px solid #333;
-      background-color: #000;
-      color: var(--text-main);
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: #fff;
       font-size: 16px;
     }
 
-    input[type="number"] {
-      -moz-appearance: textfield;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Buttons */
-    .btn {
-      display: block;
+    .remove-set-btn {
       width: 100%;
-      border: none;
-      border-radius: 30px;
-      padding: 12px;
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
       margin-top: 10px;
-    }
-
-    .btn-blue {
-      background-color: var(--accent-blue);
-      color: var(--text-main);
-    }
-
-    .btn-blue:active {
-      background-color: #0060c8;
-    }
-
-    .btn-red {
-      background-color: var(--accent-red);
-      color: var(--text-main);
-    }
-
-    .btn-red:active {
-      background-color: var(--accent-red-dark);
-    }
-
-    .btn-red-soft {
-      background-color: #5a1a1a;
-      color: #f5c8c8;
-    }
-
-    .btn-red-soft:active {
-      background-color: #7b2525;
-    }
-
-    .btn-ghost {
-      background-color: transparent;
-      color: var(--text-subtle);
-    }
-
-    .btn-small {
-      padding: 10px;
-      font-size: 15px;
-      border-radius: 24px;
-    }
-
-    /* ---------- HOME PAGE (LOGGER) ---------- */
-    .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-    }
-
-    .workout-title-input {
-      margin-bottom: 8px;
-    }
-
-    .section-spacer {
-      height: 16px;
-    }
-
-    /* ---------- WORKOUTS PAGE ---------- */
-    .page-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin: 4px 0 8px;
-    }
-
-    .page-subtitle {
-      font-size: 14px;
-      color: var(--text-subtle);
-      margin-bottom: 12px;
-    }
-
-    .saved-workouts-list {
-      margin-top: 10px;
-      max-height: 260px;
-      overflow-y: auto;
-    }
-
-    .saved-workout-item {
-      background-color: #111111;
-      border-radius: 12px;
-      padding: 10px 12px;
-      border: 1px solid #262626;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .saved-workout-name {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .saved-workout-actions {
-      display: flex;
-      gap: 6px;
-    }
-
-    .pill-btn {
-      padding: 6px 10px;
+      padding: 12px 0;
       border-radius: 999px;
       border: none;
-      font-size: 13px;
-      cursor: pointer;
+      background-color: #8b1f1f;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
     }
 
-    .pill-load {
+    .add-set-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px 0;
+      border-radius: 999px;
+      border: none;
       background-color: var(--accent-blue);
       color: #fff;
+      font-size: 18px;
+      font-weight: 600;
     }
 
-    .pill-delete {
-      background-color: #3a1515;
-      color: #ffb4b4;
+    .primary-bottom-btn {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px 0;
+      border-radius: 999px;
+      border: none;
+      background-color: var(--accent-blue);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
     }
 
-    /* Dialog */
-    .dialog-backdrop {
+    .page-hidden {
+      display: none;
+    }
+
+    /* Simple dialog for "Workouts page coming soon" (keep for now as generic modal if needed) */
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      display: none;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
       align-items: center;
       justify-content: center;
       z-index: 30;
     }
 
-    .dialog-backdrop.open {
+    .modal {
+      background-color: #181818;
+      border-radius: 16px;
+      padding: 18px 18px 12px 18px;
+      width: 90%;
+      max-width: 380px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+
+    .modal-text {
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .modal-footer {
       display: flex;
+      justify-content: flex-end;
     }
 
-    .dialog {
-      background-color: #111;
-      border-radius: 18px;
-      padding: 18px 16px 14px;
-      max-width: 320px;
-      width: 82%;
-      border: 1px solid #333;
-      text-align: center;
+    .modal-close-btn {
+      border: none;
+      background: none;
+      color: #4da3ff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 6px 0 2px 0;
     }
 
-    .dialog-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .dialog-text {
-      font-size: 15px;
-      color: var(--text-subtle);
-      margin-bottom: 14px;
+    @media (min-width: 768px) {
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
+  <div class="page">
     <!-- HEADER -->
     <div class="header">
-      <h1>Code and Iron</h1>
-      <div class="menu-button" id="menuButton">
-        <div class="menu-lines">
-          <span></span>
-          <span></span>
-          <span></span>
+      <div class="title">Code and Iron</div>
+
+      <div class="menu-container">
+        <button class="menu-button" id="menuBtn" aria-label="Menu">
+          <div>
+            <div class="menu-icon-line"></div>
+            <div class="menu-icon-line"></div>
+            <div class="menu-icon-line"></div>
+          </div>
+        </button>
+
+        <div class="menu-panel" id="menuPanel">
+          <div class="menu-item" data-menu="workouts">Workouts</div>
+          <div class="menu-item">Option 2</div>
+          <div class="menu-item">Option 3</div>
+          <div class="menu-item">Option 4</div>
         </div>
       </div>
     </div>
 
-    <!-- MENU DROPDOWN -->
-    <div class="menu-dropdown" id="menuDropdown">
-      <div class="menu-item" data-nav="workouts">Workouts</div>
-      <div class="menu-item">Option 2</div>
-      <div class="menu-item">Option 3</div>
-      <div class="menu-item">Option 4</div>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-button active" id="tabHome">Today</button>
+      <button class="tab-button" id="tabSaved">Saved workouts</button>
     </div>
 
-    <!-- ============ PAGE: HOME (LOGGER) ============ -->
-    <div class="page active" id="pageHome">
+    <!-- HOME PAGE (Today’s workout logger) -->
+    <div id="homePage">
       <div class="card">
-        <div class="workout-title-input">
-          <input type="text" id="workoutName" placeholder="Enter workout name" />
-        </div>
-        <button class="btn btn-red" id="removeWorkoutBtn">Remove workout</button>
+        <div class="card-title">Today&apos;s workout</div>
 
-        <div class="inner-card" id="setsContainer">
-          <!-- Sets injected here -->
-        </div>
+        <input
+          id="todayWorkoutName"
+          class="workout-name-input"
+          placeholder="Enter workout name"
+        />
 
-        <button class="btn btn-blue" id="addSetBtn">Add set</button>
+        <button class="remove-workout-btn" id="homeRemoveWorkout">
+          Remove workout
+        </button>
+
+        <div id="homeSetsContainer"></div>
+
+        <button class="add-set-btn" id="homeAddSetBtn">Add set</button>
       </div>
 
-      <button class="btn btn-blue" id="addWorkoutBtn">Add workout</button>
+      <button class="primary-bottom-btn" id="homeAddWorkoutBtn">
+        Add workout
+      </button>
     </div>
 
-    <!-- ============ PAGE: WORKOUTS (SAVED TEMPLATES) ============ -->
-    <div class="page" id="pageWorkouts">
+    <!-- SAVED WORKOUTS PAGE -->
+    <div id="savedPage" class="page-hidden">
       <div class="card">
-        <div class="page-title">Workouts</div>
-        <div class="page-subtitle">
-          Create and save workout templates you can load later on the main page.
+        <div class="card-title">Saved workouts</div>
+        <div class="card-subtitle">
+          Build workout templates you can re-use later.
         </div>
 
-        <div class="inner-card">
-          <div class="field-label">New workout name</div>
-          <input
-            type="text"
-            id="templateNameInput"
-            placeholder="e.g. Push Day, Leg Day, Code & Iron Chest"
-          />
+        <input
+          id="savedWorkoutName"
+          class="workout-name-input"
+          placeholder="Template name (e.g. Push Day)"
+        />
 
-          <button class="btn btn-blue" id="saveTemplateBtn">Save workout</button>
-        </div>
+        <button class="remove-workout-btn" id="savedRemoveWorkout">
+          Reset template
+        </button>
 
-        <div class="section-spacer"></div>
+        <div id="savedSetsContainer"></div>
 
-        <div class="page-subtitle">Saved workouts</div>
-
-        <div id="savedWorkoutsContainer" class="saved-workouts-list">
-          <!-- Saved workout items injected here -->
-        </div>
+        <button class="add-set-btn" id="savedAddSetBtn">Add set</button>
       </div>
 
-      <button class="btn btn-ghost btn-small" id="backToHomeBtn">
-        ← Back to workout logger
+      <button class="primary-bottom-btn" id="savedAddWorkoutBtn">
+        Save workout template
       </button>
     </div>
   </div>
 
-  <!-- Simple dialog (we’ll re-use this later if needed) -->
-  <div class="dialog-backdrop" id="dialogBackdrop">
-    <div class="dialog">
-      <div class="dialog-title" id="dialogTitle">Workouts page</div>
-      <div class="dialog-text" id="dialogText">Message</div>
-      <button class="btn btn-blue btn-small" id="dialogCloseBtn">Close</button>
-    </div>
-  </div>
+  <!-- Modal placeholder (not used heavily yet, but kept for future) -->
+  <div id="modalRoot" style="display:none;"></div>
 
   <script>
-    // ---------- BASIC PAGE NAV ----------
-    const pageHome = document.getElementById("pageHome");
-    const pageWorkouts = document.getElementById("pageWorkouts");
-    const menuButton = document.getElementById("menuButton");
-    const menuDropdown = document.getElementById("menuDropdown");
-    const backToHomeBtn = document.getElementById("backToHomeBtn");
+    /****************
+     * Menu handling
+     ****************/
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
 
-    function showPage(pageId) {
-      pageHome.classList.remove("active");
-      pageWorkouts.classList.remove("active");
-
-      if (pageId === "home") {
-        pageHome.classList.add("active");
-      } else if (pageId === "workouts") {
-        pageWorkouts.classList.add("active");
-      }
-      menuDropdown.classList.remove("open");
-    }
-
-    menuButton.addEventListener("click", () => {
-      menuDropdown.classList.toggle("open");
+    menuBtn.addEventListener('click', () => {
+      menuPanel.classList.toggle('open');
     });
 
-    document.addEventListener("click", (e) => {
-      if (
-        !menuButton.contains(e.target) &&
-        !menuDropdown.contains(e.target)
-      ) {
-        menuDropdown.classList.remove("open");
+    document.addEventListener('click', (e) => {
+      if (!menuPanel.contains(e.target) && !menuBtn.contains(e.target)) {
+        menuPanel.classList.remove('open');
       }
     });
 
-    menuDropdown.addEventListener("click", (e) => {
-      const item = e.target.closest(".menu-item");
-      if (!item) return;
-
-      if (item.dataset.nav === "workouts") {
-        showPage("workouts");
-      }
-    });
-
-    backToHomeBtn.addEventListener("click", () => showPage("home"));
-
-    // ---------- LOGGER (HOME) LOGIC ----------
-    const setsContainer = document.getElementById("setsContainer");
-    const addSetBtn = document.getElementById("addSetBtn");
-    const removeWorkoutBtn = document.getElementById("removeWorkoutBtn");
-    const addWorkoutBtn = document.getElementById("addWorkoutBtn");
-    const workoutNameInput = document.getElementById("workoutName");
-
-    let setCounter = 0;
-
-    function createSetElement() {
-      setCounter += 1;
-      const setId = setCounter;
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "inner-card";
-      wrapper.dataset.setId = setId;
-
-      const label = document.createElement("div");
-      label.className = "label";
-      label.textContent = "Set " + setId;
-      wrapper.appendChild(label);
-
-      const row = document.createElement("div");
-      row.className = "row";
-
-      const colWeight = document.createElement("div");
-      colWeight.className = "col";
-      const weightLabel = document.createElement("div");
-      weightLabel.className = "field-label";
-      weightLabel.textContent = "Weight";
-      const weightInput = document.createElement("input");
-      weightInput.type = "text";
-      weightInput.placeholder = "lbs";
-      colWeight.appendChild(weightLabel);
-      colWeight.appendChild(weightInput);
-
-      const colReps = document.createElement("div");
-      colReps.className = "col";
-      const repsLabel = document.createElement("div");
-      repsLabel.className = "field-label";
-      repsLabel.textContent = "Reps";
-      const repsInput = document.createElement("input");
-      repsInput.type = "number";
-      repsInput.min = "0";
-      repsInput.value = "0";
-      colReps.appendChild(repsLabel);
-      colReps.appendChild(repsInput);
-
-      row.appendChild(colWeight);
-      row.appendChild(colReps);
-
-      wrapper.appendChild(row);
-
-      const removeSetBtn = document.createElement("button");
-      removeSetBtn.className = "btn btn-red-soft";
-      removeSetBtn.textContent = "Remove set";
-      removeSetBtn.addEventListener("click", () => {
-        setsContainer.removeChild(wrapper);
-        renumberSets();
+    // Menu item: Workouts -> switch to Saved workouts tab
+    menuPanel
+      .querySelector('[data-menu="workouts"]')
+      .addEventListener('click', () => {
+        switchTab('saved');
+        menuPanel.classList.remove('open');
       });
 
-      wrapper.appendChild(removeSetBtn);
+    /****************
+     * Tabs
+     ****************/
+    const tabHome = document.getElementById('tabHome');
+    const tabSaved = document.getElementById('tabSaved');
+    const homePage = document.getElementById('homePage');
+    const savedPage = document.getElementById('savedPage');
 
-      return wrapper;
+    function switchTab(tab) {
+      const isHome = tab === 'home';
+      tabHome.classList.toggle('active', isHome);
+      tabSaved.classList.toggle('active', !isHome);
+      homePage.classList.toggle('page-hidden', !isHome);
+      savedPage.classList.toggle('page-hidden', isHome);
     }
 
-    function renumberSets() {
-      const setCards = Array.from(
-        setsContainer.querySelectorAll(".inner-card")
-      );
-      setCards.forEach((card, index) => {
-        const label = card.querySelector(".label");
-        if (label) label.textContent = "Set " + (index + 1);
+    tabHome.addEventListener('click', () => switchTab('home'));
+    tabSaved.addEventListener('click', () => switchTab('saved'));
+
+    /****************
+     * Set helpers
+     ****************/
+    let homeSetCounter = 0;
+    let savedSetCounter = 0;
+
+    function createSetElement(context, index) {
+      // context: 'home' or 'saved'
+      const div = document.createElement('div');
+      div.className = 'set-box';
+
+      const label = document.createElement('div');
+      label.className = 'set-label';
+      label.textContent = `Set ${index}`;
+      div.appendChild(label);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const weightBox = document.createElement('div');
+      weightBox.className = 'input-box';
+      const weightLabel = document.createElement('div');
+      weightLabel.className = 'input-label';
+      weightLabel.textContent = 'Weight';
+      const weightInput = document.createElement('input');
+      weightInput.className = 'input-field';
+      weightInput.placeholder = 'lbs';
+      weightInput.inputMode = 'decimal';
+      weightBox.appendChild(weightLabel);
+      weightBox.appendChild(weightInput);
+
+      const repsBox = document.createElement('div');
+      repsBox.className = 'input-box';
+      const repsLabel = document.createElement('div');
+      repsLabel.className = 'input-label';
+      repsLabel.textContent = 'Reps';
+      const repsInput = document.createElement('input');
+      repsInput.className = 'input-field';
+      repsInput.placeholder = '0';
+      repsInput.inputMode = 'numeric';
+      repsBox.appendChild(repsLabel);
+      repsBox.appendChild(repsInput);
+
+      row.appendChild(weightBox);
+      row.appendChild(repsBox);
+      div.appendChild(row);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-set-btn';
+      removeBtn.textContent = 'Remove set';
+
+      removeBtn.addEventListener('click', () => {
+        div.remove();
+        renumberSets(context);
+      });
+
+      div.appendChild(removeBtn);
+      return div;
+    }
+
+    function renumberSets(context) {
+      const containerId =
+        context === 'home' ? 'homeSetsContainer' : 'savedSetsContainer';
+      const container = document.getElementById(containerId);
+      [...container.querySelectorAll('.set-box')].forEach((box, idx) => {
+        const label = box.querySelector('.set-label');
+        if (label) label.textContent = `Set ${idx + 1}`;
       });
     }
 
-    addSetBtn.addEventListener("click", () => {
-      const newSet = createSetElement();
-      setsContainer.appendChild(newSet);
-      renumberSets();
+    /****************
+     * HOME PAGE LOGIC
+     ****************/
+    const homeSetsContainer = document.getElementById('homeSetsContainer');
+    const homeAddSetBtn = document.getElementById('homeAddSetBtn');
+    const homeRemoveWorkoutBtn = document.getElementById('homeRemoveWorkout');
+    const homeAddWorkoutBtn = document.getElementById('homeAddWorkoutBtn');
+    const todayWorkoutNameInput = document.getElementById('todayWorkoutName');
+
+    homeAddSetBtn.addEventListener('click', () => {
+      homeSetCounter += 1;
+      const setEl = createSetElement('home', homeSetCounter);
+      homeSetsContainer.appendChild(setEl);
     });
 
-    removeWorkoutBtn.addEventListener("click", () => {
-      workoutNameInput.value = "";
-      setsContainer.innerHTML = "";
-      setCounter = 0;
-      const newSet = createSetElement();
-      setsContainer.appendChild(newSet);
-      renumberSets();
+    homeRemoveWorkoutBtn.addEventListener('click', () => {
+      todayWorkoutNameInput.value = '';
+      homeSetsContainer.innerHTML = '';
+      homeSetCounter = 0;
     });
 
-    addWorkoutBtn.addEventListener("click", () => {
-      const name = workoutNameInput.value.trim() || "Untitled workout";
-      console.log("Workout logged:", name);
-      // This is where you might later save/export data.
+    homeAddWorkoutBtn.addEventListener('click', () => {
+      // For now this just "starts a new workout" like before:
+      todayWorkoutNameInput.value = '';
+      homeSetsContainer.innerHTML = '';
+      homeSetCounter = 0;
+      alert('New workout started.');
     });
 
-    // ---------- WORKOUTS PAGE LOGIC ----------
-    const templateNameInput = document.getElementById("templateNameInput");
-    const saveTemplateBtn = document.getElementById("saveTemplateBtn");
-    const savedWorkoutsContainer = document.getElementById(
-      "savedWorkoutsContainer"
-    );
+    /****************
+     * SAVED WORKOUTS LOGIC
+     ****************/
+    const savedSetsContainer = document.getElementById('savedSetsContainer');
+    const savedAddSetBtn = document.getElementById('savedAddSetBtn');
+    const savedRemoveWorkoutBtn = document.getElementById('savedRemoveWorkout');
+    const savedAddWorkoutBtn = document.getElementById('savedAddWorkoutBtn');
+    const savedWorkoutNameInput = document.getElementById('savedWorkoutName');
 
-    function loadSavedWorkouts() {
-      const raw = localStorage.getItem("ci_saved_workouts");
-      if (!raw) return [];
+    const STORAGE_KEY = 'code_and_iron_templates_v1';
+
+    function loadTemplates() {
       try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
         return JSON.parse(raw);
-      } catch {
+      } catch (e) {
         return [];
       }
     }
 
-    function storeSavedWorkouts(list) {
-      localStorage.setItem("ci_saved_workouts", JSON.stringify(list));
+    function saveTemplates(list) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
     }
 
-    function renderSavedWorkouts() {
-      const items = loadSavedWorkouts();
-      savedWorkoutsContainer.innerHTML = "";
+    function resetSavedTemplateCard() {
+      savedWorkoutNameInput.value = '';
+      savedSetsContainer.innerHTML = '';
+      savedSetCounter = 0;
+    }
 
-      if (!items.length) {
-        const empty = document.createElement("div");
-        empty.className = "page-subtitle";
-        empty.textContent = "No workouts saved yet.";
-        savedWorkoutsContainer.appendChild(empty);
+    savedAddSetBtn.addEventListener('click', () => {
+      savedSetCounter += 1;
+      const setEl = createSetElement('saved', savedSetCounter);
+      savedSetsContainer.appendChild(setEl);
+    });
+
+    savedRemoveWorkoutBtn.addEventListener('click', () => {
+      resetSavedTemplateCard();
+    });
+
+    savedAddWorkoutBtn.addEventListener('click', () => {
+      const name = savedWorkoutNameInput.value.trim();
+      if (!name) {
+        alert('Give this template a name first.');
         return;
       }
 
-      items.forEach((item, index) => {
-        const row = document.createElement("div");
-        row.className = "saved-workout-item";
-
-        const name = document.createElement("div");
-        name.className = "saved-workout-name";
-        name.textContent = item.name;
-
-        const actions = document.createElement("div");
-        actions.className = "saved-workout-actions";
-
-        const loadBtn = document.createElement("button");
-        loadBtn.className = "pill-btn pill-load";
-        loadBtn.textContent = "Load";
-        loadBtn.addEventListener("click", () => {
-          // In the next step we’ll wire this to
-          // actually load the template into the logger.
-          workoutNameInput.value = item.name;
-          showPage("home");
-        });
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = "pill-btn pill-delete";
-        deleteBtn.textContent = "Delete";
-        deleteBtn.addEventListener("click", () => {
-          const updated = loadSavedWorkouts().filter((_, i) => i !== index);
-          storeSavedWorkouts(updated);
-          renderSavedWorkouts();
-        });
-
-        actions.appendChild(loadBtn);
-        actions.appendChild(deleteBtn);
-
-        row.appendChild(name);
-        row.appendChild(actions);
-
-        savedWorkoutsContainer.appendChild(row);
+      const sets = [];
+      savedSetsContainer.querySelectorAll('.set-box').forEach((box) => {
+        const inputs = box.querySelectorAll('.input-field');
+        if (inputs.length === 2) {
+          sets.push({
+            weight: inputs[0].value,
+            reps: inputs[1].value,
+          });
+        }
       });
-    }
 
-    saveTemplateBtn.addEventListener("click", () => {
-      const name = templateNameInput.value.trim();
-      if (!name) return;
+      if (sets.length === 0) {
+        alert('Add at least one set to this template.');
+        return;
+      }
 
-      const current = loadSavedWorkouts();
-      current.push({ name });
-      storeSavedWorkouts(current);
-      templateNameInput.value = "";
-      renderSavedWorkouts();
+      const templates = loadTemplates();
+      // If template with same name exists, overwrite.
+      const existingIdx = templates.findIndex((t) => t.name === name);
+      const template = { name, sets };
+      if (existingIdx >= 0) {
+        templates[existingIdx] = template;
+      } else {
+        templates.push(template);
+      }
+      saveTemplates(templates);
+
+      alert('Template saved!');
+      resetSavedTemplateCard();
     });
 
-    // ---------- DIALOG HOOK (not used yet, but kept for future) ----------
-    const dialogBackdrop = document.getElementById("dialogBackdrop");
-    const dialogCloseBtn = document.getElementById("dialogCloseBtn");
-
-    function openDialog(title, text) {
-      document.getElementById("dialogTitle").textContent = title;
-      document.getElementById("dialogText").textContent = text;
-      dialogBackdrop.classList.add("open");
-    }
-
-    dialogCloseBtn.addEventListener("click", () => {
-      dialogBackdrop.classList.remove("open");
-    });
-
-    // ---------- INIT ----------
+    /****************
+     * INIT
+     ****************/
     function init() {
-      const firstSet = createSetElement();
-      setsContainer.appendChild(firstSet);
-      renumberSets();
-      renderSavedWorkouts();
+      // Start each page with one blank set
+      homeAddSetBtn.click();
+      savedAddSetBtn.click();
     }
 
     init();
