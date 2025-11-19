@@ -1,208 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Code and Iron</title>
-
-  <style>
-    /* Make sure nothing can overflow the screen */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        system-ui, -system-ui, sans-serif;
-      background: #050505;
-      color: #ffffff;
-    }
-
-    .app {
-      max-width: 420px;            /* slightly narrower than phone width */
-      margin: 0 auto;
-      padding: 20px 16px 40px;
+<title>Code and Iron</title>
+<style>
+    body {
+        background-color: #111;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
     }
 
     h1 {
-      font-size: 2.4rem;
-      margin: 0 0 4px;
-      font-weight: 800;
+        font-size: 34px;
+        margin-bottom: 5px;
     }
 
-    .subtitle {
-      font-size: 0.95rem;
-      color: #b0b0b0;
-      line-height: 1.4;
-      margin-bottom: 24px;
+    p.subtitle {
+        color: #ccc;
+        margin-top: 0;
+        margin-bottom: 25px;
+        font-size: 16px;
     }
 
-    .exercise-card {
-      background: #111111;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    .exercise {
+        background: #1c1c1c;
+        padding: 18px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    .exercise-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 10px;
+    .exercise h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 22px;
     }
 
-    .set-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      margin-top: 10px;
+    .set {
+        background: #222;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 10px;
     }
 
     .set-label {
-      flex: 0 0 60px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ffb347;
+        font-weight: bold;
+        font-size: 18px;
+        color: #ffcc66;
+        margin-bottom: 6px;
     }
 
-    .field {
-      flex: 1 1 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    .input-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        width: 100%;
     }
 
-    .field label {
-      font-size: 0.75rem;
-      color: #b0b0b0;
+    .input-group {
+        width: 48%;
     }
 
-    .field input {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid #303030;
-      background: #050505;
-      color: #ffffff;
-      font-size: 0.9rem;
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        background: #333;
+        color: white;
+        font-size: 16px;
+        box-sizing: border-box;
     }
 
-    .field input::placeholder {
-      color: #555555;
+    button.add-btn {
+        width: 100%;
+        background: #0A84FF;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 17px;
+        border-radius: 10px;
+        margin-top: 10px;
     }
 
-    .add-set-btn {
-      margin-top: 12px;
-      width: 100%;
-      padding: 10px 0;
-      border-radius: 999px;
-      border: none;
-      background: #007aff;
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+    button.remove-btn {
+        width: 100%;
+        background: #d13a3a;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
     }
-
-    .add-set-btn span.icon {
-      font-size: 1.1rem;
-    }
-
-    .add-set-btn:active {
-      transform: scale(0.97);
-    }
-  </style>
+</style>
 </head>
 <body>
-  <div class="app">
-    <h1>Code and Iron</h1>
-    <p class="subtitle">
-      Track each set with its own reps and weight. Tap <strong>“+ Add set”</strong> to log more.
-    </p>
 
-    <!-- Incline DB Bench -->
-    <div class="exercise-card" data-exercise="incline-db">
-      <h2 class="exercise-title">Incline Dumbbell Bench Press</h2>
-      <div class="set-list" id="incline-db-sets"></div>
-      <button class="add-set-btn" onclick="addSet('incline-db')">
-        <span class="icon">＋</span> Add set
-      </button>
-    </div>
+<h1>Code and Iron</h1>
+<p class="subtitle">Track each set with its own reps and weight.</p>
 
-    <!-- Incline Machine Chest Fly -->
-    <div class="exercise-card" data-exercise="incline-fly">
-      <h2 class="exercise-title">Incline Machine Chest Fly</h2>
-      <div class="set-list" id="incline-fly-sets"></div>
-      <button class="add-set-btn" onclick="addSet('incline-fly')">
-        <span class="icon">＋</span> Add set
-      </button>
-    </div>
+<!-- Exercise Template -->
+<div id="exercise-list"></div>
 
-    <!-- Bodyweight Dips -->
-    <div class="exercise-card" data-exercise="dips">
-      <h2 class="exercise-title">Bodyweight Dips</h2>
-      <div class="set-list" id="dips-sets"></div>
-      <button class="add-set-btn" onclick="addSet('dips')">
-        <span class="icon">＋</span> Add set
-      </button>
-    </div>
+<script>
+const exercises = [
+    "Incline Dumbbell Bench Press",
+    "Incline Machine Chest Fly",
+    "Bodyweight Dips",
+    "Tricep Cable Pulldown",
+    "Overhead Tricep Extension"
+];
 
-    <!-- Tricep Cable Pushdown -->
-    <div class="exercise-card" data-exercise="tricep-push">
-      <h2 class="exercise-title">Tricep Cable Pulldown</h2>
-      <div class="set-list" id="tricep-push-sets"></div>
-      <button class="add-set-btn" onclick="addSet('tricep-push')">
-        <span class="icon">＋</span> Add set
-      </button>
-    </div>
+function createExercise(name) {
+    const container = document.createElement("div");
+    container.className = "exercise";
 
-    <!-- Overhead Tricep Extension -->
-    <div class="exercise-card" data-exercise="overhead-tri">
-      <h2 class="exercise-title">Overhead Tricep Extension</h2>
-      <div class="set-list" id="overhead-tri-sets"></div>
-      <button class="add-set-btn" onclick="addSet('overhead-tri')">
-        <span class="icon">＋</span> Add set
-      </button>
-    </div>
-  </div>
+    const title = document.createElement("h2");
+    title.textContent = name;
+    container.appendChild(title);
 
-  <script>
-    function createSetRow(exerciseId, setNumber) {
-      const row = document.createElement("div");
-      row.className = "set-row";
+    const setsContainer = document.createElement("div");
+    container.appendChild(setsContainer);
 
-      row.innerHTML = `
-        <div class="set-label">Set ${setNumber}</div>
-        <div class="field">
-          <label>Weight</label>
-          <input type="number" inputmode="decimal" placeholder="lbs" />
-        </div>
-        <div class="field">
-          <label>Reps</label>
-          <input type="number" inputmode="numeric" value="0" min="0" />
-        </div>
-      `;
+    function addSet() {
+        const setDiv = document.createElement("div");
+        setDiv.className = "set";
 
-      return row;
+        const setNumber = setsContainer.children.length + 1;
+        const label = document.createElement("div");
+        label.className = "set-label";
+        label.textContent = `Set ${setNumber}`;
+        setDiv.appendChild(label);
+
+        const row = document.createElement("div");
+        row.className = "input-row";
+
+        const weightGroup = document.createElement("div");
+        weightGroup.className = "input-group";
+        const weightInput = document.createElement("input");
+        weightInput.placeholder = "Weight (lbs)";
+        weightGroup.appendChild(weightInput);
+
+        const repsGroup = document.createElement("div");
+        repsGroup.className = "input-group";
+        const repsInput = document.createElement("input");
+        repsInput.placeholder = "Reps";
+        repsGroup.appendChild(repsInput);
+
+        row.appendChild(weightGroup);
+        row.appendChild(repsGroup);
+        setDiv.appendChild(row);
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove set";
+        removeBtn.className = "remove-btn";
+        removeBtn.onclick = () => {
+            setDiv.remove();
+            updateSetNumbers();
+        };
+        setDiv.appendChild(removeBtn);
+
+        setsContainer.appendChild(setDiv);
     }
 
-    function addSet(exerciseId) {
-      const container = document.getElementById(exerciseId + "-sets");
-      const currentSets = container.children.length;
-      const nextSetNumber = currentSets + 1;
-      const newRow = createSetRow(exerciseId, nextSetNumber);
-      container.appendChild(newRow);
+    function updateSetNumbers() {
+        [...setsContainer.children].forEach((set, index) => {
+            set.querySelector(".set-label").textContent = `Set ${index + 1}`;
+        });
     }
 
-    // Start each exercise with 1 set
-    const exercises = ["incline-db", "incline-fly", "dips", "tricep-push", "overhead-tri"];
-    exercises.forEach(id => addSet(id));
-  </script>
+    const addBtn = document.createElement("button");
+    addBtn.textContent = "Add set";
+    addBtn.className = "add-btn";
+    addBtn.onclick = addSet;
+
+    container.appendChild(addBtn);
+
+    return container;
+}
+
+const exerciseList = document.getElementById("exercise-list");
+exercises.forEach(ex => exerciseList.appendChild(createExercise(ex)));
+
+</script>
+
 </body>
 </html>
