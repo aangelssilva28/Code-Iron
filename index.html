@@ -719,6 +719,17 @@
   });
       editor.appendChild(addWorkoutBtn);
 
+      // Add workout button in the template editor
+      const addWorkoutForTemplateBtn = document.createElement("button");
+      addWorkoutForTemplateBtn.className = "primary-btn footer-btn";
+      addWorkoutForTemplateBtn.textContent = "Add workout";
+      addWorkoutForTemplateBtn.addEventListener("click", () => {
+      // editorWorkoutsContainer is the container we filled with this template's workouts
+      createWorkoutCard(editorWorkoutsContainer);
+});
+
+      editorCard.appendChild(addWorkoutForTemplateBtn);
+
       // Info note under the editor
       const note = document.createElement("p");
       note.className = "card-subtitle";
