@@ -112,6 +112,17 @@
       box-shadow: 0 0 6px rgba(255, 255, 255, 0.03);
       margin-bottom: 22px;
     }
+    
+    /* Area that appears when you press "Create" on Workouts page */
+.template-builder-area {
+  margin-top: 16px;
+}
+
+/* Card inside the template builder area (reuses your main card style) */
+.template-builder-area .exercise {
+  margin-bottom: 14px;
+}
+    
 
     .card-title {
       font-size: 22px;
@@ -301,6 +312,8 @@
     <button id="addTemplateWorkoutBtn" class="primary-btn footer-btn">
       Create
     </button>
+    
+    <div id="templateBuilderArea" class="template-builder-area"></div>
 
     <!-- Saved templates list (like on your screenshot with "Chest day") -->
     <div class="saved-templates" id="savedTemplatesSection">
@@ -348,6 +361,22 @@
       item.addEventListener("click", () => setScreen(nav));
     }
   });
+  
+  const addTemplateWorkoutBtn = document.getElementById("addTemplateWorkoutBtn");
+const templateBuilderArea = document.getElementById("templateBuilderArea");
+
+addTemplateWorkoutBtn.addEventListener("click", () => {
+  const isOpen = templateBuilderArea.childElementCount > 0;
+
+  if (isOpen) {
+    // "Dropdown" is open -> close it
+    templateBuilderArea.innerHTML = "";
+  } else {
+    // "Dropdown" is closed -> open it and show the workout builder card
+    buildTemplateWorkoutCard();
+  }
+});
+  
 
   document.addEventListener("click", (e) => {
     if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
@@ -360,6 +389,20 @@
   function createWorkoutCard(options = {}) {
     const card = document.createElement("div");
     card.className = "workout-card";
+    
+    function buildTemplateWorkoutCard() {
+  const container = document.getElementById("templateBuilderArea");
+  container.innerHTML = ""; // clear previous
+
+  // Create a workout card using your existing function
+  const card = createWorkoutCard();
+
+  // Optional: tweak the title color or text if you want to show it's a template
+  // For now we'll just leave it as-is; user can type the workout name.
+
+  container.appendChild(card);
+}
+    
 
     const nameInput = document.createElement("input");
     nameInput.className = "workout-name-input";
