@@ -688,49 +688,100 @@
       if (!templates.length) return;
 
       templates.forEach((tpl, index) => {
-        const row = document.createElement("div");
-        row.className = "saved-item";
+      // outer wrapper so we can put the row + dropdown together
+      const wrapper = document.createElement("div");
+      wrapper.className = "saved-wrapper";
 
-        const name = document.createElement("div");
-        name.className = "saved-name";
-        name.textContent = tpl.name || "Untitled workout";
-        row.appendChild(name);
+      const row = document.createElement("div");
+      row.className = "saved-item";
 
-        const btnWrap = document.createElement("div");
-        btnWrap.className = "saved-buttons";
+      const name = document.createElement("div");
+      name.className = "saved-name";
+      name.textContent = tpl.name || "Untitled workout";
+      row.appendChild(name);
 
-        const loadBtn = document.createElement("button");
-        loadBtn.className = "small-btn load";
-        loadBtn.textContent = "Load";
-        loadBtn.addEventListener("click", () => {
-          applyTemplateToHome(tpl.workouts || []);
-          showScreen("home");
-        });
-        btnWrap.appendChild(loadBtn);
-        
-        const openBtn = document.createElement("button");
-        openBtn.className = "small-btn open";
-        openBtn.textContent = "Open";
-        openBtn.addEventListener("click", () => {
-          // OPEN will show the template screen AND highlight the selected template
-          templateNameInput.value = tpl.name;
-        });
-        btnWrap.appendChild(openBtn);
-        
-        const delBtn = document.createElement("button");
-        delBtn.className = "small-btn delete";
-        delBtn.textContent = "Delete";
-        delBtn.addEventListener("click", () => {
-          templates.splice(index, 1);
-          saveTemplates(templates);
-          renderTemplatesList();
-        });
-        btnWrap.appendChild(delBtn);
+      const btnWrap = document.createElement("div");
+      btnWrap.className = "saved-buttons";
 
-        row.appendChild(btnWrap);
-        savedTemplatesList.appendChild(row);
+      // LOAD (green) – same behavior as before
+      const loadBtn = document.createElement("button");
+      loadBtn.className = "small-btn load";
+      loadBtn.textContent = "Load";
+      loadBtn.addEventListener("click", () => {
+      applyTemplateToHome(tpl.workouts || []);
+      showScreen("home");
       });
-    }
+      btnWrap.appendChild(loadBtn);
+
+      // OPEN (blue) – show dropdown editor under this row
+      const openBtn = document.createElement("button");
+      openBtn.className = "small-btn open";
+      openBtn.textContent = "Open";
+      btnWrap.appendChild(openBtn);
+
+      // DELETE (red)
+      const delBtn = document.createElement("button");
+      delBtn.className = "small-btn delete";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", () => {
+      templates.splice(index, 1);
+      saveTemplates(templates);
+      renderTemplatesList();
+      });
+      btnWrap.appendChild(delBtn);
+
+      row.appendChild(btnWrap);
+      wrapper.appendChild(row);
+
+      // dropdown panel for "Open"
+      const panel = document.createElement("div");
+      panel.className = "open-panel";
+      wrapper.appendChild(panel);
+
+      // Open button logic
+      openBtn.addEventListener("click", () => {
+      // toggle panel
+      if (panel.classList.contains("open")) {
+        panel.classList.remove("open");
+        panel.innerHTML = "";
+        return;
+      }
+
+      // close any other open panels
+      document
+        .querySelectorAll(".open-panel.open")
+        .forEach((p) => {
+          p.classList.remove("open");
+          p.innerHTML = "";
+        });
+
+      panel.innerHTML = "";
+      panel.classList.add("open");
+
+      // container inside panel that reuses the same workout-card layout
+      const innerContainer = document.createElement("div");
+      innerContainer.className = "workouts-container";
+      panel.appendChild(innerContainer);
+
+      const data = tpl.workouts || [];
+      if (!data.length) {
+        // no data yet – start empty
+        createWorkoutCard(innerContainer);
+      } else {
+        data.forEach((w) => createWorkoutCard(innerContainer, w));
+      }
+
+      const note = document.createElement("p");
+      note.className = "card-subtitle";
+      note.style.marginTop = "10px";
+      note.textContent =
+        "You’re viewing this template’s layout. Edits here won’t overwrite it until you save a new template with this layout.";
+      panel.appendChild(note);
+    });
+
+    savedTemplatesList.appendChild(wrapper);
+  });
+}
 
     saveTemplateBtn.addEventListener("click", () => {
       const name = templateNameInput.value.trim();
