@@ -327,6 +327,14 @@
       color: #fff;
     }
 
+    .small-btn.open {
+      background-color: #0a84ff; /* blue */
+    }
+
+    .small-btn.open:active {
+      background-color: #005fd1; /* darker blue */
+    }
+
     .small-btn.load {
       background-color: var(--accent);
     }
@@ -391,8 +399,6 @@
     <!-- Menu -->
     <div class="menu-dropdown" id="menuDropdown">
       <div class="menu-item" data-nav="workouts">Workouts</div>
-      <div class="menu-item">Option 3</div>
-      <div class="menu-item">Option 4</div>
     </div>
 
     <!-- HOME / LOGGER SCREEN -->
@@ -418,7 +424,7 @@
           <input
             id="templateNameInput"
             class="text-input"
-            placeholder="e.g. Push Day, Leg Day, Code & Iron Chest"
+            placeholder="e.g. Chest, Legs, Shoulders, Back"
           />
         </div>
 
@@ -701,7 +707,16 @@
           showScreen("home");
         });
         btnWrap.appendChild(loadBtn);
-
+        
+        const openBtn = document.createElement("button");
+        openBtn.className = "small-btn open";
+        openBtn.textContent = "Open";
+        openBtn.addEventListener("click", () => {
+          // OPEN will show the template screen AND highlight the selected template
+          templateNameInput.value = tpl.name;
+        });
+        btnWrap.appendChild(openBtn);
+        
         const delBtn = document.createElement("button");
         delBtn.className = "small-btn delete";
         delBtn.textContent = "Delete";
