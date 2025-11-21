@@ -683,62 +683,47 @@
       });
     }
 
-    function showTemplateEditor(tpl) {
-        // Remove any existing editor section
-      const existing = document.getElementById("templateEditor");
-      if (existing) existing.remove();
+function showTemplateEditor(tpl) {
+  const existing = document.getElementById("templateEditor");
+  if (existing) existing.remove();
 
-      // We'll attach the editor inside the Workouts screen card
-      const card = workoutsScreen.querySelector(".card");
+  const card = workoutsScreen.querySelector(".card");
 
-      const editor = document.createElement("div");
-      editor.id = "templateEditor";
-      editor.style.marginTop = "16px";
+  const editor = document.createElement("div");
+  editor.id = "templateEditor";
+  editor.style.marginTop = "16px";
 
-      // Container for the workout cards in this template
-      const editorContainer = document.createElement("div");
-      editorContainer.className = "workouts-container";
-      editor.appendChild(editorContainer);
+  // container for workouts in editor
+  const editorContainer = document.createElement("div");
+  editorContainer.className = "workouts-container";
+  editor.appendChild(editorContainer);
 
-      // Use template workouts if they exist, otherwise start with one blank workout
-      const workoutsData =
-      tpl.workouts && tpl.workouts.length
-      ? tpl.workouts
-      : [{ name: "", sets: [{ weight: "", reps: "" }] }];
+  const workoutsData = tpl.workouts && tpl.workouts.length
+    ? tpl.workouts
+    : [{ name: "", sets: [{ weight: "", reps: "" }] }];
 
-      workoutsData.forEach((w) => {
-        createWorkoutCard(editorContainer, w);
+  workoutsData.forEach((w) => {
+    createWorkoutCard(editorContainer, w);
   });
 
-      // 🔵 NEW: Add workout button inside the editor
-      const addWorkoutBtn = document.createElement("button");
-      addWorkoutBtn.className = "primary-btn footer-btn";
-      addWorkoutBtn.textContent = "Add workout";
-      addWorkoutBtn.addEventListener("click", () => {
-        createWorkoutCard(editorContainer);
+  // ✅ FIXED: Actual working add-workout button
+  const addWorkoutBtn = document.createElement("button");
+  addWorkoutBtn.className = "primary-btn footer-btn";
+  addWorkoutBtn.textContent = "Add workout";
+  addWorkoutBtn.addEventListener("click", () => {
+    createWorkoutCard(editorContainer);
   });
-      editor.appendChild(addWorkoutBtn);
+  editor.appendChild(addWorkoutBtn);
 
-      // Add workout button in the template editor
-      const addWorkoutForTemplateBtn = document.createElement("button");
-      addWorkoutForTemplateBtn.className = "primary-btn footer-btn";
-      addWorkoutForTemplateBtn.textContent = "Add workout";
-      addWorkoutForTemplateBtn.addEventListener("click", () => {
-      // editorWorkoutsContainer is the container we filled with this template's workouts
-      createWorkoutCard(editorWorkoutsContainer);
-});
+  // info note
+  const note = document.createElement("p");
+  note.className = "card-subtitle";
+  note.style.marginTop = "12px";
+  note.textContent =
+    "You’re viewing this template’s layout. Edits here won’t overwrite it until you save a new template with this layout.";
+  editor.appendChild(note);
 
-      editorCard.appendChild(addWorkoutForTemplateBtn);
-
-      // Info note under the editor
-      const note = document.createElement("p");
-      note.className = "card-subtitle";
-      note.style.marginTop = "12px";
-      note.textContent =
-      "You’re viewing this template’s layout. Edits here won’t overwrite it until you save a new template with this layout.";
-      editor.appendChild(note);
-
-      card.appendChild(editor);
+  card.appendChild(editor);
 }
 
     function renderTemplatesList() {
