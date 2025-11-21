@@ -19,6 +19,8 @@
       --radius-card: 24px;
       --radius-pill: 999px;
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.7);
+      --success: #34c759;       /* green for Load button */
+      --success-soft: #248a3d;
     }
 
     * {
@@ -333,25 +335,22 @@
       color: #fff;
     }
 
-    /* Load = green */
     .small-btn.load {
-      background-color: #28a745;
+      background-color: var(--success); /* green */
     }
 
     .small-btn.load:active {
-      background-color: #1e7e34;
+      background-color: var(--success-soft);
     }
 
-    /* Open = blue */
     .small-btn.open {
-      background-color: #0a84ff;
+      background-color: var(--accent); /* blue */
     }
 
     .small-btn.open:active {
-      background-color: #005fd1;
+      background-color: var(--accent-soft);
     }
 
-    /* Delete = red */
     .small-btn.delete {
       background-color: #5b1a1a;
     }
@@ -360,12 +359,12 @@
       background-color: #3e1010;
     }
 
-    /* Panel that appears when you click "Open" */
     .open-panel {
       display: none;
-      padding: 10px 12px 14px;
-      border-radius: 18px;
-      background-color: #151515;
+      margin-top: 6px;
+      padding: 10px 10px 8px;
+      border-radius: 16px;
+      background-color: #101010;
       border: 1px solid #262626;
     }
 
@@ -526,7 +525,7 @@
         const allSets = card.querySelectorAll(".set-box");
         if (allSets.length > 1) {
           box.remove();
-          // Renumber sets
+          // renumber
           card.querySelectorAll(".set-box").forEach((b, i) => {
             const h = b.querySelector(".set-header");
             if (h) h.textContent = "Set " + (i + 1);
@@ -559,14 +558,14 @@
       });
       card.appendChild(removeWorkoutBtn);
 
+      // sets wrapper
       const setsWrapper = document.createElement("div");
       setsWrapper.className = "sets-wrapper";
       card.appendChild(setsWrapper);
 
-      const setsFromData =
-        workoutData && Array.isArray(workoutData.sets)
-          ? workoutData.sets
-          : [{ weight: "", reps: "" }];
+      const setsFromData = workoutData && Array.isArray(workoutData.sets)
+        ? workoutData.sets
+        : [{ weight: "", reps: "" }];
 
       setsFromData.forEach((set, idx) => {
         const setBox = createSetBox(card, set, idx + 1);
@@ -586,6 +585,27 @@
       return card;
     }
 
+    function getWorkoutDataFromContainer(container) {
+      const cards = container.querySelectorAll(".workout-card");
+      const workouts = [];
+      cards.forEach((card) => {
+        const nameInput = card.querySelector(".workout-name");
+        const sets = [];
+        card.querySelectorAll(".set-box").forEach((box) => {
+          const inputs = box.querySelectorAll(".set-input");
+          sets.push({
+            weight: inputs[0] ? inputs[0].value : "",
+            reps: inputs[1] ? inputs[1].value : "",
+          });
+        });
+        workouts.push({
+          name: nameInput ? nameInput.value : "",
+          sets,
+        });
+      });
+      return workouts;
+    }
+
     // ---------- Screens & navigation ----------
 
     const menuButton = document.getElementById("menuButton");
@@ -602,7 +622,10 @@
     });
 
     document.addEventListener("click", (e) => {
-      if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
+      if (
+        !menuButton.contains(e.target) &&
+        !menuDropdown.contains(e.target)
+      ) {
         closeMenu();
       }
     });
@@ -636,6 +659,17 @@
       createWorkoutCard(workoutsContainer);
     });
 
+    function applyTemplateToHome(workoutDataArray) {
+      workoutsContainer.innerHTML = "";
+      if (!workoutDataArray || workoutDataArray.length === 0) {
+        createWorkoutCard(workoutsContainer);
+        return;
+      }
+      workoutDataArray.forEach((w) => {
+        createWorkoutCard(workoutsContainer, w);
+      });
+    }
+
     // ---------- Templates (workouts screen) ----------
 
     const templateNameInput = document.getElementById("templateNameInput");
@@ -667,241 +701,133 @@
     }
 
     let templates = loadTemplates();
-    function collectWorkoutsFromContainer(container) {
-      const cards = container.querySelectorAll(".workout-card");
-      const workouts = [];
 
-      cards.forEach((card) => {
-      const nameInput = card.querySelector(".workout-name");
-      const sets = [];
+    function renderTemplatesList() {
+      savedTemplatesList.innerHTML = "";
+      if (!templates.length) return;
 
-      card.querySelectorAll(".set-box").forEach((box) => {
-      const inputs = box.querySelectorAll(".set-input");
-      sets.push({
-        weight: inputs[0] ? inputs[0].value : "",
-        reps:   inputs[1] ? inputs[1].value : "",
-        });
-      });
+      templates.forEach((tpl, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "saved-wrapper";
 
-      workouts.push({
-        name: nameInput ? nameInput.value : "",
-        sets,
-      });
-    });
+        const row = document.createElement("div");
+        row.className = "saved-item";
 
-      return workouts;
-    }
-    
-    function getCurrentWorkoutLayout() {
-  // Use the helper on the main logger container
-  return collectWorkoutsFromContainer(workoutsContainer);
-}
+        const name = document.createElement("div");
+        name.className = "saved-name";
+        name.textContent = tpl.name || "Untitled workout";
+        row.appendChild(name);
 
-    function applyTemplateToHome(workoutDataArray) {
-      workoutsContainer.innerHTML = "";
-      if (!workoutDataArray || workoutDataArray.length === 0) {
-        createWorkoutCard(workoutsContainer);
-        return;
-      }
-      workoutDataArray.forEach((w) => {
-        createWorkoutCard(workoutsContainer, w);
-      });
-    }
+        const btnWrap = document.createElement("div");
+        btnWrap.className = "saved-buttons";
 
-function renderTemplatesList() {
-  savedTemplatesList.innerHTML = "";
-  if (!templates.length) return;
+        // LOAD (green) – replace home with this template
+        const loadBtn = document.createElement("button");
+        loadBtn.className = "small-btn load";
+        loadBtn.textContent = "Load";
 
-  templates.forEach((tpl, index) => {
-    // Wrapper so we can put row + dropdown together
-    const wrapper = document.createElement("div");
-    wrapper.className = "saved-wrapper";
-
-    // Top row (name + buttons)
-    const row = document.createElement("div");
-    row.className = "saved-item";
-
-    const name = document.createElement("div");
-    name.className = "saved-name";
-    name.textContent = tpl.name || "Untitled workout";
-    row.appendChild(name);
-
-    const btnWrap = document.createElement("div");
-    btnWrap.className = "saved-buttons";
-
-    // LOAD (green) – replaces home with this workout
-    const loadBtn = document.createElement("button");
-    loadBtn.className = "small-btn load";
-    loadBtn.textContent = "Load";
-    btnWrap.appendChild(loadBtn);
-
-    // OPEN/CLOSE (blue) – toggles dropdown editor
-    const openBtn = document.createElement("button");
-    openBtn.className = "small-btn open";
-    openBtn.textContent = "Open";
-    btnWrap.appendChild(openBtn);
-
-    // DELETE (red)
-    const delBtn = document.createElement("button");
-    delBtn.className = "small-btn delete";
-    delBtn.textContent = "Delete";
-    btnWrap.appendChild(delBtn);
-
-    row.appendChild(btnWrap);
-    wrapper.appendChild(row);
-
-    // Dropdown editor panel
-    const panel = document.createElement("div");
-    panel.className = "open-panel";
-    wrapper.appendChild(panel);
-
-    // ----- OPEN / CLOSE BUTTON -----
-    openBtn.addEventListener("click", () => {
-      const isOpen = panel.classList.contains("open");
-
-      // Close all other panels & reset their buttons
-      document.querySelectorAll(".open-panel.open").forEach((p) => {
-        p.classList.remove("open");
-      });
-      document.querySelectorAll(".small-btn.open").forEach((b) => {
-        b.textContent = "Open";
-      });
-
-      if (isOpen) {
-        // Closing THIS one: just hide, keep the content
-        panel.classList.remove("open");
+        // OPEN/CLOSE (blue) – inline editor
+        const openBtn = document.createElement("button");
+        openBtn.className = "small-btn open";
         openBtn.textContent = "Open";
-        return;
-      }
 
-      // Opening THIS one
-      // If we’ve never built its contents before, build once
-      if (!panel.hasChildNodes()) {
-        const innerContainer = document.createElement("div");
-        innerContainer.className = "workouts-container";
-        panel.appendChild(innerContainer);
+        // DELETE (red)
+        const delBtn = document.createElement("button");
+        delBtn.className = "small-btn delete";
+        delBtn.textContent = "Delete";
 
-        const data = tpl.workouts || [];
-        if (!data.length) {
-          // start empty
-          createWorkoutCard(innerContainer);
-        } else {
-          data.forEach((w) => createWorkoutCard(innerContainer, w));
-        }
+        btnWrap.appendChild(loadBtn);
+        btnWrap.appendChild(openBtn);
+        btnWrap.appendChild(delBtn);
 
+        row.appendChild(btnWrap);
+        wrapper.appendChild(row);
+
+        // Panel for inline editor
+        const panel = document.createElement("div");
+        panel.className = "open-panel";
+        const panelInner = document.createElement("div");
+        panelInner.className = "workouts-container";
+        panel.appendChild(panelInner);
+
+        // Add workout button inside panel
+        const panelAddBtn = document.createElement("button");
+        panelAddBtn.className = "primary-btn footer-btn";
+        panelAddBtn.textContent = "Add workout";
+        panelAddBtn.addEventListener("click", () => {
+          createWorkoutCard(panelInner);
+        });
+        panel.appendChild(panelAddBtn);
+
+        // Note text
         const note = document.createElement("p");
         note.className = "card-subtitle";
         note.style.marginTop = "10px";
         note.textContent =
-          "You’re viewing this template’s layout. Changes here will be used when you tap Load.";
+          "You’re viewing this template’s layout. Edits here are used when you Load, but they don’t overwrite the saved template unless you create a new one.";
         panel.appendChild(note);
-      }
 
-      panel.classList.add("open");
-      openBtn.textContent = "Close";
-    });
-
-    // ----- LOAD BUTTON -----
-    loadBtn.addEventListener("click", () => {
-      let workoutsToLoad;
-
-      // If dropdown is open and has workout cards, read from there
-      if (panel.classList.contains("open") && panel.querySelector(".workout-card")) {
-        const cards = panel.querySelectorAll(".workout-card");
-        const workouts = [];
-
-        cards.forEach((card) => {
-          const nameInput = card.querySelector(".workout-name");
-          const sets = [];
-          card.querySelectorAll(".set-box").forEach((box) => {
-            const inputs = box.querySelectorAll(".set-input");
-            sets.push({
-              weight: inputs[0] ? inputs[0].value : "",
-              reps: inputs[1] ? inputs[1].value : "",
-            });
-          });
-          workouts.push({
-            name: nameInput ? nameInput.value : "",
-            sets,
-          });
-        });
-
-        workoutsToLoad = workouts;
-
-        // Also save these edits back into the template so it sticks
-        tpl.workouts = workouts;
-        saveTemplates(templates);
-      } else {
-        // If the dropdown isn’t open, just use saved data
-        workoutsToLoad = tpl.workouts || [];
-      }
-
-      applyTemplateToHome(workoutsToLoad);
-      showScreen("home");
-    });
-
-    // ----- DELETE BUTTON -----
-    delBtn.addEventListener("click", () => {
-      templates.splice(index, 1);
-      saveTemplates(templates);
-      renderTemplatesList();
-    });
-
-    savedTemplatesList.appendChild(wrapper);
-  });
-}
-
-        // Dropdown panel for "Open"
-        const panel = document.createElement("div");
-        panel.className = "open-panel";
         wrapper.appendChild(panel);
+        savedTemplatesList.appendChild(wrapper);
 
+        // OPEN button logic: toggle panel without clearing its contents
         openBtn.addEventListener("click", () => {
-          const alreadyOpen = panel.classList.contains("open");
+          const isOpen = panel.classList.contains("open");
 
-          // Close any other open panels
-          document.querySelectorAll(".open-panel.open").forEach((p) => {
-            p.classList.remove("open");
-            p.innerHTML = "";
-          });
-
-          if (alreadyOpen) {
-            // We just closed everything, so we're done
+          if (isOpen) {
+            // just close, keep contents
+            panel.classList.remove("open");
+            openBtn.textContent = "Open";
             return;
           }
 
-          panel.classList.add("open");
-          panel.innerHTML = "";
+          // close any other open panels
+          document.querySelectorAll(".open-panel.open").forEach((p) => {
+            p.classList.remove("open");
+          });
+          document.querySelectorAll(".small-btn.open").forEach((b) => {
+            b.textContent = "Open";
+          });
 
-          const innerContainer = document.createElement("div");
-          innerContainer.className = "workouts-container";
-          panel.appendChild(innerContainer);
-
-          const data = tpl.workouts || [];
-          if (!data.length) {
-            createWorkoutCard(innerContainer);
-          } else {
-            data.forEach((w) => createWorkoutCard(innerContainer, w));
+          // If first time opening and empty, populate from template data
+          if (panelInner.children.length === 0) {
+            const data = tpl.workouts && tpl.workouts.length
+              ? tpl.workouts
+              : [{ name: "", sets: [{ weight: "", reps: "" }] }];
+            data.forEach((w) => createWorkoutCard(panelInner, w));
           }
 
-          // Add workout button inside the dropdown editor
-          const addWorkoutInPanelBtn = document.createElement("button");
-          addWorkoutInPanelBtn.className = "primary-btn footer-btn";
-          addWorkoutInPanelBtn.textContent = "Add workout";
-          addWorkoutInPanelBtn.addEventListener("click", () => {
-            createWorkoutCard(innerContainer);
-          });
-          panel.appendChild(addWorkoutInPanelBtn);
-
-          const note = document.createElement("p");
-          note.className = "card-subtitle";
-          note.style.marginTop = "10px";
-          note.textContent =
-            "You’re viewing this template’s layout. Edits here won’t overwrite it until you save a new template with this layout.";
-          panel.appendChild(note);
+          panel.classList.add("open");
+          openBtn.textContent = "Close";
         });
 
-        savedTemplatesList.appendChild(wrapper);
+        // LOAD button logic
+        loadBtn.addEventListener("click", () => {
+          let data = null;
+
+          // If panel is open and has cards, use what’s currently in the editor
+          if (panel.classList.contains("open")) {
+            const cards = panelInner.querySelectorAll(".workout-card");
+            if (cards.length > 0) {
+              data = getWorkoutDataFromContainer(panelInner);
+            }
+          }
+
+          // Fallback: use saved template data
+          if (!data || !data.length) {
+            data = tpl.workouts || [];
+          }
+
+          applyTemplateToHome(data);
+          showScreen("home");
+        });
+
+        // DELETE
+        delBtn.addEventListener("click", () => {
+          templates.splice(index, 1);
+          saveTemplates(templates);
+          renderTemplatesList();
+        });
       });
     }
 
@@ -912,7 +838,7 @@ function renderTemplatesList() {
         return;
       }
 
-      const workoutsData = getCurrentWorkoutLayout();
+      const workoutsData = getWorkoutDataFromContainer(workoutsContainer);
       if (!workoutsData.length) {
         alert("Create at least one workout on the main page first.");
         return;
@@ -935,7 +861,7 @@ function renderTemplatesList() {
     // ---------- Init ----------
 
     function init() {
-      // one empty workout by default
+      // one empty workout by default on home
       createWorkoutCard(workoutsContainer);
       renderTemplatesList();
     }
