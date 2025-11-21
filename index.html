@@ -708,14 +708,16 @@
       });
     }
 
-    function renderTemplatesList() {
+function renderTemplatesList() {
   savedTemplatesList.innerHTML = "";
   if (!templates.length) return;
 
   templates.forEach((tpl, index) => {
+    // Wrapper so we can put row + dropdown together
     const wrapper = document.createElement("div");
     wrapper.className = "saved-wrapper";
 
+    // Top row (name + buttons)
     const row = document.createElement("div");
     row.className = "saved-item";
 
@@ -727,110 +729,124 @@
     const btnWrap = document.createElement("div");
     btnWrap.className = "saved-buttons";
 
-    // Panel for the dropdown editor (we create it here so both
-    // LOAD and OPEN buttons can see it)
-    const panel = document.createElement("div");
-    panel.className = "open-panel";
-
-    // ---- LOAD (green) ----
+    // LOAD (green) – replaces home with this workout
     const loadBtn = document.createElement("button");
     loadBtn.className = "small-btn load";
     loadBtn.textContent = "Load";
-    loadBtn.addEventListener("click", () => {
-      // Default to the saved template data
-      let workoutsForHome = tpl.workouts || [];
-
-      // If the dropdown is open and has workouts, prefer the
-      // edited layout from the dropdown
-      if (panel.classList.contains("open")) {
-        const innerContainer = panel.querySelector(".workouts-container");
-        if (innerContainer) {
-          const edited = collectWorkoutsFromContainer(innerContainer);
-          if (edited.length) {
-            workoutsForHome = edited;
-          }
-        }
-      }
-
-      // OPTION A: replace whatever is on the home screen
-      applyTemplateToHome(workoutsForHome);
-      showScreen("home");
-    });
     btnWrap.appendChild(loadBtn);
 
-    // ---- OPEN/CLOSE (blue) ----
+    // OPEN/CLOSE (blue) – toggles dropdown editor
     const openBtn = document.createElement("button");
     openBtn.className = "small-btn open";
     openBtn.textContent = "Open";
+    btnWrap.appendChild(openBtn);
 
+    // DELETE (red)
+    const delBtn = document.createElement("button");
+    delBtn.className = "small-btn delete";
+    delBtn.textContent = "Delete";
+    btnWrap.appendChild(delBtn);
+
+    row.appendChild(btnWrap);
+    wrapper.appendChild(row);
+
+    // Dropdown editor panel
+    const panel = document.createElement("div");
+    panel.className = "open-panel";
+    wrapper.appendChild(panel);
+
+    // ----- OPEN / CLOSE BUTTON -----
     openBtn.addEventListener("click", () => {
       const isOpen = panel.classList.contains("open");
 
+      // Close all other panels & reset their buttons
+      document.querySelectorAll(".open-panel.open").forEach((p) => {
+        p.classList.remove("open");
+      });
+      document.querySelectorAll(".small-btn.open").forEach((b) => {
+        b.textContent = "Open";
+      });
+
       if (isOpen) {
-        // Closing: **do NOT clear panel.innerHTML** so the
-        // user’s changes stay there when reopened
+        // Closing THIS one: just hide, keep the content
         panel.classList.remove("open");
         openBtn.textContent = "Open";
         return;
       }
 
-      // Close any other open panels and reset their buttons
-      document.querySelectorAll(".open-panel.open").forEach((p) => {
-        p.classList.remove("open");
-      });
-      document.querySelectorAll(".small-btn.open").forEach((btn) => {
-        if (btn !== openBtn) btn.textContent = "Open";
-      });
-
-      // If panel is empty, build it once
-      if (!panel.innerHTML.trim()) {
+      // Opening THIS one
+      // If we’ve never built its contents before, build once
+      if (!panel.hasChildNodes()) {
         const innerContainer = document.createElement("div");
         innerContainer.className = "workouts-container";
         panel.appendChild(innerContainer);
 
         const data = tpl.workouts || [];
         if (!data.length) {
+          // start empty
           createWorkoutCard(innerContainer);
         } else {
           data.forEach((w) => createWorkoutCard(innerContainer, w));
         }
 
-        // Add workout button inside dropdown editor
-        const addWorkoutBtn = document.createElement("button");
-        addWorkoutBtn.className = "primary-btn footer-btn";
-        addWorkoutBtn.textContent = "Add workout";
-        addWorkoutBtn.addEventListener("click", () => {
-          createWorkoutCard(innerContainer);
-        });
-        panel.appendChild(addWorkoutBtn);
-
         const note = document.createElement("p");
         note.className = "card-subtitle";
         note.style.marginTop = "10px";
         note.textContent =
-          "You’re viewing this template’s layout. Edits here won’t overwrite it until you save a new template with this layout.";
+          "You’re viewing this template’s layout. Changes here will be used when you tap Load.";
         panel.appendChild(note);
       }
 
       panel.classList.add("open");
       openBtn.textContent = "Close";
     });
-    btnWrap.appendChild(openBtn);
 
-    // ---- DELETE (red) ----
-    const delBtn = document.createElement("button");
-    delBtn.className = "small-btn delete";
-    delBtn.textContent = "Delete";
+    // ----- LOAD BUTTON -----
+    loadBtn.addEventListener("click", () => {
+      let workoutsToLoad;
+
+      // If dropdown is open and has workout cards, read from there
+      if (panel.classList.contains("open") && panel.querySelector(".workout-card")) {
+        const cards = panel.querySelectorAll(".workout-card");
+        const workouts = [];
+
+        cards.forEach((card) => {
+          const nameInput = card.querySelector(".workout-name");
+          const sets = [];
+          card.querySelectorAll(".set-box").forEach((box) => {
+            const inputs = box.querySelectorAll(".set-input");
+            sets.push({
+              weight: inputs[0] ? inputs[0].value : "",
+              reps: inputs[1] ? inputs[1].value : "",
+            });
+          });
+          workouts.push({
+            name: nameInput ? nameInput.value : "",
+            sets,
+          });
+        });
+
+        workoutsToLoad = workouts;
+
+        // Also save these edits back into the template so it sticks
+        tpl.workouts = workouts;
+        saveTemplates(templates);
+      } else {
+        // If the dropdown isn’t open, just use saved data
+        workoutsToLoad = tpl.workouts || [];
+      }
+
+      applyTemplateToHome(workoutsToLoad);
+      showScreen("home");
+    });
+
+    // ----- DELETE BUTTON -----
     delBtn.addEventListener("click", () => {
       templates.splice(index, 1);
       saveTemplates(templates);
       renderTemplatesList();
     });
-    btnWrap.appendChild(delBtn);
 
-    row.appendChild(btnWrap);
-    wrapper.appendChild(row);
-    wrapper.appendChild(panel);
     savedTemplatesList.appendChild(wrapper);
   });
 }
