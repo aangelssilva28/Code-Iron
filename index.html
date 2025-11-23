@@ -197,7 +197,26 @@
     }
 
     .workout-name {
+      margin-bottom: 0;
+    }
+
+    .workout-header {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 10px;
       margin-bottom: 10px;
+    }
+
+    .workout-header .workout-name {
+      flex: 1;
+      height: 44px;
+      padding: 0 12px;
+    }
+
+    .workout-header-actions {
+      display: flex;
+      gap: 8px;
     }
 
     .danger-btn,
@@ -221,12 +240,26 @@
     }
 
     .primary-btn {
-      background-color: var(--accent);
+      width: 100%;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-size: 17px;
+      font-weight: 600;
+      border: 1px solid #333;
+      color: #fff;
       margin-top: 8px;
+      background-color: #000;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+      -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .primary-btn:active {
-      background-color: var(--accent-soft);
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #111 !important;
+      border-color: #333 !important;
     }
 
     .footer-btn {
@@ -249,10 +282,90 @@
       margin-bottom: 6px;
     }
 
+    /* Progress screen letter group headers */
+    .progress-letter-header {
+      margin-top: 10px;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* Rows inside the progress detail panel */
+    .progress-detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .progress-detail-row span:first-child {
+      color: #bbbbbb;
+    }
+
+    .progress-detail-row span:last-child {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
     .set-row {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 6px;
+    }
+
+    .set-fields {
+      flex: 1;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .set-input {
+      width: 100%;
+      padding: 0 10px;
+      height: 44px;
+      border-radius: 12px;
+      background-color: #000;
+      border: 1px solid #333;
+      color: #fff;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .set-input::placeholder {
+      color: #666;
+    }
+
+    .set-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .round-btn {
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #000;
+      border: 1px solid #333;
+      color: #fff;
+      height: 44px;
+      min-width: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 0 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .round-btn:active {
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #111;
     }
 
     .set-col {
@@ -264,20 +377,6 @@
       font-size: 12px;
       color: var(--text-muted);
       margin-bottom: 2px;
-    }
-
-    .set-input {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 12px;
-      background-color: #000;
-      border: 1px solid #333;
-      color: #fff;
-      font-size: 15px;
-    }
-
-    .set-input::placeholder {
-      color: #666;
     }
 
     .remove-set-btn {
@@ -329,39 +428,23 @@
     }
 
     .small-btn {
-      border-radius: 999px;
-      border: none;
-      padding: 6px 10px;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 12px;
+      border: 1px solid #333;
+      padding: 6px 12px;
       font-size: 13px;
       font-weight: 600;
       color: #fff;
+      background-color: #000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
-    /* Load = green */
-    .small-btn.load {
-      background-color: #2ecc71;
-    }
-
-    .small-btn.load:active {
-      background-color: #27ae60;
-    }
-
-    /* Open/Close = blue */
-    .small-btn.open {
-      background-color: var(--accent);
-    }
-
-    .small-btn.open:active {
-      background-color: var(--accent-soft);
-    }
-
-    /* Delete = red */
-    .small-btn.delete {
-      background-color: #5b1a1a;
-    }
-
-    .small-btn.delete:active {
-      background-color: #3e1010;
+    .small-btn:active {
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #111;
     }
 
     .open-panel {
@@ -399,6 +482,94 @@
       margin: 6px 0 10px;
     }
 
+    /* --- Tutorial overlay --- */
+    .tutorial-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .tutorial-overlay.visible {
+      display: flex;
+    }
+
+    .tutorial-card {
+      width: 100%;
+      max-width: 420px;
+      background-color: #121212;
+      border-radius: 24px;
+      padding: 20px 18px 16px;
+      border: 1px solid #333;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tutorial-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tutorial-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tutorial-bullets {
+      margin-top: 8px;
+      padding-left: 18px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .tutorial-bullets li {
+      margin-bottom: 4px;
+    }
+
+    .tutorial-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .tutorial-primary-btn,
+    .tutorial-secondary-btn {
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      border: 1px solid #333;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #000;
+    }
+
+    .tutorial-primary-btn {
+      background-color: var(--accent-soft);
+      border-color: var(--accent-soft);
+    }
+
+    .tutorial-primary-btn:active,
+    .tutorial-secondary-btn:active {
+      transform: translateY(1px);
+      opacity: 0.9;
+    }
+
+    .tutorial-screen {
+      display: none;
+    }
+
+    .tutorial-screen.active {
+      display: block;
+    }
+
     @media (min-width: 500px) {
       .app-wrapper {
         align-items: center;
@@ -422,17 +593,110 @@
       </button>
     </header>
 
+    <!-- Tutorial Overlay (one-time walkthrough) -->
+    <div id="tutorialOverlay" class="tutorial-overlay">
+      <div class="tutorial-card">
+        <!-- Step 0: Welcome / choice -->
+        <div class="tutorial-screen active" data-tutorial-step="0">
+          <div class="tutorial-title">Welcome to Code & Iron</div>
+          <div class="tutorial-body">
+            This is your workout logger, routines builder, and progress tracker —
+            all in one place.
+          </div>
+          <ul class="tutorial-bullets">
+            <li>Log exercises and sets on the home screen</li>
+            <li>Save routines you can reload later</li>
+            <li>Track PRs and progress over time</li>
+          </ul>
+          <div class="tutorial-actions">
+            <button id="tutorialSkipBtn" class="tutorial-secondary-btn">
+              Skip for now
+            </button>
+            <button id="tutorialStartBtn" class="tutorial-primary-btn">
+              Show me around
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 1: Logger -->
+        <div class="tutorial-screen" data-tutorial-step="1">
+          <div class="tutorial-title">1. Log your workout</div>
+          <div class="tutorial-body">
+            On the home screen:
+          </div>
+          <ul class="tutorial-bullets">
+            <li>Type an exercise name (e.g. Bench Press, Push Ups)</li>
+            <li>Use the + / – next to sets to add or remove sets</li>
+            <li>Use the top-right + to add another exercise card</li>
+            <li>Hit “Save progress” when you're done</li>
+          </ul>
+          <div class="tutorial-actions">
+            <button data-tutorial-back class="tutorial-secondary-btn">
+              Back
+            </button>
+            <button data-tutorial-next class="tutorial-primary-btn">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Routines -->
+        <div class="tutorial-screen" data-tutorial-step="2">
+          <div class="tutorial-title">2. Save routines</div>
+          <div class="tutorial-body">
+            In the Routines menu:
+          </div>
+          <ul class="tutorial-bullets">
+            <li>Give your routine a name (e.g. Push Day, Leg Day)</li>
+            <li>Tap “Create” to save the current layout from the home screen</li>
+            <li>Use “Load” to send that routine back to the home screen</li>
+            <li>Use “Open” to edit the template itself</li>
+          </ul>
+          <div class="tutorial-actions">
+            <button data-tutorial-back class="tutorial-secondary-btn">
+              Back
+            </button>
+            <button data-tutorial-next class="tutorial-primary-btn">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Progress & PRs -->
+        <div class="tutorial-screen" data-tutorial-step="3">
+          <div class="tutorial-title">3. Track progress & PRs</div>
+          <div class="tutorial-body">
+            In the Progress menu:
+          </div>
+          <ul class="tutorial-bullets">
+            <li>See your best weight × reps and max reps for each exercise</li>
+            <li>New PRs are tagged when you beat your old best</li>
+            <li>Tap an exercise to see recent history by date</li>
+          </ul>
+          <div class="tutorial-actions">
+            <button data-tutorial-back class="tutorial-secondary-btn">
+              Back
+            </button>
+            <button data-tutorial-done class="tutorial-primary-btn">
+              Got it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Menu -->
     <div class="menu-dropdown" id="menuDropdown">
       <div class="menu-item" data-nav="workouts">Routines</div>
+      <div class="menu-item" data-nav="progress">Progress</div>
     </div>
 
     <!-- HOME / LOGGER SCREEN -->
     <main id="homeScreen" class="screen active">
       <section class="card">
         <div id="workoutsContainer" class="workouts-container"></div>
-        <button id="addWorkoutBtn" class="primary-btn footer-btn">
-          Add exercise
+        <button id="saveProgressBtn" class="primary-btn footer-btn">
+          Save progress
         </button>
       </section>
     </main>
@@ -468,10 +732,30 @@
         </div>
       </section>
     </main>
+
+    <!-- PROGRESS SCREEN (now a separate screen) -->
+    <main id="progressScreen" class="screen">
+      <section class="card">
+        <h2 class="card-title">Progress</h2>
+        <p class="card-subtitle">
+          Your best sets for each exercise based on saved workouts.
+        </p>
+
+        <div id="progressList" class="saved-list"></div>
+
+        <!-- Detail panel for a single exercise -->
+        <div id="progressDetail" class="open-panel"></div>
+
+        <div class="link-back" id="backToLoggerFromProgress">
+          <span>←</span> Back to workout logger
+        </div>
+      </section>
+    </main>
   </div>
 
   <script>
     // ---------- Helpers: exercise card + sets ----------
+    // NOTE: createSetBox is now clean. Tutorial is NO LONGER inside this function.
 
     function createSetBox(card, setData, indexOverride) {
       const existing = card.querySelectorAll(".set-box").length;
@@ -488,16 +772,16 @@
       const row = document.createElement("div");
       row.className = "set-row";
 
+      const fields = document.createElement("div");
+      fields.className = "set-fields";
+
       const colWeight = document.createElement("div");
       colWeight.className = "set-col";
-      const weightLabel = document.createElement("label");
-      weightLabel.textContent = "Weight";
-      colWeight.appendChild(weightLabel);
 
       const weightInput = document.createElement("input");
       weightInput.className = "set-input";
       weightInput.type = "text";
-      weightInput.placeholder = "lbs";
+      weightInput.placeholder = "Weight";
       if (setData && setData.weight != null) {
         weightInput.value = setData.weight;
       }
@@ -505,32 +789,30 @@
 
       const colReps = document.createElement("div");
       colReps.className = "set-col";
-      const repsLabel = document.createElement("label");
-      repsLabel.textContent = "Reps";
-      colReps.appendChild(repsLabel);
 
       const repsInput = document.createElement("input");
       repsInput.className = "set-input";
       repsInput.type = "number";
       repsInput.min = "0";
-      repsInput.placeholder = "0";
+      repsInput.placeholder = "Reps";
       if (setData && setData.reps != null) {
         repsInput.value = setData.reps;
       }
       colReps.appendChild(repsInput);
 
-      row.appendChild(colWeight);
-      row.appendChild(colReps);
-      box.appendChild(row);
+      fields.appendChild(colWeight);
+      fields.appendChild(colReps);
 
-      const removeSetBtn = document.createElement("button");
-      removeSetBtn.className = "remove-set-btn";
-      removeSetBtn.textContent = "Remove set";
-      removeSetBtn.addEventListener("click", () => {
+      const actions = document.createElement("div");
+      actions.className = "set-actions";
+
+      const minusBtn = document.createElement("button");
+      minusBtn.className = "round-btn minus";
+      minusBtn.textContent = "–";
+      minusBtn.addEventListener("click", () => {
         const allSets = card.querySelectorAll(".set-box");
         if (allSets.length > 1) {
           box.remove();
-          // renumber
           card.querySelectorAll(".set-box").forEach((b, i) => {
             const h = b.querySelector(".set-header");
             if (h) h.textContent = "Set " + (i + 1);
@@ -538,7 +820,21 @@
         }
       });
 
-      box.appendChild(removeSetBtn);
+      const plusBtn = document.createElement("button");
+      plusBtn.className = "round-btn plus";
+      plusBtn.textContent = "+";
+      plusBtn.addEventListener("click", () => {
+        const newBox = createSetBox(card);
+        const wrapper = card.querySelector(".sets-wrapper") || card;
+        wrapper.appendChild(newBox);
+      });
+
+      actions.appendChild(minusBtn);
+      actions.appendChild(plusBtn);
+
+      row.appendChild(fields);
+      row.appendChild(actions);
+      box.appendChild(row);
 
       return box;
     }
@@ -547,25 +843,56 @@
       const card = document.createElement("div");
       card.className = "workout-card";
 
+      const setsWrapper = document.createElement("div");
+      setsWrapper.className = "sets-wrapper";
+
+      const header = document.createElement("div");
+      header.className = "workout-header";
+
       const nameInput = document.createElement("input");
       nameInput.className = "text-input workout-name";
       nameInput.placeholder = "Enter exercise name";
       if (workoutData && workoutData.name) {
         nameInput.value = workoutData.name;
       }
-      card.appendChild(nameInput);
+
+      const headerActions = document.createElement("div");
+      headerActions.className = "workout-header-actions";
 
       const removeWorkoutBtn = document.createElement("button");
-      removeWorkoutBtn.className = "danger-btn";
-      removeWorkoutBtn.textContent = "Remove exercise";
+      removeWorkoutBtn.className = "round-btn minus";
+      removeWorkoutBtn.textContent = "–";
       removeWorkoutBtn.addEventListener("click", () => {
-        card.remove();
-      });
-      card.appendChild(removeWorkoutBtn);
+        const allCards = parent.querySelectorAll(".workout-card");
 
-      // sets wrapper
-      const setsWrapper = document.createElement("div");
-      setsWrapper.className = "sets-wrapper";
+        if (allCards.length <= 1) {
+          nameInput.value = "";
+          const setsWrapper = card.querySelector(".sets-wrapper");
+          if (setsWrapper) {
+            setsWrapper.innerHTML = "";
+            const setBox = createSetBox(card, { weight: "", reps: "" }, 1);
+            setsWrapper.appendChild(setBox);
+          }
+        } else {
+          card.remove();
+        }
+      });
+
+      // Header "+" = add a NEW EXERCISE card below (NOT a set)
+      const addExerciseBtn = document.createElement("button");
+      addExerciseBtn.className = "round-btn plus";
+      addExerciseBtn.textContent = "+";
+      addExerciseBtn.addEventListener("click", () => {
+        createWorkoutCard(parent);
+      });
+
+      headerActions.appendChild(removeWorkoutBtn);
+      headerActions.appendChild(addExerciseBtn);
+
+      header.appendChild(nameInput);
+      header.appendChild(headerActions);
+
+      card.appendChild(header);
       card.appendChild(setsWrapper);
 
       const setsFromData =
@@ -578,41 +905,88 @@
         setsWrapper.appendChild(setBox);
       });
 
-      const addSetBtn = document.createElement("button");
-      addSetBtn.className = "primary-btn";
-      addSetBtn.textContent = "Add set";
-      addSetBtn.addEventListener("click", () => {
-        const newSetBox = createSetBox(card);
-        setsWrapper.appendChild(newSetBox);
-      });
-      card.appendChild(addSetBtn);
-
       parent.appendChild(card);
       return card;
     }
 
-    // helper to read layout from any container
-    function getWorkoutLayoutFrom(container) {
-      const cards = container.querySelectorAll(".workout-card");
-      const workouts = [];
+    // ---------- One-time tutorial walkthrough (GLOBAL) ----------
+    // NOTE: This was previously nested inside createSetBox.
+    // Moving it here makes initTutorial() available to init() at the bottom.
 
-      cards.forEach((card) => {
-        const nameInput = card.querySelector(".workout-name");
-        const sets = [];
-        card.querySelectorAll(".set-box").forEach((box) => {
-          const inputs = box.querySelectorAll(".set-input");
-          sets.push({
-            weight: inputs[0] ? inputs[0].value : "",
-            reps: inputs[1] ? inputs[1].value : "",
-          });
+    const TUTORIAL_KEY = "codeAndIronTutorialSeen_v1";
+
+    function initTutorial() {
+      const overlay = document.getElementById("tutorialOverlay");
+      if (!overlay) return;
+
+      const seen = localStorage.getItem(TUTORIAL_KEY);
+      if (seen === "true") {
+        overlay.classList.remove("visible");
+        return;
+      }
+
+      const screens = Array.from(
+        overlay.querySelectorAll(".tutorial-screen")
+      );
+      if (!screens.length) return;
+
+      let currentIndex = 0;
+
+      function showStep(index) {
+        screens.forEach((el, i) => {
+          el.classList.toggle("active", i === index);
         });
-        workouts.push({
-          name: nameInput ? nameInput.value : "",
-          sets,
+      }
+
+      function finishTutorial() {
+        localStorage.setItem(TUTORIAL_KEY, "true");
+        overlay.classList.remove("visible");
+      }
+
+      overlay.classList.add("visible");
+      showStep(currentIndex);
+
+      const skipBtn = document.getElementById("tutorialSkipBtn");
+      const startBtn = document.getElementById("tutorialStartBtn");
+
+      if (skipBtn) {
+        skipBtn.addEventListener("click", () => {
+          finishTutorial();
+        });
+      }
+
+      if (startBtn) {
+        startBtn.addEventListener("click", () => {
+          currentIndex = 1;
+          showStep(currentIndex);
+        });
+      }
+
+      overlay.querySelectorAll("[data-tutorial-next]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (currentIndex < screens.length - 1) {
+            currentIndex++;
+            showStep(currentIndex);
+          } else {
+            finishTutorial();
+          }
         });
       });
 
-      return workouts;
+      overlay.querySelectorAll("[data-tutorial-back]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (currentIndex > 0) {
+            currentIndex--;
+            showStep(currentIndex);
+          }
+        });
+      });
+
+      overlay.querySelectorAll("[data-tutorial-done]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          finishTutorial();
+        });
+      });
     }
 
     // ---------- Screens & navigation ----------
@@ -621,6 +995,83 @@
     const menuDropdown = document.getElementById("menuDropdown");
     const homeScreen = document.getElementById("homeScreen");
     const workoutsScreen = document.getElementById("workoutsScreen");
+    const progressScreen = document.getElementById("progressScreen");
+    const progressDetail = document.getElementById("progressDetail");
+
+    function renderProgressList() {
+      const list = document.getElementById("progressList");
+      list.innerHTML = "";
+
+      const entries = Object.values(progressData);
+      if (!entries.length) {
+        const empty = document.createElement("div");
+        empty.className = "card-subtitle";
+        empty.textContent =
+          "No progress saved yet. Log a workout on the home screen and tap 'Save progress'.";
+        list.appendChild(empty);
+        if (progressDetail) {
+          progressDetail.classList.remove("open");
+          progressDetail.innerHTML = "";
+        }
+        return;
+      }
+
+      const today = new Date().toISOString().split("T")[0];
+
+      entries.sort((a, b) => a.name.localeCompare(b.name));
+
+      let currentLetter = null;
+
+      entries.forEach((ex) => {
+        if (!ex.name) return;
+
+        const firstLetter = ex.name.charAt(0).toUpperCase();
+
+        if (firstLetter !== currentLetter) {
+          currentLetter = firstLetter;
+          const letterHeader = document.createElement("div");
+          letterHeader.className = "progress-letter-header";
+          letterHeader.textContent = currentLetter;
+          list.appendChild(letterHeader);
+        }
+
+        const row = document.createElement("div");
+        row.className = "saved-item";
+
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "saved-name";
+        nameDiv.textContent = ex.name;
+        row.appendChild(nameDiv);
+
+        const detail = document.createElement("div");
+        detail.style.fontSize = "13px";
+        detail.style.color = "#bbbbbb";
+
+        let prText = "";
+
+        if (ex.bestRepsDate && ex.bestRepsDate.startsWith(today)) {
+          prText += " (NEW REP PR!)";
+        }
+
+        if (ex.bestWeightDate && ex.bestWeightDate.startsWith(today)) {
+          prText += " (NEW WEIGHT PR!)";
+        }
+
+        if (ex.bestWeight !== null) {
+          detail.textContent = `Best: ${ex.bestWeight} x ${ex.bestWeightReps} • Max reps: ${ex.bestReps}${prText}`;
+        } else {
+          detail.textContent = `Best: ${ex.bestReps} reps${prText}`;
+        }
+
+        row.appendChild(detail);
+
+        row.addEventListener("click", () => {
+          openProgressDetail(ex);
+        });
+
+        list.appendChild(row);
+      });
+    }
 
     function closeMenu() {
       menuDropdown.classList.remove("open");
@@ -639,31 +1090,228 @@
     document.querySelectorAll(".menu-item").forEach((item) => {
       item.addEventListener("click", () => {
         const nav = item.dataset.nav;
-        if (nav === "workouts") {
-          showScreen("workouts");
+        if (nav === "workouts" || nav === "progress") {
+          showScreen(nav);
+          if (nav === "progress") {
+            renderProgressList();
+          }
         }
         closeMenu();
       });
     });
 
+    const backToLoggerFromProgress = document.getElementById("backToLoggerFromProgress");
+    if (backToLoggerFromProgress) {
+      backToLoggerFromProgress.addEventListener("click", () => {
+        showScreen("home");
+      });
+    }
+
     function showScreen(which) {
       if (which === "home") {
         homeScreen.classList.add("active");
         workoutsScreen.classList.remove("active");
+        progressScreen.classList.remove("active");
       } else if (which === "workouts") {
         homeScreen.classList.remove("active");
         workoutsScreen.classList.add("active");
+        progressScreen.classList.remove("active");
+      } else if (which === "progress") {
+        homeScreen.classList.remove("active");
+        workoutsScreen.classList.remove("active");
+        progressScreen.classList.add("active");
+      }
+
+      if (which !== "progress" && progressDetail) {
+        progressDetail.classList.remove("open");
+        progressDetail.innerHTML = "";
       }
     }
 
     // ---------- Logger (home) ----------
 
     const workoutsContainer = document.getElementById("workoutsContainer");
-    const addWorkoutBtn = document.getElementById("addWorkoutBtn");
+    const saveProgressBtn = document.getElementById("saveProgressBtn");
 
-    addWorkoutBtn.addEventListener("click", () => {
-      createWorkoutCard(workoutsContainer);
+    saveProgressBtn.addEventListener("click", () => {
+      saveCurrentProgress();
+      alert("Progress saved!");
     });
+
+    // ---------- Progress detail panel (last 5 logs) ----------
+
+    function formatDateLabel(isoDate) {
+      if (!isoDate) return "";
+      const d = new Date(isoDate);
+      return d.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+
+    function openProgressDetail(ex) {
+      if (!progressDetail) return;
+
+      progressDetail.classList.add("open");
+      progressDetail.innerHTML = "";
+
+      const title = document.createElement("div");
+      title.className = "card-subtitle";
+      title.style.marginBottom = "8px";
+      title.textContent = ex.name + " — last sessions";
+      progressDetail.appendChild(title);
+
+      if (ex.bestRepsDate || ex.bestWeightDate) {
+        const prInfo = document.createElement("div");
+        prInfo.style.fontSize = "13px";
+        prInfo.style.color = "#bbbbbb";
+        prInfo.style.marginBottom = "8px";
+
+        const parts = [];
+        if (ex.bestRepsDate) {
+          parts.push(
+            `Rep PR: ${ex.bestReps} reps on ${formatDateLabel(
+              ex.bestRepsDate.split("T")[0]
+            )}`
+          );
+        }
+        if (ex.bestWeightDate && ex.bestWeight !== null) {
+          parts.push(
+            `Weight PR: ${ex.bestWeight} x ${ex.bestWeightReps} on ${formatDateLabel(
+              ex.bestWeightDate.split("T")[0]
+            )}`
+          );
+        }
+
+        prInfo.textContent = parts.join(" • ");
+        progressDetail.appendChild(prInfo);
+      }
+
+      const history = (ex.history || []).slice(0, 5);
+      if (!history.length) {
+        const empty = document.createElement("div");
+        empty.style.fontSize = "13px";
+        empty.style.color = "#bbbbbb";
+        empty.textContent =
+          "No detailed history yet. Save progress a few times for this exercise.";
+        progressDetail.appendChild(empty);
+        return;
+      }
+
+      history.forEach((entry) => {
+        const row = document.createElement("div");
+        row.className = "progress-detail-row";
+
+        const left = document.createElement("span");
+        left.textContent = formatDateLabel(entry.date);
+
+        const right = document.createElement("span");
+        if (entry.bestWeight !== null) {
+          right.textContent = `${entry.bestWeight} x ${entry.bestWeightReps} • Max reps: ${entry.bestReps}`;
+        } else {
+          right.textContent = `Best: ${entry.bestReps} reps`;
+        }
+
+        row.appendChild(left);
+        row.appendChild(right);
+        progressDetail.appendChild(row);
+      });
+    }
+
+    function saveCurrentProgress() {
+      const workouts = getCurrentWorkoutLayout();
+      if (!workouts || !workouts.length) return;
+
+      const now = new Date().toISOString();
+      const today = now.split("T")[0];
+      const updated = { ...progressData };
+
+      workouts.forEach((w) => {
+        const rawName = (w.name || "").trim();
+        if (!rawName) return;
+
+        const key = rawName.toLowerCase();
+        let maxReps = 0;
+        let bestWeight = null;
+        let bestWeightReps = 0;
+
+        (w.sets || []).forEach((set) => {
+          const repsNum = parseInt(set.reps, 10);
+          if (!repsNum || isNaN(repsNum)) return;
+
+          const weightStr = (set.weight || "").trim();
+          const weightNum = parseFloat(weightStr);
+
+          if (repsNum > maxReps) maxReps = repsNum;
+
+          if (!isNaN(weightNum)) {
+            if (
+              bestWeight === null ||
+              weightNum > bestWeight ||
+              (weightNum === bestWeight && repsNum > bestWeightReps)
+            ) {
+              bestWeight = weightNum;
+              bestWeightReps = repsNum;
+            }
+          }
+        });
+
+        if (maxReps === 0 && bestWeight === null) return;
+
+        const existing = updated[key] || {
+          name: rawName,
+          bestReps: 0,
+          bestRepsDate: null,
+          bestWeight: null,
+          bestWeightReps: 0,
+          bestWeightDate: null,
+          lastUpdated: null,
+          history: []
+        };
+
+        if (maxReps > existing.bestReps) {
+          existing.bestReps = maxReps;
+          existing.bestRepsDate = now;
+        }
+
+        if (bestWeight !== null) {
+          if (
+            existing.bestWeight === null ||
+            bestWeight > existing.bestWeight ||
+            (bestWeight === existing.bestWeight &&
+              bestWeightReps > existing.bestWeightReps)
+          ) {
+            existing.bestWeight = bestWeight;
+            existing.bestWeightReps = bestWeightReps;
+            existing.bestWeightDate = now;
+          }
+        }
+
+        const snapshot = {
+          date: today,
+          bestReps: maxReps,
+          bestWeight: bestWeight,
+          bestWeightReps: bestWeightReps
+        };
+
+        existing.history = existing.history || [];
+        existing.history = existing.history.filter((h) => h.date !== today);
+        existing.history.push(snapshot);
+        existing.history.sort((a, b) => b.date.localeCompare(a.date));
+
+        if (existing.history.length > 30) {
+          existing.history = existing.history.slice(0, 30);
+        }
+
+        existing.lastUpdated = now;
+        existing.name = rawName;
+        updated[key] = existing;
+      });
+
+      progressData = updated;
+      saveProgress(progressData);
+    }
 
     function getCurrentWorkoutLayout() {
       return getWorkoutLayoutFrom(workoutsContainer);
@@ -688,6 +1336,29 @@
     const backToLogger = document.getElementById("backToLogger");
 
     const STORAGE_KEY = "codeAndIronTemplates_v2";
+    const PROGRESS_KEY = "codeAndIronProgress_v1";
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY);
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch (e) {
+        console.error("Error loading progress", e);
+        return {};
+      }
+    }
+
+    function saveProgress(progress) {
+      try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+      } catch (e) {
+        console.error("Error saving progress", e);
+      }
+    }
+
+    let progressData = loadProgress();
 
     function loadTemplates() {
       try {
@@ -712,6 +1383,29 @@
 
     let templates = loadTemplates();
 
+    function getWorkoutLayoutFrom(container) {
+      const cards = container.querySelectorAll(".workout-card");
+      const workouts = [];
+
+      cards.forEach((card) => {
+        const nameInput = card.querySelector(".workout-name");
+        const sets = [];
+        card.querySelectorAll(".set-box").forEach((box) => {
+          const inputs = box.querySelectorAll(".set-input");
+          sets.push({
+            weight: inputs[0] ? inputs[0].value : "",
+            reps: inputs[1] ? inputs[1].value : "",
+          });
+        });
+        workouts.push({
+          name: nameInput ? nameInput.value : "",
+          sets,
+        });
+      });
+
+      return workouts;
+    }
+
     function buildEditorPanel(panel, tpl) {
       panel.innerHTML = "";
       panel.classList.add("open");
@@ -726,22 +1420,6 @@
           : [{ name: "", sets: [{ weight: "", reps: "" }] }];
 
       data.forEach((w) => createWorkoutCard(innerContainer, w));
-
-      // Add exercise button inside panel
-      const addExerciseBtn = document.createElement("button");
-      addExerciseBtn.className = "primary-btn footer-btn";
-      addExerciseBtn.textContent = "Add exercise";
-      addExerciseBtn.addEventListener("click", () => {
-        createWorkoutCard(innerContainer);
-      });
-      panel.appendChild(addExerciseBtn);
-
-      const note = document.createElement("p");
-      note.className = "card-subtitle";
-      note.style.marginTop = "10px";
-      note.textContent =
-        "You’re viewing this template’s layout. Changes here are saved when you close this panel.";
-      panel.appendChild(note);
     }
 
     function closePanelAndSave(panel) {
@@ -776,7 +1454,6 @@
         const btnWrap = document.createElement("div");
         btnWrap.className = "saved-buttons";
 
-        // LOAD – green
         const loadBtn = document.createElement("button");
         loadBtn.className = "small-btn load";
         loadBtn.textContent = "Load";
@@ -786,57 +1463,52 @@
         });
         btnWrap.appendChild(loadBtn);
 
-        // OPEN/CLOSE – blue
         const openBtn = document.createElement("button");
         openBtn.className = "small-btn open";
         openBtn.textContent = "Open";
         btnWrap.appendChild(openBtn);
 
-        // DELETE – red
         const delBtn = document.createElement("button");
         delBtn.className = "small-btn delete";
         delBtn.textContent = "Delete";
         delBtn.addEventListener("click", () => {
-          // if its panel is open, close and discard it
           const panel = savedTemplatesList.querySelector(
             `.open-panel[data-index="${index}"]`
           );
           if (panel && panel.classList.contains("open")) {
-            closePanelAndSave(panel); // save then delete
+            closePanelAndSave(panel);
           }
           templates.splice(index, 1);
           saveTemplates(templates);
           renderTemplatesList();
+          renderProgressList();
         });
         btnWrap.appendChild(delBtn);
 
         row.appendChild(btnWrap);
         wrapper.appendChild(row);
 
-        // dropdown panel for "Open"
         const panel = document.createElement("div");
         panel.className = "open-panel";
         panel.dataset.index = index.toString();
         wrapper.appendChild(panel);
 
         openBtn.addEventListener("click", () => {
-          // if this panel is already open -> close & save
           if (panel.classList.contains("open")) {
             closePanelAndSave(panel);
             openBtn.textContent = "Open";
             return;
           }
 
-          // close & save any other open panels
           document
             .querySelectorAll(".open-panel.open")
             .forEach((p) => {
               if (p !== panel) {
                 const btnIndex = p.dataset.index;
-                const btn = savedTemplatesList.querySelector(
+                const otherBtn = savedTemplatesList.querySelector(
                   `.saved-wrapper:nth-child(${parseInt(btnIndex, 10) + 1}) .small-btn.open`
                 );
-                if (btn) btn.textContent = "Open";
+                if (otherBtn) otherBtn.textContent = "Open";
                 closePanelAndSave(p);
               }
             });
@@ -857,16 +1529,18 @@
       }
 
       const workoutsData = getCurrentWorkoutLayout();
-      if (!workoutsData.length) {
-        alert("Create at least one exercise on the main page first.");
-        return;
-      }
+
+      const safeWorkouts =
+        workoutsData && workoutsData.length
+          ? workoutsData
+          : [{ name: "", sets: [{ weight: "", reps: "" }] }];
 
       templates.push({
         id: Date.now(),
         name,
-        workouts: JSON.parse(JSON.stringify(workoutsData)), // deep-ish copy
+        workouts: JSON.parse(JSON.stringify(safeWorkouts)),
       });
+
       saveTemplates(templates);
       renderTemplatesList();
       templateNameInput.value = "";
@@ -877,10 +1551,12 @@
     });
 
     // ---------- Init ----------
+    // NOTE: initTutorial() is now defined above, so this call works.
 
     function init() {
-      createWorkoutCard(workoutsContainer); // one empty exercise by default
+      createWorkoutCard(workoutsContainer);
       renderTemplatesList();
+      initTutorial(); // run one-time tutorial if not seen
     }
 
     init();
