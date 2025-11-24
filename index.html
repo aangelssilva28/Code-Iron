@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Code and Iron </title>
+  <title>Code and Iron</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Germania One font -->
@@ -24,806 +24,262 @@
       --border-soft: #2a2a2a;
       --radius-card: 24px;
       --radius-pill: 999px;
-      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.7);
-    }
-
-    * {
-      box-sizing: border-box;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.7);
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: "Germania One", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text-main);
+      margin:0;
+      padding:0;
+      font-family:"Germania One",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      background-color:var(--bg);
+      color:var(--text-main);
     }
 
     .app-wrapper {
-      min-height: 100vh;
-      padding: 12px 12px 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      min-height:100vh;
+      padding:12px 12px 32px;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
     }
 
+    /* Header */
     .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 8px 4px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin:8px 4px 16px;
     }
 
     .app-header h1 {
-      font-size: 32px;
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: 0.5px;
+      font-size:32px;
+      font-weight:800;
+      margin:0;
+      letter-spacing:0.5px;
     }
 
+    .version-label {
+      font-size:12px;
+      opacity:0.6;
+      margin-top:-6px;
+      margin-left:4px;
+    }
+
+    /* Menu */
     .menu-button {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      background-color: #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
+      width:44px;height:44px;
+      border-radius:12px;
+      border:1px solid #333;
+      background:#111;
+      display:flex;
+      justify-content:center;
+      align-items:center;
     }
-
-    .menu-button:active {
-      background-color: #222;
-    }
+    .menu-button:active { background:#222; }
 
     .menu-icon {
-      width: 18px;
-      height: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      width:18px;height:18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
-
     .menu-icon span {
-      display: block;
-      height: 3px;
-      border-radius: 999px;
-      background-color: #fff;
+      height:3px;
+      background:#fff;
+      border-radius:999px;
     }
 
     .menu-dropdown {
-      position: absolute;
-      right: 16px;
-      top: 64px;
-      background-color: #111;
-      border-radius: 16px;
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-8px);
-      transition: opacity 0.18s ease, transform 0.18s ease;
-      min-width: 220px;
-      z-index: 20;
+      position:absolute;
+      right:16px; top:64px;
+      background:#111;
+      min-width:220px;
+      border-radius:16px;
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(-8px);
+      transition:opacity .18s ease, transform .18s ease;
+      box-shadow:var(--shadow-soft);
+      z-index:50;
     }
-
     .menu-dropdown.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
+      opacity:1; pointer-events:auto; transform:translateY(0);
     }
-
     .menu-item {
-      padding: 14px 18px;
-      font-size: 16px;
-      border-bottom: 1px solid #222;
+      padding:14px 18px;
+      font-size:16px;
+      border-bottom:1px solid #222;
     }
+    .menu-item:last-child { border-bottom:none; }
+    .menu-item:active { background:#1f1f1f; }
 
-    .menu-item:last-child {
-      border-bottom: none;
-    }
-
-    .menu-item:active {
-      background-color: #1f1f1f;
-    }
-
-    main.screen {
-      display: none;
-      flex: 1;
-    }
-
-    main.screen.active {
-      display: block;
-    }
+    main.screen { display:none; flex:1; }
+    main.screen.active { display:block; }
 
     .card {
-      max-width: 480px;
-      margin: 0 auto;
-      background-color: var(--card);
-      border-radius: var(--radius-card);
-      padding: 18px 16px 24px;
-      box-shadow: var(--shadow-soft);
+      max-width:480px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:var(--radius-card);
+      padding:18px 16px 24px;
+      box-shadow:var(--shadow-soft);
     }
 
     .card-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin: 4px 4px 8px;
+      font-size:22px;
+      font-weight:700;
+      margin:4px 4px 8px;
     }
 
     .card-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 4px 16px;
-      line-height: 1.4;
-    }
-
-    .input-label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+      font-size:14px;
+      color:var(--text-muted);
+      margin:0 4px 16px;
+      line-height:1.4;
     }
 
     .text-input {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid #333;
-      background-color: #000;
-      color: var(--text-main);
-      font-size: 16px;
-    }
-
-    .text-input::placeholder {
-      color: #666;
+      width:100%;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid #333;
+      background:#000;
+      color:#fff;
+      font-size:16px;
     }
 
     .workouts-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
-      margin-bottom: 12px;
-    }
-
-    .workout-card {
-      background-color: var(--card-inner);
-      border-radius: 20px;
-      padding: 14px 12px 16px;
-      border: 1px solid var(--border-soft);
-    }
-
-    .workout-name {
-      margin-bottom: 0;
-    }
-
-    .workout-header {
-      display: flex;
-      align-items: stretch;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .workout-header .workout-name {
-      flex: 1;
-      height: 44px;
-      padding: 0 12px;
-    }
-
-    .workout-header-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .danger-btn,
-    .primary-btn {
-      width: 100%;
-      border-radius: var(--radius-pill);
-      padding: 11px 16px;
-      font-size: 17px;
-      font-weight: 600;
-      border: none;
-      color: #fff;
-    }
-
-    .danger-btn {
-      background-color: var(--danger);
-      margin: 4px 0 10px;
-    }
-
-    .danger-btn:active {
-      background-color: var(--danger-soft);
+      display:flex; flex-direction:column;
+      gap:12px; margin-top:4px; margin-bottom:12px;
     }
 
     .primary-btn {
-      width: 100%;
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-size: 17px;
-      font-weight: 600;
-      border: 1px solid #333;
-      color: #fff;
-      margin-top: 8px;
-      background-color: #000;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-      -webkit-tap-highlight-color: transparent;
-      -webkit-appearance: none;
-      appearance: none;
+      width:100%;
+      border-radius:12px;
+      padding:11px 16px;
+      margin-top:8px;
+      background:#000;
+      border:1px solid #333;
+      color:#fff;
+      font-size:17px;
+      font-weight:600;
+      box-shadow:0 6px 16px rgba(0,0,0,0.5);
     }
 
-    .primary-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-      background-color: #111 !important;
-      border-color: #333 !important;
-    }
-
-    .footer-btn {
-      margin-top: 10px;
-    }
-
-    .set-box {
-      background-color: #151515;
-      border-radius: 16px;
-      padding: 10px 10px 12px;
-      border: 1px solid #262626;
-      margin-top: 4px;
-      margin-bottom: 6px;
-    }
-
-    .set-header {
-      font-size: 15px;
-      font-weight: 700;
-      color: #ffb74d;
-      margin-bottom: 6px;
-    }
-
-    /* Progress screen letter group headers */
-    .progress-letter-header {
-      margin-top: 10px;
-      margin-bottom: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      text-transform: uppercase;
-    }
-
-    /* Rows inside the progress detail panel */
-    .progress-detail-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .progress-detail-row span:first-child {
-      color: #bbbbbb;
-    }
-
-    .progress-detail-row span:last-child {
-      color: #ffffff;
-      font-weight: 600;
-    }
-
-    .set-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .set-fields {
-      flex: 1;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .set-input {
-      width: 100%;
-      padding: 0 10px;
-      height: 44px;
-      border-radius: 12px;
-      background-color: #000;
-      border: 1px solid #333;
-      color: #fff;
-      font-size: 15px;
-      text-align: center;
-    }
-
-    .set-input::placeholder {
-      color: #666;
-    }
-
-    .set-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .round-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      background-color: #000;
-      border: 1px solid #333;
-      color: #fff;
-      height: 44px;
-      min-width: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 0 10px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    .round-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-      background-color: #111;
-    }
-
-    .set-col {
-      flex: 1;
-    }
-
-    .set-col label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .remove-set-btn {
-      width: 100%;
-      margin-top: 4px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: none;
-      background-color: #802121;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .remove-set-btn:active {
-      background-color: #5c1818;
-    }
-
-    .saved-list {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .saved-wrapper {
-      margin-top: 4px;
-    }
-
-    .saved-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background-color: #151515;
-      border: 1px solid #262626;
-      font-size: 15px;
-    }
-
-    .saved-name {
-      flex: 1;
-      margin-right: 10px;
-    }
-
-    .saved-buttons {
-      display: flex;
-      gap: 6px;
-    }
-
-    .small-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      -webkit-tap-highlight-color: transparent;
-      border-radius: 12px;
-      border: 1px solid #333;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #fff;
-      background-color: #000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .small-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-      background-color: #111;
-    }
-
-    .open-panel {
-      margin-top: 8px;
-      padding: 10px 10px 14px;
-      border-radius: 18px;
-      background-color: #101010;
-      border: 1px solid #262626;
-      display: none;
-    }
-
-    .open-panel.open {
-      display: block;
-    }
-
-    .link-back {
-      margin-top: 18px;
-      font-size: 15px;
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .link-back span {
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .link-back:active {
-      color: #ffffff;
-    }
-
-    .input-group {
-      margin: 6px 0 10px;
-    }
-
-    /* --- Tutorial overlay --- */
-    .tutorial-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 100;
-    }
-
-    .tutorial-overlay.visible {
-      display: flex;
-    }
-
-    .tutorial-card {
-      width: 100%;
-      max-width: 420px;
-      background-color: #121212;
-      border-radius: 24px;
-      padding: 20px 18px 16px;
-      border: 1px solid #333;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .tutorial-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .tutorial-body {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .tutorial-bullets {
-      margin-top: 8px;
-      padding-left: 18px;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .tutorial-bullets li {
-      margin-bottom: 4px;
-    }
-
-    .tutorial-actions {
-      margin-top: 16px;
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .tutorial-primary-btn,
-    .tutorial-secondary-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      border-radius: 999px;
-      padding: 8px 14px;
-      border: 1px solid #333;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      background-color: #000;
-    }
-
-    .tutorial-primary-btn {
-      background-color: var(--accent-soft);
-      border-color: var(--accent-soft);
-    }
-
-    .tutorial-primary-btn:active,
-    .tutorial-secondary-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-    }
-
-    .tutorial-screen {
-      display: none;
-    }
-
-    .tutorial-screen.active {
-      display: block;
-    }
-
+    /* Footer Legal */
     .legal-footer {
-      font-size: 0.75rem;
-      padding: 0.75rem 1rem 1.25rem;
-      opacity: 0.75;
-      text-align: center;
+      font-size:.75rem;
+      padding:.75rem 1rem 1.25rem;
+      opacity:.75;
+      text-align:center;
     }
-
     .legal-link {
-      background: none;
-      border: none;
-      padding: 0;
-      margin-bottom: 0.25rem;
-      font-size: 0.8rem;
-      text-decoration: underline;
-      cursor: pointer;
-      color: var(--text-muted);
+      font-size:.8rem;
+      text-decoration:underline;
+      color:var(--text-muted);
+      background:none; border:none;
+      cursor:pointer;
     }
-
     .legal-panel {
-      max-width: 500px;
-      margin: 0.25rem auto 0;
-      line-height: 1.3;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      max-width:500px;
+      margin:.25rem auto 0;
+      font-size:.75rem;
+      line-height:1.3;
+      color:var(--text-muted);
     }
+    .hidden { display:none; }
 
-    .hidden {
-      display: none;
-    }
-
-    @media (min-width: 500px) {
-      .app-wrapper {
-        align-items: center;
-      }
-      .card {
-        width: 430px;
-      }
-    }
   </style>
 </head>
+
 <body>
   <div class="app-wrapper">
+
+    <!-- Header -->
     <header class="app-header">
-      <h1>Code and Iron</h1>
-      <button class="menu-button" id="menuButton" aria-label="Open menu">
+      <div>
+        <h1>Code and Iron</h1>
+        <div class="version-label">v0.9.0 Beta — updated 2025-11-24</div>
+      </div>
+
+      <button class="menu-button" id="menuButton">
         <div class="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </div>
       </button>
     </header>
-
-    <!-- Tutorial Overlay (one-time walkthrough) -->
-    <div id="tutorialOverlay" class="tutorial-overlay">
-      <div class="tutorial-card">
-        <!-- Step 0: Welcome / choice -->
-        <div class="tutorial-screen active" data-tutorial-step="0">
-          <div class="tutorial-title">Welcome to Code & Iron</div>
-          <div class="tutorial-body">
-            This is your workout logger, routines builder, and progress tracker —
-            all in one place.
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Log exercises and sets on the home screen</li>
-            <li>Save routines you can reload later</li>
-            <li>Track PRs and progress over time</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button id="tutorialSkipBtn" class="tutorial-secondary-btn">
-              Skip for now
-            </button>
-            <button id="tutorialStartBtn" class="tutorial-primary-btn">
-              Show me around
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 1: Logger -->
-        <div class="tutorial-screen" data-tutorial-step="1">
-          <div class="tutorial-title">1. Log your workout</div>
-          <div class="tutorial-body">
-            On the home screen:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Type an exercise name (e.g. Bench Press, Push Ups)</li>
-            <li>Use the + / – next to sets to add or remove sets</li>
-            <li>Use the top-right + to add another exercise card</li>
-            <li>Hit “Save progress” when you're done</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn">
-              Back
-            </button>
-            <button data-tutorial-next class="tutorial-primary-btn">
-              Next
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 2: Routines -->
-        <div class="tutorial-screen" data-tutorial-step="2">
-          <div class="tutorial-title">2. Save routines</div>
-          <div class="tutorial-body">
-            In the Routines menu:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Give your routine a name (e.g. Push Day, Leg Day)</li>
-            <li>Tap “Create” to save the current layout from the home screen</li>
-            <li>Use “Load” to send that routine back to the home screen</li>
-            <li>Use “Open” to edit the template itself</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn">
-              Back
-            </button>
-            <button data-tutorial-next class="tutorial-primary-btn">
-              Next
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 3: Progress & PRs -->
-        <div class="tutorial-screen" data-tutorial-step="3">
-          <div class="tutorial-title">3. Track progress & PRs</div>
-          <div class="tutorial-body">
-            In the Progress menu:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>See your best weight × reps and max reps for each exercise</li>
-            <li>New PRs are tagged when you beat your old best</li>
-            <li>Tap an exercise to see recent history by date</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn">
-              Back
-            </button>
-            <button data-tutorial-done class="tutorial-primary-btn">
-              Got it
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Menu -->
     <div class="menu-dropdown" id="menuDropdown">
       <div class="menu-item" data-nav="workouts">Routines</div>
       <div class="menu-item" data-nav="progress">Progress</div>
+      <div class="menu-item" id="contactDev">Contact</div>
     </div>
 
-    <!-- HOME / LOGGER SCREEN -->
+    <!-- HOME -->
     <main id="homeScreen" class="screen active">
       <section class="card">
         <div id="workoutsContainer" class="workouts-container"></div>
-        <button id="saveProgressBtn" class="primary-btn footer-btn">
-          Save progress
-        </button>
+        <button id="saveProgressBtn" class="primary-btn footer-btn">Save progress</button>
       </section>
     </main>
 
-    <!-- ROUTINES SCREEN -->
+    <!-- ROUTINES -->
     <main id="workoutsScreen" class="screen">
       <section class="card">
         <h2 class="card-title">Workouts</h2>
-        <p class="card-subtitle">
-          Create and save exercise routines you can load later on the main page.
-        </p>
+        <p class="card-subtitle">Create and save exercise routines you can load later.</p>
 
-        <div class="input-group">
-          <label class="input-label" for="templateNameInput">New routine name</label>
-          <input
-            id="templateNameInput"
-            class="text-input"
-            placeholder="e.g. Chest, Legs, Shoulders, Back"
-          />
-        </div>
+        <label class="input-label" for="templateNameInput">New routine name</label>
+        <input id="templateNameInput" class="text-input" placeholder="e.g. Chest, Legs..." />
 
-        <button id="saveTemplateBtn" class="primary-btn">
-          Create
-        </button>
+        <button id="saveTemplateBtn" class="primary-btn">Create</button>
 
-        <h3 class="card-subtitle" style="margin-top:18px;margin-bottom:4px;">
-          Saved workouts
-        </h3>
+        <h3 class="card-subtitle" style="margin-top:18px;">Saved workouts</h3>
         <div id="savedTemplatesList" class="saved-list"></div>
 
-        <div class="link-back" id="backToLogger">
-          <span>←</span> Back to workout logger
-        </div>
+        <div class="link-back" id="backToLogger"><span>←</span> Back to workout logger</div>
       </section>
     </main>
 
-    <!-- PROGRESS SCREEN -->
+    <!-- PROGRESS -->
     <main id="progressScreen" class="screen">
       <section class="card">
         <h2 class="card-title">Progress</h2>
-        <p class="card-subtitle">
-          Your best sets for each exercise based on saved workouts.
-        </p>
+        <p class="card-subtitle">Your best sets for each exercise.</p>
 
         <div id="progressList" class="saved-list"></div>
-
-        <!-- Detail panel for a single exercise -->
         <div id="progressDetail" class="open-panel"></div>
 
-        <!-- Backup & Restore section -->
-        <h3 class="card-subtitle" style="margin-top:18px;margin-bottom:4px;">
-          Backup &amp; Restore
-        </h3>
+        <h3 class="card-subtitle" style="margin-top:18px;">Backup & Restore</h3>
+        <p class="card-subtitle">Generate a code to save your data externally.</p>
 
-        <p class="card-subtitle" style="margin-top:0;margin-bottom:8px;">
-          Generate a backup code and save it somewhere (Notes, email, etc.).
-          If your browser data ever gets cleared, paste it here to restore
-          your routines and progress.
-        </p>
+        <textarea id="backupText" class="text-input" rows="3"></textarea>
 
-        <textarea
-          id="backupText"
-          class="text-input"
-          rows="3"
-          placeholder="Your backup code will appear here. Copy it and save it. To restore, paste a code and tap Restore."
-        ></textarea>
+        <button id="exportBackupBtn" class="primary-btn footer-btn">Generate Code</button>
+        <button id="importBackupBtn" class="primary-btn footer-btn">Restore from backup</button>
 
-        <button id="exportBackupBtn" class="primary-btn footer-btn">
-          Generate Code
-        </button>
-
-        <button id="importBackupBtn" class="primary-btn footer-btn">
-          Restore from backup
-        </button>
-
-        <div class="link-back" id="backToLoggerFromProgress">
-          <span>←</span> Back to workout logger
-        </div>
+        <div class="link-back" id="backToLoggerFromProgress"><span>←</span> Back to workout logger</div>
       </section>
     </main>
+
   </div>
 
+  <!-- FOOTER -->
   <footer class="legal-footer">
-    <button id="toggle-privacy" class="legal-link">
-      Privacy &amp; Data
-    </button>
+    <button id="toggle-privacy" class="legal-link">Privacy &amp; Data</button>
 
     <div id="privacy-panel" class="legal-panel hidden">
       <p>
-        This app does not collect, store, or transmit any personal data.
-        All workout entries and progress logs are saved locally on your device
-        using your browser's localStorage.
+        This app stores your workouts ONLY on your device using localStorage.
+        Nothing is uploaded to a server.
       </p>
       <p>
-        No data is sent to the developer, and the developer cannot access
-        your information in any way. Clearing your browser data may erase
-        your saved progress.
+        Clearing your browser storage may erase your data. Use the Backup feature
+        to save a recovery code externally.
+      </p>
+      <p>
+        For bug reports or feature suggestions, use the Contact button in the menu.
       </p>
     </div>
   </footer>
