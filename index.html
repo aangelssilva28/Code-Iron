@@ -613,15 +613,17 @@
 <body>
   <div class="app-wrapper">
     <header class="app-header">
-      <h1>Code and Iron</h1>
-      <button class="menu-button" id="menuButton" aria-label="Open menu">
-        <div class="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
-    </header>
+  <div style="display: flex; align-items: baseline; gap: 8px;">
+    <h1>Code and Iron</h1>
+    <span style="font-size: 14px; opacity: .6;">
+  </div>
+
+  <button class="menu-button" id="menuButton">
+    <div class="menu-icon">
+      <span></span><span></span><span></span>
+    </div>
+  </button>
+</header>
 
     <!-- Tutorial Overlay (one-time walkthrough) -->
     <div id="tutorialOverlay" class="tutorial-overlay">
@@ -809,25 +811,35 @@
     </main>
   </div>
 
-  <footer class="legal-footer">
-    <button id="toggle-privacy" class="legal-link">
-      Privacy &amp; Data
-    </button>
+<footer class="legal-footer">
+  <button id="toggle-privacy" class="legal-link">
+    Privacy &amp; Data
+  </button>
 
-    <div id="privacy-panel" class="legal-panel hidden">
-      <p>
-        This app does not collect, store, or transmit any personal data.
-        All workout entries and progress logs are saved locally on your device
-        using your browser's localStorage.
-      </p>
-      <p>
-        No data is sent to the developer, and the developer cannot access
-        your information in any way. Clearing your browser data may erase
-        your saved progress.
-      </p>
-    </div>
-  </footer>
-
+  <div id="privacy-panel" class="legal-panel hidden">
+    <p>
+      This app does not collect, store, or transmit any personal data.
+      All workout entries and progress logs are saved locally on your device
+      using your browser's localStorage.
+    </p>
+    <p>
+      No data is sent to the developer, and the developer cannot access your
+      information in any way. Clearing your browser data may erase your saved
+      progress.
+    </p>
+    <p>
+      If you have ideas, run into bugs, or want to suggest features,
+      please email me at
+      <a href="mailto:aangel.ssilva28@gmail.com">
+        aangel.ssilva28@gmail.com
+      </a>.
+      I read every message and use your feedback to make this app better.
+    </p>
+    <p style="margin-top: 12px; opacity: .7;">
+    <strong>Version:</strong> v0.9.0 Beta<br>
+    <strong>Last updated:</strong> November 24, 2025
+  </div>
+</footer>
   <script src="app.js"></script>
 </body>
 </html>
