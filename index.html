@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Code and Iron</title>
+  <title>Code and Iron Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Germania One font -->
@@ -12,16 +12,19 @@
 
   <style>
     :root {
-      --bg: #000;
-      --card: #121212;
-      --card-inner: #1a1a1a;
-      --text-main: #fff;
-      --text-muted: #bbbbbb;
-      --accent: #0a84ff;
-      --accent-soft: #005fd1;
+      --bg: #000000;
+      --card: #111214;
+      --card-inner: #141518;
+      --text-main: #ffffff;
+      --text-muted: #b3b3b3;
+      --accent: #39ff14;
+      --accent-soft: #00c853;
+      --accent-dark: #00b34a;
+      --copper: #8b5a2b;
+      --gunmetal: #1A1E2C;
       --danger: #d93030;
       --danger-soft: #a52424;
-      --border-soft: #2a2a2a;
+      --border-soft: #262626;
       --radius-card: 24px;
       --radius-pill: 999px;
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.7);
@@ -36,9 +39,13 @@
       padding: 0;
       font-family: "Germania One", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
+      background-color: var(--gunmetal);
       color: var(--text-main);
     }
+
+    /* --------------------------
+       LAYOUT SHELL
+    --------------------------- */
 
     .app-wrapper {
       min-height: 100vh;
@@ -62,11 +69,60 @@
       letter-spacing: 0.5px;
     }
 
+    main.screen {
+      display: none;
+      flex: 1;
+    }
+
+    main.screen.active {
+      display: block;
+    }
+
+    .card {
+      max-width: 480px;
+      margin: 0 auto;
+      background-color: var(--card);
+      padding: 18px 16px 24px;
+      border-radius: 22px;
+      border: 2px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #1A1E2C,
+        0 4px 0 #000;
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 4px 4px 8px;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0 4px 16px;
+      line-height: 1.4;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .input-group {
+      margin: 6px 0 10px;
+    }
+
+    /* --------------------------
+       MENU
+    --------------------------- */
+
     .menu-button {
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      border: 1px solid #333;
+      border: 1px solid #2f2f2f;
       background-color: #111;
       display: flex;
       align-items: center;
@@ -75,7 +131,7 @@
     }
 
     .menu-button:active {
-      background-color: #222;
+      background-color: #1d1d1d;
     }
 
     .menu-icon {
@@ -90,7 +146,7 @@
       display: block;
       height: 3px;
       border-radius: 999px;
-      background-color: #fff;
+      background-color: #ffffff;
     }
 
     .menu-dropdown {
@@ -129,57 +185,109 @@
       background-color: #1f1f1f;
     }
 
-    main.screen {
-      display: none;
-      flex: 1;
-    }
+    /* --------------------------
+       INPUTS & BUTTONS
+    --------------------------- */
 
-    main.screen.active {
-      display: block;
-    }
-
-    .card {
-      max-width: 480px;
-      margin: 0 auto;
-      background-color: var(--card);
-      border-radius: var(--radius-card);
-      padding: 18px 16px 24px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .card-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin: 4px 4px 8px;
-    }
-
-    .card-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 4px 16px;
-      line-height: 1.4;
-    }
-
-    .input-label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .text-input {
+    .text-input,
+    .set-input {
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid #333;
+      height: 44px;
+      border-radius: 12px;
+      text-align: center;
+      box-sizing: border-box;
       background-color: #000;
-      color: var(--text-main);
+      border: 2px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 4px 0 #000;
       font-size: 16px;
+      color: #fff;
     }
 
-    .text-input::placeholder {
-      color: #666;
+    .text-input::placeholder,
+    .set-input::placeholder {
+      color: #727272;
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
     }
+
+    .set-input:focus,
+    .text-input:focus {
+      outline: 1px solid var(--copper);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.35);
+    }
+
+    .round-btn {
+      background-color: #1A1E2C;
+      height: 44px;
+      width: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 4px 0 #000;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .round-btn:active {
+      outline: 1px solid var(--copper);
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #0a0b0d;
+      box-shadow: none;
+    }
+
+    .primary-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: 12px;
+      background-color: #1A1E2C;
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 8px;
+      border: 2px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 4px 0 #000;
+      color: #fff;
+    }
+
+    .primary-btn:active {
+      outline: 1px solid var(--copper);
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #070809;
+      box-shadow: none;
+    }
+
+    .footer-btn {
+      margin-top: 10px;
+    }
+
+    .danger-btn {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      padding: 11px 16px;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      color: #fff;
+      background-color: var(--danger);
+      margin: 4px 0 10px;
+    }
+
+    .danger-btn:active {
+      background-color: var(--danger-soft);
+      outline: 1px solid var(--copper);
+    }
+
+    /* --------------------------
+       WORKOUT CARDS
+    --------------------------- */
 
     .workouts-container {
       display: flex;
@@ -190,22 +298,55 @@
     }
 
     .workout-card {
+      border: 1px solid var(--copper);
+      border-radius: 22px;
+      padding: 10px 14px;
       background-color: var(--card-inner);
-      border-radius: 20px;
-      padding: 14px 12px 16px;
-      border: 1px solid var(--border-soft);
+      margin-bottom: 14px;
+      box-shadow:
+        0 0 0 1px #1b1c20,
+        0 12px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .workout-card.collapsed {
+      padding: 14px 8px;
+    }
+
+    .workout-card.collapsed .workout-header {
+      margin: 0;
+      opacity: 0.85;
+    }
+
+    .workout-card.collapsed .sets-wrapper {
+      display: none;
+    }
+
+    .workout-card.collapsed .workout-header-actions {
+      display: none;
+    }
+
+    .workout-card.collapsed .workout-name {
+      cursor: pointer;
+    }
+
+    .workout-card.collapsed .workout-name:focus {
+      outline: none;
+    }
+
+    .round-btn.collapse-btn {
+      font-size: 18px;
     }
 
     .workout-name {
-      margin-bottom: 0;
+      flex: 1;
+      width: 100%;
     }
 
     .workout-header {
       display: flex;
-      align-items: stretch;
-      justify-content: space-between;
+      align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 0;
     }
 
     .workout-header .workout-name {
@@ -219,181 +360,50 @@
       gap: 8px;
     }
 
-    .danger-btn,
-    .primary-btn {
-      width: 100%;
-      border-radius: var(--radius-pill);
-      padding: 11px 16px;
-      font-size: 17px;
-      font-weight: 600;
-      border: none;
-      color: #fff;
+    .sets-wrapper.collapsed {
+      display: none;
     }
 
-    .danger-btn {
-      background-color: var(--danger);
-      margin: 4px 0 10px;
-    }
-
-    .danger-btn:active {
-      background-color: var(--danger-soft);
-    }
-
-    .primary-btn {
-      width: 100%;
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-size: 17px;
-      font-weight: 600;
-      border: 1px solid #333;
-      color: #fff;
-      margin-top: 8px;
-      background-color: #000;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-      -webkit-tap-highlight-color: transparent;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    .primary-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-      background-color: #111 !important;
-      border-color: #333 !important;
-    }
-
-    .footer-btn {
-      margin-top: 10px;
-    }
+    /* --------------------------
+       SET ROW
+    --------------------------- */
 
     .set-box {
-      background-color: #151515;
-      border-radius: 16px;
-      padding: 10px 10px 12px;
-      border: 1px solid #262626;
-      margin-top: 4px;
-      margin-bottom: 6px;
-    }
-
-    .set-header {
-      font-size: 15px;
-      font-weight: 700;
-      color: #ffb74d;
-      margin-bottom: 6px;
-    }
-
-    /* Progress screen letter group headers */
-    .progress-letter-header {
-      margin-top: 10px;
-      margin-bottom: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      text-transform: uppercase;
-    }
-
-    /* Rows inside the progress detail panel */
-    .progress-detail-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .progress-detail-row span:first-child {
-      color: #bbbbbb;
-    }
-
-    .progress-detail-row span:last-child {
-      color: #ffffff;
-      font-weight: 600;
-    }
-
-    .set-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      column-gap: 10px;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+      margin-top: 12px;
     }
 
-    .set-fields {
-      flex: 1;
+    .set-label {
+      font-size: 18px;
+      color: var(--copper);
+      font-family: "Germania One", sans-serif;
+      font-weight: 700;
+    }
+
+    .set-weight-group {
+      justify-self: end;
+    }
+
+    .set-weight-group .set-input {
+      width: 56px;
+    }
+
+    .set-right-group {
       display: flex;
       gap: 8px;
-      align-items: center;
+      margin-left: auto;
     }
 
-    .set-input {
-      width: 100%;
-      padding: 0 10px;
-      height: 44px;
-      border-radius: 12px;
-      background-color: #000;
-      border: 1px solid #333;
-      color: #fff;
-      font-size: 15px;
-      text-align: center;
+    .set-right-group .set-input {
+      width: 56px;
     }
 
-    .set-input::placeholder {
-      color: #666;
-    }
-
-    .set-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .round-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      background-color: #000;
-      border: 1px solid #333;
-      color: #fff;
-      height: 44px;
-      min-width: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 0 10px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    .round-btn:active {
-      transform: translateY(1px);
-      opacity: 0.9;
-      background-color: #111;
-    }
-
-    .set-col {
-      flex: 1;
-    }
-
-    .set-col label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .remove-set-btn {
-      width: 100%;
-      margin-top: 4px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: none;
-      background-color: #802121;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .remove-set-btn:active {
-      background-color: #5c1818;
-    }
+    /* --------------------------
+       PROGRESS LIST / LETTER GRID
+    --------------------------- */
 
     .saved-list {
       margin-top: 12px;
@@ -412,14 +422,22 @@
       justify-content: space-between;
       padding: 10px 12px;
       border-radius: 14px;
-      background-color: #151515;
-      border: 1px solid #262626;
-      font-size: 15px;
+      background-color: #1A1E2C;
+      border: 1px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 4px 0 #000;
+      font-size: 16px;
+      color: #fff;
     }
 
     .saved-name {
       flex: 1;
       margin-right: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
     .saved-buttons {
@@ -432,11 +450,11 @@
       appearance: none;
       -webkit-tap-highlight-color: transparent;
       border-radius: 12px;
-      border: 1px solid #333;
+      border: 1px solid var(--copper);
       padding: 6px 12px;
       font-size: 13px;
       font-weight: 600;
-      color: #fff;
+      color: #ffffff;
       background-color: #000;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
@@ -445,6 +463,7 @@
       transform: translateY(1px);
       opacity: 0.9;
       background-color: #111;
+      outline: 1px solid var(--copper);
     }
 
     .open-panel {
@@ -459,6 +478,76 @@
     .open-panel.open {
       display: block;
     }
+
+    .set-header {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .progress-detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .progress-detail-row span:first-child {
+      color: #bbbbbb;
+    }
+
+    .progress-detail-row span:last-child {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .progress-letter-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .progress-letter-btn {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid var(--copper);
+      background-color: #000;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 3px 0 #000;
+    }
+
+    .progress-letter-btn:active {
+      transform: translateY(1px);
+      outline: 1px solid var(--copper);
+      box-shadow: none;
+    }
+
+    .progress-letter-btn.disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .progress-letter-btn.active {
+      background-color: #1A1E2C;
+      box-shadow:
+        0 0 0 1px var(--accent),
+        0 3px 0 #000;
+    }
+
+    /* --------------------------
+       LINKS / MISC
+    --------------------------- */
 
     .link-back {
       margin-top: 18px;
@@ -478,11 +567,10 @@
       color: #ffffff;
     }
 
-    .input-group {
-      margin: 6px 0 10px;
-    }
+    /* --------------------------
+       TUTORIAL OVERLAY
+    --------------------------- */
 
-    /* --- Tutorial overlay --- */
     .tutorial-overlay {
       position: fixed;
       inset: 0;
@@ -570,6 +658,10 @@
       display: block;
     }
 
+    /* --------------------------
+       FOOTER / LEGAL
+    --------------------------- */
+
     .legal-footer {
       font-size: 0.75rem;
       padding: 0.75rem 1rem 1.25rem;
@@ -604,6 +696,7 @@
       .app-wrapper {
         align-items: center;
       }
+
       .card {
         width: 430px;
       }
@@ -613,17 +706,16 @@
 <body>
   <div class="app-wrapper">
     <header class="app-header">
-  <div style="display: flex; align-items: baseline; gap: 8px;">
-    <h1>Code and Iron</h1>
-    <span style="font-size: 14px; opacity: .6;">
-  </div>
+      <div style="display: flex; align-items: baseline; gap: 8px;">
+        <h1>Code and Iron Test</h1>
+      </div>
 
-  <button class="menu-button" id="menuButton">
-    <div class="menu-icon">
-      <span></span><span></span><span></span>
-    </div>
-  </button>
-</header>
+      <button class="menu-button" id="menuButton">
+        <div class="menu-icon">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+    </header>
 
     <!-- Tutorial Overlay (one-time walkthrough) -->
     <div id="tutorialOverlay" class="tutorial-overlay">
@@ -633,12 +725,16 @@
           <div class="tutorial-title">Welcome to Code & Iron</div>
           <div class="tutorial-body">
             This is your workout logger, routines builder, and progress tracker —
-            all in one place.
+            all in one place. You can always re-open this walkthrough later from
+            the menu (tap the three lines → <strong>Tutorial</strong>).
+            <br><br>
+            <strong>What’s new in v0.9.1:</strong>
           </div>
           <ul class="tutorial-bullets">
-            <li>Log exercises and sets on the home screen</li>
-            <li>Save routines you can reload later</li>
-            <li>Track PRs and progress over time</li>
+            <li>Collapse and expand exercise cards with the <strong>▼</strong> button</li>
+            <li>Use the A–Z letter grid on the Progress screen to filter exercises</li>
+            <li>Share/import routines using compact share codes in the Routines screen</li>
+            <li>Re-open this tutorial any time from the menu</li>
           </ul>
           <div class="tutorial-actions">
             <button id="tutorialSkipBtn" class="tutorial-secondary-btn">
@@ -660,7 +756,8 @@
             <li>Type an exercise name (e.g. Bench Press, Push Ups)</li>
             <li>Use the + / – next to sets to add or remove sets</li>
             <li>Use the top-right + to add another exercise card</li>
-            <li>Hit “Save progress” when you're done</li>
+            <li>Tap the <strong>▼</strong> button to collapse a card; tap the name to open it again</li>
+            <li>Hit “Save progress” when you're done to update your PRs</li>
           </ul>
           <div class="tutorial-actions">
             <button data-tutorial-back class="tutorial-secondary-btn">
@@ -674,15 +771,17 @@
 
         <!-- Step 2: Routines -->
         <div class="tutorial-screen" data-tutorial-step="2">
-          <div class="tutorial-title">2. Save routines</div>
+          <div class="tutorial-title">2. Save & share routines</div>
           <div class="tutorial-body">
-            In the Routines menu:
+            In the <strong>Routines</strong> menu:
           </div>
           <ul class="tutorial-bullets">
             <li>Give your routine a name (e.g. Push Day, Leg Day)</li>
             <li>Tap “Create” to save the current layout from the home screen</li>
-            <li>Use “Load” to send that routine back to the home screen</li>
-            <li>Use “Open” to edit the template itself</li>
+            <li>Tap “Load” to send that routine back to the home screen</li>
+            <li>Tap “Open” to edit the template itself</li>
+            <li>Tap “Share” to generate a share code (it appears in the name box)</li>
+            <li>To import a routine, paste a share code into the name box and tap “Create”</li>
           </ul>
           <div class="tutorial-actions">
             <button data-tutorial-back class="tutorial-secondary-btn">
@@ -694,16 +793,19 @@
           </div>
         </div>
 
-        <!-- Step 3: Progress & PRs -->
+        <!-- Step 3: Progress, PRs & Backup -->
         <div class="tutorial-screen" data-tutorial-step="3">
-          <div class="tutorial-title">3. Track progress & PRs</div>
+          <div class="tutorial-title">3. Progress, PRs & backup</div>
           <div class="tutorial-body">
-            In the Progress menu:
+            In the <strong>Progress</strong> menu:
           </div>
           <ul class="tutorial-bullets">
+            <li>Use the A–Z buttons to filter exercises by their first letter</li>
             <li>See your best weight × reps and max reps for each exercise</li>
-            <li>New PRs are tagged when you beat your old best</li>
-            <li>Tap an exercise to see recent history by date</li>
+            <li>New PRs are tagged when you beat your old best on that day</li>
+            <li>Tap an exercise to see recent history and best sets by date</li>
+            <li>At the bottom, use <strong>Generate Code</strong> to back up your routines and progress</li>
+            <li>Paste a saved code and tap <strong>Restore from backup</strong> if you ever need to recover data</li>
           </ul>
           <div class="tutorial-actions">
             <button data-tutorial-back class="tutorial-secondary-btn">
@@ -721,6 +823,7 @@
     <div class="menu-dropdown" id="menuDropdown">
       <div class="menu-item" data-nav="workouts">Routines</div>
       <div class="menu-item" data-nav="progress">Progress</div>
+      <div class="menu-item" id="menuTutorial">Tutorial</div>
     </div>
 
     <!-- HOME / LOGGER SCREEN -->
@@ -773,12 +876,15 @@
           Your best sets for each exercise based on saved workouts.
         </p>
 
+        <!-- Letter grid A–Z -->
+        <div id="progressLetterGrid" class="progress-letter-grid"></div>
+
+        <!-- Exercises for selected letter -->
         <div id="progressList" class="saved-list"></div>
 
         <!-- Detail panel for a single exercise -->
         <div id="progressDetail" class="open-panel"></div>
 
-        <!-- Backup & Restore section -->
         <h3 class="card-subtitle" style="margin-top:18px;margin-bottom:4px;">
           Backup &amp; Restore
         </h3>
@@ -811,35 +917,37 @@
     </main>
   </div>
 
-<footer class="legal-footer">
-  <button id="toggle-privacy" class="legal-link">
-    Privacy &amp; Data
-  </button>
+  <footer class="legal-footer">
+    <button id="toggle-privacy" class="legal-link">
+      Privacy &amp; Data
+    </button>
 
-  <div id="privacy-panel" class="legal-panel hidden">
-    <p>
-      This app does not collect, store, or transmit any personal data.
-      All workout entries and progress logs are saved locally on your device
-      using your browser's localStorage.
-    </p>
-    <p>
-      No data is sent to the developer, and the developer cannot access your
-      information in any way. Clearing your browser data may erase your saved
-      progress.
-    </p>
-    <p>
-      If you have ideas, run into bugs, or want to suggest features,
-      please email me at
-      <a href="mailto:aangel.ssilva28@gmail.com">
-        aangel.ssilva28@gmail.com
-      </a>.
-      I read every message and use your feedback to make this app better.
-    </p>
-    <p style="margin-top: 12px; opacity: .7;">
-    <strong>Version:</strong> v0.9.0 Beta<br>
-    <strong>Last updated:</strong> November 24, 2025
-  </div>
-</footer>
+    <div id="privacy-panel" class="legal-panel hidden">
+      <p>
+        This app does not collect, store, or transmit any personal data.
+        All workout entries and progress logs are saved locally on your device
+        using your browser's localStorage.
+      </p>
+      <p>
+        No data is sent to the developer, and the developer cannot access your
+        information in any way. Clearing your browser data may erase your saved
+        progress.
+      </p>
+      <p>
+        If you have ideas, run into bugs, or want to suggest features,
+        please email me at
+        <a href="mailto:aangel.ssilva28@gmail.com">
+          aangel.ssilva28@gmail.com
+        </a>.
+        Please subject the email "Code and Iron" I read every message and use your feedback to make this app better.
+      </p>
+      <p style="margin-top: 12px; opacity: .7;">
+        <strong>Version:</strong> v0.9.1 Beta<br>
+        <strong>Last updated:</strong> November 30, 2025
+      </p>
+    </div>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
