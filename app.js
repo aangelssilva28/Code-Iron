@@ -27,7 +27,7 @@ function openSinglePanel(
 // ======================================================
 // App version + toast helper
 // ======================================================
-const APP_VERSION = "0.9.1";
+const APP_VERSION = "0.9.2";
 const VERSION_STORAGE_KEY = "codeAndIronLastSeenVersion_v1";
 
 let toastTimeoutId = null;
