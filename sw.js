@@ -1,14 +1,14 @@
 // sw.js
-const CACHE_NAME = "code-and-iron-static-v1";
+const CACHE_NAME = "code-and-iron-static-v2";
 
 const URLS_TO_CACHE = [
   "./",
   "./index.html",
   "./app.js",
   "./manifest.webmanifest",
-  // Add your icons if you have them:
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./directory.json",
+  "./icon-152.png",
+  "./icon-192.png"
 ];
 
 // Install: cache core assets
@@ -48,9 +48,7 @@ self.addEventListener("fetch", (event) => {
     caches.match(request).then((cached) => {
       if (cached) return cached;
 
-      // Otherwise go to the network and (optionally) cache new files
       return fetch(request).then((response) => {
-        // Don’t cache opaque or error responses
         if (!response || response.status !== 200 || response.type === "opaque") {
           return response;
         }
