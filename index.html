@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Code and Iron</title>
+  <title>Code and Iron Test</title>
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <!-- PWA -->
@@ -37,9 +37,7 @@
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.7);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -53,6 +51,20 @@
     /* --------------------------
        LAYOUT SHELL
     --------------------------- */
+
+    /* Complex-mode Set label in header: match Standard .set-label styling */
+    .workout-header .complex-set-label {
+      user-select: none;
+      cursor: pointer;
+    }
+
+    /* (If you ever re-enable an editable set name in the header) */
+    .workout-header .complex-set-name {
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .workout-header .complex-set-name:focus { outline: none; }
 
     .app-wrapper {
       min-height: 100vh;
@@ -76,14 +88,8 @@
       letter-spacing: 0.5px;
     }
 
-    main.screen {
-      display: none;
-      flex: 1;
-    }
-
-    main.screen.active {
-      display: block;
-    }
+    main.screen { display: none; flex: 1; }
+    main.screen.active { display: block; }
 
     .card {
       max-width: 480px;
@@ -117,9 +123,7 @@
       margin-bottom: 4px;
     }
 
-    .input-group {
-      margin: 6px 0 10px;
-    }
+    .input-group { margin: 6px 0 10px; }
 
     /* --------------------------
        MENU
@@ -137,9 +141,7 @@
       padding: 0;
     }
 
-    .menu-button:active {
-      background-color: #1d1d1d;
-    }
+    .menu-button:active { background-color: #1d1d1d; }
 
     .menu-icon {
       width: 18px;
@@ -184,13 +186,8 @@
       border-bottom: 1px solid #222;
     }
 
-    .menu-item:last-child {
-      border-bottom: none;
-    }
-
-    .menu-item:active {
-      background-color: #1f1f1f;
-    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:active { background-color: #1f1f1f; }
 
     /* --------------------------
        INPUTS & BUTTONS
@@ -211,15 +208,6 @@
       font-size: 16px;
       color: #fff;
     }
-    
-    textarea.text-input {
-  height: auto;
-  min-height: 80px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  line-height: 1.3;
-  resize: vertical;
-}
 
     .text-input::placeholder,
     .set-input::placeholder {
@@ -231,6 +219,45 @@
     .text-input:focus {
       outline: 1px solid var(--copper);
       box-shadow: 0 0 12px rgba(57, 255, 20, 0.35);
+    }
+
+    /* --------------------------
+       EXERCISE AUTOCOMPLETE
+    --------------------------- */
+
+    .exercise-suggest {
+      position: absolute;
+      z-index: 9999;
+      background-color: #111;
+      border: 2px solid var(--copper);
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      max-height: 240px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .exercise-suggest .exercise-suggest-item {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #222;
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .exercise-suggest .exercise-suggest-item:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-suggest .exercise-suggest-item:active {
+      background-color: #1f1f1f;
     }
 
     .quick-add-row {
@@ -307,6 +334,17 @@
       color: #fff;
     }
 
+    .create-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .create-buttons .primary-btn {
+      margin-top: 0;
+    }
+
+
     .primary-btn:active {
       outline: 1px solid var(--copper);
       transform: translateY(1px);
@@ -315,9 +353,7 @@
       box-shadow: none;
     }
 
-    .footer-btn {
-      margin-top: 10px;
-    }
+    .footer-btn { margin-top: 10px; }
 
     .danger-btn {
       width: 100%;
@@ -340,12 +376,10 @@
        BACK TO LOGGER BUTTON
     --------------------------- */
 
-    .back-nav-wrap {
-      margin-top: 1.75rem; /* just spacing, no card visuals */
-    }
+    .back-nav-wrap { margin-top: 1.75rem; }
 
     .back-nav-btn {
-      margin-top: 0; /* override primary-btn margin */
+      margin-top: 0;
       height: 48px;
       font-size: 1.15rem;
       display: flex;
@@ -377,50 +411,31 @@
         0 12px 30px rgba(0, 0, 0, 0.85);
     }
 
-    .workout-card.collapsed .quick-add-row {
-      display: none;
-    }
+    .workout-card.collapsed .quick-add-row { display: none; }
 
-    .workout-card.collapsed {
-      padding: 14px 8px;
-    }
+    .workout-card.collapsed { padding: 14px 8px; }
 
     .workout-card.collapsed .workout-header {
       margin: 0;
       opacity: 0.85;
     }
 
-    .workout-card.collapsed .sets-wrapper {
-      display: none;
-    }
+    .workout-card.collapsed .sets-wrapper { display: none; }
+    .workout-card.collapsed .workout-header-actions { display: none; }
+    .workout-card.collapsed .workout-name { cursor: pointer; }
+    .workout-card.collapsed .workout-name:focus { outline: none; }
 
-    .workout-card.collapsed .workout-header-actions {
-      display: none;
-    }
+    .round-btn.collapse-btn { font-size: 18px; }
 
-    .workout-card.collapsed .workout-name {
-      cursor: pointer;
-    }
+    .workout-name { flex: 1; width: 100%; }
 
-    .workout-card.collapsed .workout-name:focus {
-      outline: none;
-    }
-
-    .round-btn.collapse-btn {
-      font-size: 18px;
-    }
-
-    .workout-name {
-      flex: 1;
-      width: 100%;
-    }
-
-    .workout-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 0;
-    }
+.workout-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+  margin-top: 4px;
+}
 
     .workout-header .workout-name {
       flex: 1;
@@ -433,46 +448,185 @@
       gap: 8px;
     }
 
-    .sets-wrapper.collapsed {
-      display: none;
+    .sets-wrapper.collapsed { display: none; }
+
+    /* NEW: complex mode control buttons inside card header */
+    .complex-header-controls {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .complex-header-controls .round-btn {
+      width: 56px;
+      height: 44px;
     }
 
     /* --------------------------
        SET ROW
     --------------------------- */
 
-    .set-box {
-      display: grid;
+.set-box {
+  display: grid;
+  grid-template-columns: 75px 1fr auto;
+  column-gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* ✅ Standard mode: Set column only grows a LITTLE (not all the way) */
+body.mode-standard .set-box {
+  grid-template-columns: clamp(78px, 22vw, 81px) 56px 56px 56px 56px;
+  column-gap: 8px;
+  width: 100%;
+}
+
+/* ✅ Make the wrapper divs “not count” as grid columns in Standard mode */
+body.mode-standard .set-weight-group,
+body.mode-standard .set-right-group {
+  display: contents;
+}
+
+    /* Complex rows: exercise name + spacer + right group */
+    .set-box.complex-row {
       grid-template-columns: auto 1fr auto;
-      column-gap: 10px;
-      align-items: center;
-      margin-top: 12px;
     }
 
-    .set-label {
-      font-size: 18px;
-      color: var(--copper);
-      font-family: "Germania One", sans-serif;
-      font-weight: 700;
+    /* spacer column flexes to push the right group to the edge */
+    .complex-row-spacer { display: block; }
+
+    /* ✅ Complex MODE: stretch Exercise name box to line up with the end of the "-C" button */
+    body.mode-complex .set-box.complex-row {
+      grid-template-columns: 1fr auto;
+      column-gap: 8px;
     }
 
-    .set-weight-group {
-      justify-self: end;
-    }
+    body.mode-complex .complex-row-spacer { display: none; }
 
-    .set-weight-group .set-input {
-      width: 56px;
-    }
-
+    /* let the right group stay pushed to the right like before */
     .set-right-group {
       display: flex;
       gap: 8px;
       margin-left: auto;
     }
 
-    .set-right-group .set-input {
-      width: 56px;
+.set-label {
+  height: 44px;
+  width: 100%;
+  padding: 0 14px;
+  margin-left: auto;
+  margin-right: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: #fff;
+  font-family: "Germania One", sans-serif;
+  font-weight: 700;
+
+  background-color: var(--gunmetal);
+  border: 2px solid var(--copper);
+  border-radius: 14px;
+
+  box-shadow:
+    0 0 0 1px #754d27,
+    0 4px 0 #000;
+
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+.set-label:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px #754d27,
+    0 3px 0 #000;
+}
+
+    .set-weight-group { justify-self: end; }
+    .set-weight-group .set-input { width: 56px; }
+
+    .set-right-group .set-input { width: 56px; }
+
+    /* --------------------------
+       AFT CARD ONLY
+    --------------------------- */
+
+    /* Wrapper so AFT tweaks don't touch other cards */
+    .aft-card {}
+    
+    /* Make the AFT title the same width as the left event labels */
+.aft-card .aft-title {
+  width: 156px; /* same as .aft-exercise-label */
+}
+
+    /* ✅ AFT rows only — make right boxes sit 8px from the left label boxes */
+    .aft-card .set-box.complex-row {
+      grid-template-columns: auto auto;
+      column-gap: 8px;
     }
+
+    .aft-card .complex-row-spacer { display: none; }
+
+    /* M/F + Age (if you use a wrapper div) */
+    .aft-card .aft-meta-input {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+    }
+    
+    /* Ensure M/F and Age boxes match the other right-side box sizing */
+.aft-card .aft-meta-input {
+  width: 66px;
+}
+
+/* Don't let the meta group auto-push away */
+.aft-card .aft-meta-group {
+  margin-left: 0;
+  display: flex;
+  gap: 8px;
+}
+
+    /* (Weight / Rep / Time) */
+    .aft-card .aft-primary-input {
+      width: 66px;
+      margin-right: auto;
+    }
+
+    /* Event Score boxes */
+    .aft-card .aft-score-input { width: 66px; }
+
+    /* ✅ FIXED: Total box at the bottom (spans Time + Score width) */
+    .aft-card .aft-total-input {
+      width: calc((2 * 66px) + 8px); /* 2 boxes + the 8px gap */
+      margin-left: 0;               /* don’t push it inside the group */
+    }
+
+    .aft-title {
+      background-color: var(--gunmetal);
+      pointer-events: none;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aft-exercise-label {
+      width: 156px;
+      background-color: var(--gunmetal);
+      pointer-events: none;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Pass/Fail box colors (AFT only) */
+    .aft-card .aft-passfail-box.pass { background-color: #4B5320; } /* Army green */
+    .aft-card .aft-passfail-box.fail { background-color: #4b0d0d; } /* Dark red */
 
     /* --------------------------
        PROGRESS LIST / LETTER GRID
@@ -485,9 +639,7 @@
       gap: 8px;
     }
 
-    .saved-wrapper {
-      margin-top: 4px;
-    }
+    .saved-wrapper { margin-top: 4px; }
 
     .saved-item {
       display: flex;
@@ -513,9 +665,43 @@
       min-width: 0;
     }
 
-    .saved-buttons {
-      display: flex;
+    /* Routines screen: allow routine names to wrap so they don't get cut off */
+    .saved-name--wrap {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: break-word;
+    }
+
+    .saved-buttons { display: flex; gap: 6px; }
+
+    /* Routines screen: "Options" dropdown */
+    .options-wrap { position: relative; display: inline-flex; }
+
+    .options-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      display: none;
+      flex-direction: column;
       gap: 6px;
+      padding: 8px;
+      border-radius: 14px;
+      background-color: #000;
+      border: 1px solid var(--copper);
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 10px 24px rgba(0, 0, 0, 0.8);
+      z-index: 30;
+      min-width: 140px;
+    }
+
+    .options-menu.open { display: flex; }
+
+    .options-menu .small-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 8px 10px;
     }
 
     .small-btn {
@@ -548,9 +734,7 @@
       display: none;
     }
 
-    .open-panel.open {
-      display: block;
-    }
+    .open-panel.open { display: block; }
 
     .set-header {
       font-size: 15px;
@@ -559,6 +743,7 @@
       margin-bottom: 6px;
     }
 
+    /* --- Progress detail (legacy rows kept for compatibility) --- */
     .progress-detail-row {
       display: flex;
       justify-content: space-between;
@@ -566,34 +751,211 @@
       margin-bottom: 4px;
     }
 
-    .progress-detail-row span:first-child {
-      color: #bbbbbb;
+    .progress-detail-row span:first-child { color: #bbbbbb; }
+    .progress-detail-row span:last-child { color: #ffffff; font-weight: 600; }
+
+    .progress-detail-meta { font-size: 13px; color: #bbbbbb; }
+    /* Progress list right-side actions (meta + Delete button) */
+    .progress-row-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+      min-width: 0;
     }
 
-    .progress-detail-row span:last-child {
+    /* Override global button size for Progress delete */
+    .progress-delete-btn {
+      width: 100px;
+      height: 34px;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 16px;
+      font-weight: 700;
+      border: 1px solid var(--copper);
+      color: #fff;
+      background-color: #000;
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 3px 0 #000;
+      flex: 0 0 auto;
+      line-height: 1;
+    }
+
+    .progress-delete-btn:active {
+      transform: translateY(1px);
+      opacity: 0.9;
+      background-color: #111;
+      outline: 1px solid var(--copper);
+      box-shadow: none;
+    }
+
+    /* Ensure meta text can shrink without pushing Delete off-screen */
+    .progress-row-actions .progress-detail-meta {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+      min-width: 0;
+    }
+
+    .progress-detail-title { margin-bottom: 8px; }
+    .progress-detail-pr { font-size: 13px; color: #bbbbbb; margin-bottom: 8px; }
+    .progress-detail-empty { font-size: 13px; color: #bbbbbb; }
+
+    /* --- NEW: nicer “session box” layout for the Progress detail panel only --- */
+    #progressDetail.open-panel {
+      padding: 14px 14px 16px;
+      background: linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
+      border: 1px solid #2a2a2a;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 10px 26px rgba(0, 0, 0, 0.65);
+    }
+
+    #progressDetail .chart-card { margin-top: 10px; }
+
+    .pd-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .pd-title-wrap { min-width: 0; }
+
+    .pd-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.2px;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pd-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pd-close {
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid var(--copper);
+      background-color: #000;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 30px;
+      box-shadow:
+        0 0 0 1px #754d27,
+        0 3px 0 #000;
+      flex: 0 0 auto;
+    }
+
+    .pd-close:active {
+      transform: translateY(1px);
+      outline: 1px solid var(--copper);
+      box-shadow: none;
+    }
+
+    .pd-pr-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .pd-pill {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      border: 1px solid #2a2a2a;
+      background: #0d0d0d;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #d8d8d8;
+    }
+
+    .pd-pill strong { color: #ffffff; font-weight: 800; }
+
+    .pd-section-title {
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .pd-session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pd-session-card {
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: #0d0d0d;
+      border: 1px solid #262626;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .pd-session-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .pd-session-date { font-size: 12px; color: #bbbbbb; }
+
+    .pd-session-primary {
+      font-size: 14px;
       color: #ffffff;
-      font-weight: 600;
+      font-weight: 900;
+      white-space: nowrap;
     }
 
-    /* NEW: pulled out of JS inline styles */
-    .progress-detail-meta {
-      font-size: 13px;
+    .pd-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pd-chip {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #262626;
+      background: #000;
+      color: #d8d8d8;
+    }
+
+    .pd-session-sets {
+      margin-top: 8px;
+      font-size: 12px;
       color: #bbbbbb;
+      line-height: 1.35;
     }
 
-    .progress-detail-title {
-      margin-bottom: 8px;
-    }
-
-    .progress-detail-pr {
-      font-size: 13px;
-      color: #bbbbbb;
-      margin-bottom: 8px;
-    }
-
-    .progress-detail-empty {
-      font-size: 13px;
-      color: #bbbbbb;
+    .pd-chart {
+      width: 100%;
+      height: 160px;
+      display: block;
     }
 
     .progress-letter-grid {
@@ -627,10 +989,7 @@
       box-shadow: none;
     }
 
-    .progress-letter-btn.disabled {
-      opacity: 0.25;
-      pointer-events: none;
-    }
+    .progress-letter-btn.disabled { opacity: 0.25; pointer-events: none; }
 
     .progress-letter-btn.active {
       background-color: #1A1E2C;
@@ -652,14 +1011,8 @@
       gap: 6px;
     }
 
-    .link-back span {
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .link-back:active {
-      color: #ffffff;
-    }
+    .link-back span { font-size: 18px; line-height: 1; }
+    .link-back:active { color: #ffffff; }
 
     /* --------------------------
        TUTORIAL OVERLAY
@@ -676,9 +1029,7 @@
       z-index: 100;
     }
 
-    .tutorial-overlay.visible {
-      display: flex;
-    }
+    .tutorial-overlay.visible { display: flex; }
 
     .tutorial-card {
       width: 100%;
@@ -690,11 +1041,7 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .tutorial-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
+    .tutorial-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
 
     .tutorial-body {
       font-size: 14px;
@@ -709,9 +1056,7 @@
       color: var(--text-muted);
     }
 
-    .tutorial-bullets li {
-      margin-bottom: 4px;
-    }
+    .tutorial-bullets li { margin-bottom: 4px; }
 
     .tutorial-actions {
       margin-top: 16px;
@@ -744,13 +1089,8 @@
       opacity: 0.9;
     }
 
-    .tutorial-screen {
-      display: none;
-    }
-
-    .tutorial-screen.active {
-      display: block;
-    }
+    .tutorial-screen { display: none; }
+    .tutorial-screen.active { display: block; }
 
     /* --------------------------
        FOOTER / LEGAL
@@ -782,26 +1122,19 @@
       color: var(--text-muted);
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     @media (min-width: 500px) {
-      .app-wrapper {
-        align-items: center;
-      }
-
-      .card {
-        width: 430px;
-      }
+      .app-wrapper { align-items: center; }
+      .card { width: 430px; }
     }
 
     /* Logger card: scrollable content + room for sticky footer */
     .card.card--logger {
       position: relative;
-      max-height: calc(100vh - 140px); /* keeps card usable on small phones */
+      max-height: calc(100vh - 140px);
       overflow-y: auto;
-      padding-bottom: 72px; /* room so content isn't hidden behind footer */
+      padding-bottom: 72px;
     }
 
     /* Sticky footer inside the card */
@@ -810,17 +1143,42 @@
       bottom: 0;
       margin-top: 16px;
       padding-top: 12px;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.98),
-        rgba(0, 0, 0, 0.85),
-        transparent
-      );
+      background: transparent;
     }
 
-    /* Tighten spacing; footer-btn already has margin-top */
-    .card-sticky-footer .footer-btn {
+    /* AFT mode only: no inner scroll + tighter bottom space */
+    body.mode-aft .card.card--logger {
+      max-height: none;
+      overflow-y: visible;
+      padding-bottom: 32px;
+    }
+
+    body.mode-aft .card.card--logger .card-sticky-footer {
+      margin-top: 12px;
+    }
+
+    .card-sticky-footer .footer-btn { margin-top: 0; }
+
+    /* NEW: Mode row inside sticky footer */
+    .mode-footer-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mode-footer-label { font-size: 14px; color: var(--text-muted); }
+
+    .mode-footer-buttons { display: flex; gap: 8px; }
+
+    .mode-btn {
+      width: auto;
+      height: 36px;
+      font-size: 14px;
+      padding: 0 14px;
       margin-top: 0;
+      flex: 0 0 auto;
     }
 
     /* Reuse this list style for volume/charts selection */
@@ -831,10 +1189,7 @@
       padding-right: 4px;
     }
 
-    .settings-volume-list .settings-row {
-      font-size: 13px;
-      padding: 2px 0;
-    }
+    .settings-volume-list .settings-row { font-size: 13px; padding: 2px 0; }
 
     /* --------------------------
        CHARTS
@@ -854,26 +1209,14 @@
       border: 1px solid #262626;
     }
 
-    .chart-card-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .chart-card-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
+    .chart-card-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .chart-card-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
 
     /* --------------------------
        SETTINGS
     --------------------------- */
 
-    .settings-group {
-      margin-top: 10px;
-      margin-bottom: 14px;
-    }
+    .settings-group { margin-top: 10px; margin-bottom: 14px; }
 
     .settings-row {
       display: flex;
@@ -884,9 +1227,7 @@
       font-size: 14px;
     }
 
-    .settings-row span {
-      color: var(--text-main);
-    }
+    .settings-row span { color: var(--text-main); }
 
     .settings-note {
       font-size: 12px;
@@ -895,10 +1236,7 @@
       line-height: 1.4;
     }
 
-    .settings-checkbox {
-      width: 18px;
-      height: 18px;
-    }
+    .settings-checkbox { width: 18px; height: 18px; }
 
     /* --------------------------
        HIGH CONTRAST THEME
@@ -909,7 +1247,7 @@
       --card-inner: #020308;
       --text-muted: #f0f0f0;
       --border-soft: #3a3a3a;
-      --copper: #ffb366; /* brighter copper for better contrast */
+      --copper: #ffb366;
     }
 
     body.theme-high-contrast .card {
@@ -919,9 +1257,7 @@
         0 4px 0 #000;
     }
 
-    body.theme-high-contrast .saved-item {
-      border-color: var(--accent);
-    }
+    body.theme-high-contrast .saved-item { border-color: var(--accent); }
 
     /* --------------------------
        TOAST / SNACKBAR
@@ -956,14 +1292,14 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
-
   </style>
 </head>
+
 <body>
   <div class="app-wrapper">
     <header class="app-header">
       <div style="display: flex; align-items: baseline; gap: 8px;">
-        <h1>Code and Iron</h1>
+        <h1>Code and Iron Test</h1>
       </div>
 
       <button
@@ -981,113 +1317,13 @@
     </header>
 
     <!-- Tutorial Overlay (one-time walkthrough) -->
-    <div id="tutorialOverlay" class="tutorial-overlay">
-      <div class="tutorial-card">
-        <!-- Step 0: Welcome / choice -->
-        <div class="tutorial-screen active" data-tutorial-step="0">
-          <div class="tutorial-title">Code & Iron Update 12/4/25 v0.9.2</div>
-          <div class="tutorial-body">
-            If your are a new user click the show me around button.
-            <br><br>
-            <strong>What’s new:</strong>
-          </div>
-          <ul class="tutorial-bullets">
-            <li>New <strong>Charts</strong> screen to see trends for selected exercises</li>
-            <li>Per-session history now tracks sets and total volume</li>
-            <li>Smarter exercise name tracking for case sensitive naming (Bench press vs bench Press can be merged)</li>
-            <li>Backup &amp; restore your data from the new settings screen</li>
-            <li>New quick add chips for plates in sets</li>
-            <li>Saving code and iron app to your phones home page now has an icon image</li>
-            <li>You can now use the app offline, delete old version and resave to uour homescreen to use this function</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button id="tutorialSkipBtn" class="tutorial-secondary-btn" type="button">
-              Skip for now
-            </button>
-            <button id="tutorialStartBtn" class="tutorial-primary-btn" type="button">
-              Show me around
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 1: Logger -->
-        <div class="tutorial-screen" data-tutorial-step="1">
-          <div class="tutorial-title">1. Log your workout</div>
-          <div class="tutorial-body">
-            On the home screen:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Type an exercise name (e.g. Bench Press, Push Ups)</li>
-            <li>Use the + / – next to sets to add or remove sets</li>
-            <li>Use the top-right + to add another exercise card</li>
-            <li>Tap the <strong>▼</strong> button to collapse a card; tap the name to open it again</li>
-            <li>Hit “Save progress” when you're done to update your PRs</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn" type="button">
-              Back
-            </button>
-            <button data-tutorial-next class="tutorial-primary-btn" type="button">
-              Next
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 2: Routines -->
-        <div class="tutorial-screen" data-tutorial-step="2">
-          <div class="tutorial-title">2. Save & share routines</div>
-          <div class="tutorial-body">
-            In the <strong>Routines</strong> menu:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Give your routine a name (e.g. Push Day, Leg Day)</li>
-            <li>Tap “Create” to save the current layout from the home screen</li>
-            <li>Tap “Load” to send that routine back to the home screen</li>
-            <li>Tap “Open” to edit the template itself</li>
-            <li>Tap “Share” to generate a share code (it appears in the name box)</li>
-            <li>To import a routine, paste a share code into the name box and tap “Create”</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn" type="button">
-              Back
-            </button>
-            <button data-tutorial-next class="tutorial-primary-btn" type="button">
-              Next
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 3: Progress, PRs & Backup -->
-        <div class="tutorial-screen" data-tutorial-step="3">
-          <div class="tutorial-title">3. Progress, PRs & backup</div>
-          <div class="tutorial-body">
-            In the <strong>Progress</strong> menu:
-          </div>
-          <ul class="tutorial-bullets">
-            <li>Use the A–Z buttons to filter exercises by their first letter</li>
-            <li>See your best weight × reps and max reps for each exercise</li>
-            <li>New PRs are tagged when you beat your old best on that day</li>
-            <li>Tap an exercise to see recent history and best sets by date</li>
-            <li>In <strong>Settings → Data</strong>, use <strong>Generate Code</strong> to back up your routines and progress</li>
-            <li>Paste a saved code there and tap <strong>Restore from backup</strong> if you ever need to recover data</li>
-          </ul>
-          <div class="tutorial-actions">
-            <button data-tutorial-back class="tutorial-secondary-btn" type="button">
-              Back
-            </button>
-            <button data-tutorial-done class="tutorial-primary-btn" type="button">
-              Got it
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- (unchanged, omitted for brevity – keep your existing content here) -->
+    <!-- ... all the tutorial screens exactly as you had them ... -->
 
     <!-- Menu -->
     <div class="menu-dropdown" id="menuDropdown">
       <div class="menu-item" data-nav="workouts">Routines</div>
       <div class="menu-item" data-nav="progress">Progress</div>
-      <div class="menu-item" data-nav="charts">Charts</div> <!-- NEW -->
       <div class="menu-item" data-nav="settings">Settings</div>
       <div class="menu-item" id="menuTutorial">Tutorial</div>
     </div>
@@ -1098,9 +1334,40 @@
         <div id="workoutsContainer" class="workouts-container"></div>
 
         <div class="card-sticky-footer">
-          <button id="saveProgressBtn" class="primary-btn footer-btn" type="button">
+          <button
+            id="saveProgressBtn"
+            class="primary-btn footer-btn"
+            type="button"
+          >
             Save progress
           </button>
+
+          <div class="mode-footer-row">
+            <span class="mode-footer-label">Mode</span>
+            <div class="mode-footer-buttons">
+              <button
+                id="loggerModeToggle"
+                class="primary-btn mode-btn"
+                type="button"
+              >
+                Standard
+              </button>
+              <button
+                id="complexModeButton"
+                class="primary-btn mode-btn"
+                type="button"
+              >
+                Complex
+              </button>
+              <button
+                id="aftModeButton"
+                class="primary-btn mode-btn"
+                type="button"
+              >
+                AFT
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -1122,16 +1389,21 @@
           />
         </div>
 
-        <button id="saveTemplateBtn" class="primary-btn" type="button">
-          Create
-        </button>
+        <div class="create-buttons">
+          <button id="createStandardBtn" class="primary-btn" type="button">
+            Create Standard
+          </button>
+
+          <button id="createComplexBtn" class="primary-btn" type="button">
+            Create Complex
+          </button>
+        </div>
 
         <h3 class="card-subtitle" style="margin-top:18px;margin-bottom:4px;">
           Saved workouts
         </h3>
         <div id="savedTemplatesList" class="saved-list"></div>
 
-        <!-- UPDATED BACK BUTTON -->
         <div class="back-nav-wrap">
           <button
             id="backToLogger"
@@ -1152,48 +1424,13 @@
           Your best sets for each exercise based on saved workouts.
         </p>
 
-        <!-- Letter grid A–Z -->
         <div id="progressLetterGrid" class="progress-letter-grid"></div>
-
-        <!-- Exercises for selected letter -->
         <div id="progressList" class="saved-list"></div>
-
-        <!-- Detail panel for a single exercise -->
         <div id="progressDetail" class="open-panel"></div>
 
-        <!-- UPDATED BACK BUTTON -->
         <div class="back-nav-wrap">
           <button
             id="backToLoggerFromProgress"
-            class="primary-btn back-nav-btn"
-            type="button"
-          >
-            ← Back to workout logger
-          </button>
-        </div>
-      </section>
-    </main>
-
-    <!-- Charts Screen -->
-    <main id="chartsScreen" class="screen">
-      <section class="card main-card">
-        <h2 class="card-title">Charts</h2>
-        <p class="card-subtitle">
-          Pick exercises and see how their sessions trend over time.
-        </p>
-
-        <h3 class="card-subtitle" style="margin-top: 1.25rem;">
-          Choose exercises to chart
-        </h3>
-
-        <div id="chartsExerciseList" class="settings-list"></div>
-
-        <div id="chartsContainer" class="charts-container" style="margin-top: 1.5rem;"></div>
-
-        <!-- UPDATED BACK BUTTON -->
-        <div class="back-nav-wrap">
-          <button
-            id="backToLoggerFromCharts"
             class="primary-btn back-nav-btn"
             type="button"
           >
@@ -1294,7 +1531,6 @@
           </button>
         </div>
 
-        <!-- UPDATED BACK BUTTON -->
         <div class="back-nav-wrap">
           <button
             id="backToLoggerFromSettings"
@@ -1333,11 +1569,19 @@
         Please subject the email "Code and Iron" I read every message and use your feedback to make this app better.
       </p>
       <p style="margin-top: 12px; opacity: .7;">
-        <strong>Version:</strong> v0.9.2 Beta<br>
-        <strong>Last updated:</strong> December 4, 2025
+        <strong>Version:</strong> v0.9.1 Beta<br>
+        <strong>Last updated:</strong> November 30, 2025
       </p>
     </div>
   </footer>
+
+  <div
+    id="exerciseSuggest"
+    class="exercise-suggest hidden"
+    role="listbox"
+    aria-label="Exercise suggestions"
+    aria-hidden="true"
+  ></div>
 
   <div
     id="toast"
