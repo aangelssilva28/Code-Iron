@@ -28,8 +28,8 @@ function openSinglePanel(
 // ======================================================
 // App version + toast helper
 // ======================================================
-const APP_VERSION = "0.9.1";
-const VERSION_STORAGE_KEY = "codeAndIronLastSeenVersion_v1";
+const APP_VERSION = "0.9.2";
+const VERSION_STORAGE_KEY = "codeAndIronLastSeenVersion_v2";
 
 let toastTimeoutId = null;
 
@@ -217,10 +217,10 @@ function findSimilarExistingExercise(normalizedKey, rawName, progressObj) {
 // ======================================================
 const Storage = (() => {
   const STORAGE_KEY = "codeAndIronTemplates_v2";
-  const PROGRESS_KEY = "codeAndIronProgress_v1";
+  const PROGRESS_KEY = "codeAndIronProgress_v2";
 
-  const TEMPLATE_VERSION = 1;
-  const PROGRESS_VERSION = 1;
+  const TEMPLATE_VERSION = 2;
+  const PROGRESS_VERSION = 2;
 
   // ---- PROGRESS ----
   function loadProgress() {
@@ -320,7 +320,7 @@ const Storage = (() => {
 // Settings module (units, theme, data control)
 // ======================================================
 const Settings = (() => {
-  const SETTINGS_KEY = "codeAndIronSettings_v1";
+  const SETTINGS_KEY = "codeAndIronSettings_v2";
 
   let state = {
     unit: "lb", // "lb" | "kg"
@@ -433,8 +433,8 @@ const Settings = (() => {
         try {
           const keysToRemove = [
             "codeAndIronTemplates_v2",
-            "codeAndIronProgress_v1",
-            "codeAndIronTutorialSeen_v1",
+            "codeAndIronProgress_v2",
+            "codeAndIronTutorialSeen_v2",
             SETTINGS_KEY,
           ];
           keysToRemove.forEach((k) => localStorage.removeItem(k));
@@ -683,7 +683,7 @@ const Logger = (() => {
 
   // NEW: shipped exercise directory (directory.json at site root)
   const EXERCISE_CATALOG_URL = "./directory.json";
-  const EXERCISE_CATALOG_LS_KEY = "codeAndIronExerciseCatalog_v1";
+  const EXERCISE_CATALOG_LS_KEY = "codeAndIronExerciseCatalog_v2";
   let exerciseCatalog = [];
   let exerciseCatalogLoaded = false;
   let exerciseCatalogPromise = null;
@@ -3294,7 +3294,7 @@ function openProgressDetail(ex) {
 // Charts module (select exercises + show progress charts)
 // ======================================================
 const Charts = (() => {
-  const CHARTS_KEY = "codeAndIronCharts_v1";
+  const CHARTS_KEY = "codeAndIronCharts_v2";
 
   let selectedKeys = [];
   let listEl = null;
@@ -3903,9 +3903,9 @@ const Charts = (() => {
 // Templates module (routines screen + share + backup)
 // ======================================================
 const Templates = (() => {
-  const ROUTINE_SHARE_PREFIX_V1 = "C1:";
+  const ROUTINE_SHARE_PREFIX_v2 = "C1:";
   const ROUTINE_SHARE_PREFIX_V2 = "C2:";
-  const LEGACY_SHARE_PREFIX = "CIROUTINEv1:";
+  const LEGACY_SHARE_PREFIX = "CIROUTINEv2:";
   const SHARE_EMOJI_PREFIX = "💾";
 
   let templates = Storage.loadTemplates();
@@ -4562,7 +4562,7 @@ const Templates = (() => {
       // ---- C1 (base64 JSON) ----
       if (/^C1:/i.test(code)) {
         const encoded = fixBase64Padding(
-          code.slice(ROUTINE_SHARE_PREFIX_V1.length)
+          code.slice(ROUTINE_SHARE_PREFIX_v2.length)
         );
         const payload = JSON.parse(atob(encoded));
 
@@ -4585,7 +4585,7 @@ const Templates = (() => {
       }
 
       // ---- Legacy ----
-      if (/^CIROUTINEv1:/i.test(code)) {
+      if (/^CIROUTINEv2:/i.test(code)) {
         const encoded = fixBase64Padding(code.slice(LEGACY_SHARE_PREFIX.length));
         const payload = JSON.parse(atob(encoded));
 
@@ -4614,7 +4614,7 @@ const Templates = (() => {
     return {
       templates,
       progressData,
-      version: 1,
+      version: 2,
     };
   }
 
@@ -5004,7 +5004,7 @@ const Templates = (() => {
 // Tutorial module (overlay + menu item)
 // ======================================================
 const Tutorial = (() => {
-  const TUTORIAL_KEY = "codeAndIronTutorialSeen_v1";
+  const TUTORIAL_KEY = "codeAndIronTutorialSeen_v2";
 
   let overlay;
   let menuReopenItem;
@@ -5166,7 +5166,7 @@ const App = (() => {
         // Store new version
         localStorage.setItem(VERSION_STORAGE_KEY, APP_VERSION);
         // Force the tutorial / "What's new" overlay to show once per version
-        localStorage.removeItem("codeAndIronTutorialSeen_v1");
+        localStorage.removeItem("codeAndIronTutorialSeen_v2");
       }
     } catch (e) {
       console.error("Error checking app version", e);
